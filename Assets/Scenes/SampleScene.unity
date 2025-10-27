@@ -1149,7 +1149,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharacterMovement
   moveSpeed: 5
   rotationSmoothTime: 0.1
-  jumpForce: 7
+  jumpForce: 10
+  idleRotationDeadZone: 20
   cameraTransform: {fileID: 1994250889}
   groundCheckDistance: 0.2
   groundMask:
