@@ -19,9 +19,18 @@ public class CharacterMovement : MonoBehaviour
     [Header("Jump Feel")]
     public float fallMultiplier = 2f; // slightly faster fall
 
+    [Header("Jump Settings")]
+    public int maxJumps = 2;       // 1 = normal jump, 2 = double jump
+    private int jumpCount = 0;
+
     private Rigidbody rb;
     private float turnSmoothVelocity;
     private bool isGrounded;
+
+    [SerializeField, Range(0f, 1f)]
+    private float airControlPercent = 0f; // 0 = no control, 1 = full control
+
+    private Vector3 lastMoveDir;
 
     void Start()
     {
@@ -48,24 +57,33 @@ public class CharacterMovement : MonoBehaviour
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
 
-        Vector3 moveDir = new Vector3(moveX, 0f, moveZ).normalized;
-        if (moveDir.magnitude >= 0.1f)
-        {
-            // Rotate moveDir relative to camera Y rotation
-            float targetAngle = Mathf.Atan2(moveDir.x, moveDir.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
-            Vector3 moveDirRotated = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+        // Calculate movement direction relative to camera
+        Vector3 camForward = cameraTransform.forward;
+        Vector3 camRight = cameraTransform.right;
+        camForward.y = 0f;
+        camRight.y = 0f;
+        camForward.Normalize();
+        camRight.Normalize();
 
-            Vector3 targetVelocity = moveDirRotated * moveSpeed;
-            targetVelocity.y = rb.linearVelocity.y; // preserve vertical velocity
-            rb.linearVelocity = targetVelocity;
+        Vector3 moveDir = (camForward * moveZ + camRight * moveX).normalized;
+
+        if (isGrounded)
+        {
+            // Full movement control on ground
+            lastMoveDir = moveDir;
+            Vector3 targetVelocity = moveDir * moveSpeed;
+            targetVelocity.y = rb.velocity.y;
+            rb.velocity = targetVelocity;
         }
         else
         {
-            // Stop horizontal movement if no input
-            rb.linearVelocity = new Vector3(0f, rb.linearVelocity.y, 0f);
+            // In the air — reduced or zero control
+            Vector3 airDir = Vector3.Lerp(lastMoveDir, moveDir, airControlPercent);
+            Vector3 targetVelocity = airDir * moveSpeed;
+            targetVelocity.y = rb.velocity.y; // keep gravity/jump
+            rb.velocity = targetVelocity;
         }
     }
-
     void HandleRotation()
     {
         float moveX = Input.GetAxis("Horizontal");
@@ -98,32 +116,34 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
-    //void HandleRotation()
-    //{
-    //    float moveX = Input.GetAxis("Horizontal");
-    //    float moveZ = Input.GetAxis("Vertical");
-    //    Vector3 direction = new Vector3(moveX, 0f, moveZ).normalized;
-
-    //    if (direction.magnitude >= 0.1f)
-    //    {
-    //        float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
-    //        float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, rotationSmoothTime);
-    //        transform.rotation = Quaternion.Euler(0f, angle, 0f);
-    //    }
-    //}
-    void HandleJump()
+ 
+   void HandleJump()
+{
+    if (Input.GetButtonDown("Jump") && jumpCount <= maxJumps)
     {
-        if (Input.GetButtonDown("Jump") && isGrounded)
-        {
-            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z); // clear old vertical motion
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);      // one consistent impulse
-        }
+        // Reset vertical speed before applying new force
+        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+
+        jumpCount++;
+
+        // If we’re on second jump, give some midair control
+       
     }
+}
 
     void CheckGround()
     {
-        isGrounded = Physics.Raycast(transform.position, Vector3.down,
-            groundCheckDistance + 0.05f, groundMask);
+        bool wasGrounded = isGrounded;
+
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance + 0.05f, groundMask);
+
+        // If we just landed, reset jump count and air control
+        if (isGrounded && !wasGrounded)
+        {
+            jumpCount = 0;
+            airControlPercent = 0f;
+        }
     }
 
 
