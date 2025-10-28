@@ -5,12 +5,7 @@ public class CharacterMovement : MonoBehaviour
 {
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
-    public float rotationSmoothTime = 0.1f;
     public float jumpForce = 7f;
-    public float idleRotationDeadZone = 20f;
-
-    [Header("Camera")]
-    public Transform cameraTransform;
 
     [Header("Ground Check")]
     public float groundCheckDistance = 0.2f;
@@ -24,7 +19,6 @@ public class CharacterMovement : MonoBehaviour
     private int jumpCount = 0;
 
     private Rigidbody rb;
-    private float turnSmoothVelocity;
     private bool isGrounded;
 
     [SerializeField, Range(0f, 1f)]
@@ -42,8 +36,8 @@ public class CharacterMovement : MonoBehaviour
 
     void Update()
     {
-        HandleRotation();
         HandleJump();
+        Debug.Log("Grounded: " + isGrounded);
     }
 
     void FixedUpdate()
@@ -57,15 +51,8 @@ public class CharacterMovement : MonoBehaviour
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
 
-        // Calculate movement direction relative to camera
-        Vector3 camForward = cameraTransform.forward;
-        Vector3 camRight = cameraTransform.right;
-        camForward.y = 0f;
-        camRight.y = 0f;
-        camForward.Normalize();
-        camRight.Normalize();
-
-        Vector3 moveDir = (camForward * moveZ + camRight * moveX).normalized;
+        // Movement direction relative to the player's facing direction
+        Vector3 moveDir = (transform.forward * moveZ + transform.right * moveX).normalized;
 
         if (isGrounded)
         {
@@ -84,40 +71,9 @@ public class CharacterMovement : MonoBehaviour
             rb.velocity = targetVelocity;
         }
     }
-    void HandleRotation()
-    {
-        float moveX = Input.GetAxis("Horizontal");
-        float moveZ = Input.GetAxis("Vertical");
-        Vector3 movementDirection = new Vector3(moveX, 0f, moveZ).normalized;
 
-        if (movementDirection.magnitude >= 0.1f)
-        {
-            // Rotate toward movement direction relative to camera
-            float targetAngle = Mathf.Atan2(movementDirection.x, movementDirection.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, rotationSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
-        }
-        else
-        {
-            // Idle: rotate toward camera forward if dead zone exceeded
-            Vector3 cameraForward = cameraTransform.forward;
-            cameraForward.y = 0f;
-            if (cameraForward.sqrMagnitude > 0.001f)
-            {
-                float targetAngle = Mathf.Atan2(cameraForward.x, cameraForward.z) * Mathf.Rad2Deg;
-                float angleDiff = Mathf.DeltaAngle(transform.eulerAngles.y, targetAngle);
 
-                if (Mathf.Abs(angleDiff) > idleRotationDeadZone)
-                {
-                    float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, rotationSmoothTime);
-                    transform.rotation = Quaternion.Euler(0f, angle, 0f);
-                }
-            }
-        }
-    }
-
- 
-   void HandleJump()
+    void HandleJump()
 {
     if (Input.GetButtonDown("Jump") && jumpCount <= maxJumps)
     {
@@ -136,7 +92,8 @@ public class CharacterMovement : MonoBehaviour
     {
         bool wasGrounded = isGrounded;
 
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance + 0.05f, groundMask);
+        float rayOriginOffset = GetComponent<CapsuleCollider>().height / 2 - 0.05f;
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, rayOriginOffset + groundCheckDistance, groundMask);
 
         // If we just landed, reset jump count and air control
         if (isGrounded && !wasGrounded)
