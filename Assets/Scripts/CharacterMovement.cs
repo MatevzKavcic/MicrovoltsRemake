@@ -26,12 +26,18 @@ public class CharacterMovement : MonoBehaviour
 
     private Vector3 lastMoveDir;
 
+
+    private Animator animator;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        animator = GetComponentInChildren<Animator>();
+        Debug.Log(animator + "is indeed here");
+
     }
 
     void Update()
@@ -50,6 +56,12 @@ public class CharacterMovement : MonoBehaviour
     {
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
+
+        float animX = Mathf.Approximately(moveX, 0f) ? 0f : Mathf.Sign(moveX);
+        float animZ = Mathf.Approximately(moveZ, 0f) ? 0f : Mathf.Sign(moveZ);
+
+        animator.SetFloat("MoveX", animX);
+        animator.SetFloat("MoveZ", animZ);
 
         // Movement direction relative to the player's facing direction
         Vector3 moveDir = (transform.forward * moveZ + transform.right * moveX).normalized;
@@ -109,5 +121,7 @@ public class CharacterMovement : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(transform.position, transform.position + Vector3.down * (groundCheckDistance + 0.1f));
     }
+
+   
 
 }
