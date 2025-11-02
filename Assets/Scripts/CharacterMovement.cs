@@ -36,7 +36,6 @@ public class CharacterMovement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         animator = GetComponentInChildren<Animator>();
-        Debug.Log(animator + "is indeed here");
 
     }
 
@@ -71,34 +70,36 @@ public class CharacterMovement : MonoBehaviour
             // Full movement control on ground
             lastMoveDir = moveDir;
             Vector3 targetVelocity = moveDir * moveSpeed;
-            targetVelocity.y = rb.velocity.y;
-            rb.velocity = targetVelocity;
+            targetVelocity.y = rb.linearVelocity.y;
+            rb.linearVelocity = targetVelocity;
         }
         else
         {
             // In the air — reduced or zero control
             Vector3 airDir = Vector3.Lerp(lastMoveDir, moveDir, airControlPercent);
             Vector3 targetVelocity = airDir * moveSpeed;
-            targetVelocity.y = rb.velocity.y; // keep gravity/jump
-            rb.velocity = targetVelocity;
+            targetVelocity.y = rb.linearVelocity.y; // keep gravity/jump
+            rb.linearVelocity = targetVelocity;
         }
     }
 
 
     void HandleJump()
 {
-    if (Input.GetButtonDown("Jump") && jumpCount <= maxJumps)
+    if (Input.GetButtonDown("Jump") && jumpCount < maxJumps)
     {
         // Reset vertical speed before applying new force
-        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
 
         jumpCount++;
 
-        // If we’re on second jump, give some midair control
-       
+            animator.ResetTrigger("jumpKey");
+            animator.SetTrigger("jumpKey");
+            Debug.Log("jumpKey triggered");
+
+        }
     }
-}
 
     void CheckGround()
     {
@@ -111,8 +112,17 @@ public class CharacterMovement : MonoBehaviour
         if (isGrounded && !wasGrounded)
         {
             jumpCount = 0;
-            airControlPercent = 0f;
+
+            animator.SetBool("isGrounded", isGrounded);
+
         }
+        else if(isGrounded==false){
+            animator.SetBool("isGrounded", isGrounded);
+
+        }
+
+
+
     }
 
 
