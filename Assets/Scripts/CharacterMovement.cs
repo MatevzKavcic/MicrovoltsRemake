@@ -8,7 +8,7 @@ public class CharacterMovement : MonoBehaviour
     public float jumpForce = 7f;
 
     [Header("Ground Check")]
-    public float groundCheckDistance = 0.2f;
+    public float groundCheckDistance;
     public LayerMask groundMask;
 
     [Header("Jump Feel")]
