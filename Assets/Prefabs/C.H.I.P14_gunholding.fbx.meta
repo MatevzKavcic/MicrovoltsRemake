@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3d1bd7bd9be9750499a61676faca0233
+guid: bf8c85850f64f7044993037fbc08eae5
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -31,11 +31,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: C.H.I.P.|jump
-      takeName: C.H.I.P.|jump
-      internalID: 2431437532905502309
+      name: C.H.I.P.|Idle_rifle
+      takeName: C.H.I.P.|Idle_rifle
+      internalID: -2172420792575711474
       firstFrame: 0
-      lastFrame: 38
+      lastFrame: 19
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -60,11 +60,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: C.H.I.P.|jump2Between
-      takeName: C.H.I.P.|jump2Between
-      internalID: -92941669233619128
+      name: C.H.I.P.|moveForvard_rifle
+      takeName: C.H.I.P.|moveForvard_rifle
+      internalID: 152864914148212098
       firstFrame: 0
-      lastFrame: 9
+      lastFrame: 19
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -89,38 +89,9 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: C.H.I.P.|jump2Land
-      takeName: C.H.I.P.|jump2Land
-      internalID: 5760631016029068619
-      firstFrame: 0
-      lastFrame: 9
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: C.H.I.P.|jump2Start
-      takeName: C.H.I.P.|jump2Start
-      internalID: -5135334494091120992
+      name: C.H.I.P.|moveSideways_rifle
+      takeName: C.H.I.P.|moveSideways_rifle
+      internalID: -4835561873016645442
       firstFrame: 0
       lastFrame: 19
       wrapMode: 0
@@ -208,7 +179,7 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     globalScale: 1
-    rootMotionBoneName: C.H.I.P
+    rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
@@ -216,7 +187,7 @@ ModelImporter:
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 1
+  avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0

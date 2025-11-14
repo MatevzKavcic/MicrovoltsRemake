@@ -42,7 +42,7 @@ public class CharacterMovement : MonoBehaviour
     void Update()
     {
         HandleJump();
-        Debug.Log("Grounded: " + isGrounded);
+        //Debug.Log("Grounded: " + isGrounded);
     }
 
     void FixedUpdate()
@@ -96,7 +96,7 @@ public class CharacterMovement : MonoBehaviour
 
             animator.ResetTrigger("jumpKey");
             animator.SetTrigger("jumpKey");
-            Debug.Log("jumpKey triggered");
+            //Debug.Log("jumpKey triggered");
 
         }
     }
