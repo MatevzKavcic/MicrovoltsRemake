@@ -16,10 +16,21 @@ public class RifleWeapon : WeaponStats
         Vector3 origin = firePoint.position;
         Vector3 dir = aimDirection.GetAimDirection();
 
-        if (Physics.Raycast(origin, dir, out RaycastHit hit, 1000f))
-        {
+        Physics.Raycast(origin, dir, out RaycastHit hit, 1000f);
+        
             Debug.Log($"Hit {hit.collider.name} for {damage} damage");
             Debug.Log("i shot something out of my weapon... kinda ");
+
+            if(hit.collider.GetComponent<PlayerStats>() != null ) { // poglej da je player.
+            hit.collider.GetComponent<PlayerStats>().TakeDamage(100f); // naredi logiko za odvisno kaj zadanes... glava noge roke...
+
+        }
+        else
+        {
+            //do nothing
+
+        }
+
 
             // Optional: apply damage if target has health
             // hit.collider.GetComponent<Health>()?.TakeDamage(damage);
@@ -28,7 +39,7 @@ public class RifleWeapon : WeaponStats
             {
                 StartCoroutine(ShowTracer(hit.point));
             }
-        }
+        
     }
 
     private System.Collections.IEnumerator ShowTracer(Vector3 hitPoint)
