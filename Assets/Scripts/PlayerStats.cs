@@ -5,9 +5,9 @@ using UnityEngine.UI;
 public class PlayerStats : MonoBehaviour
 {
     [Header("Player")]
-    public GameObject playerObject;
+    public GameObject playerObject; // mora bit mesh... ne dat objekta drugace tudi corutine umre oz skripta.
     [Header("Death Handling")]
-    public Collider[] collidersToDisable;    // main collider, etc.
+    public Collider[] collidersToDisable;    // main collider, etc.  // lahko das za kolko te hurta ce te zadane.
     public MonoBehaviour[] scriptsToDisable; // movement, attack, etc.
 
     [Header("Health Values")]
@@ -31,7 +31,7 @@ public class PlayerStats : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //UpdateHealthUI(); // ce te kej jebe healthbar mas tle updejt drugace ne rabis updejtat konstantno ampak samo ko tejkas dmg lahko zs insoectorjem.
+        UpdateHealthUI(); // ce te kej jebe healthbar mas tle updejt drugace ne rabis updejtat konstantno ampak samo ko tejkas dmg lahko zs insoectorjem.
 
         if (currentHealth<=0)
         {

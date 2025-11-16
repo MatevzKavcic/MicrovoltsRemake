@@ -8,6 +8,7 @@ public class RifleWeapon : WeaponStats
     [Header("Hitscan Settings")]
     public Transform firePoint;      // from where it will shoot
     public LayerMask hitMask;        // What layers you can hit
+    public float maxDistance=1000f;
 
     protected override void Shoot()
     {
@@ -16,29 +17,34 @@ public class RifleWeapon : WeaponStats
         Vector3 origin = firePoint.position;
         Vector3 dir = aimDirection.GetAimDirection();
 
-        Physics.Raycast(origin, dir, out RaycastHit hit, 1000f);
-        
+        Vector3 endPoint = origin + dir * maxDistance;
+
+
+        if (Physics.Raycast(origin, dir, out RaycastHit hit, 1000f))
+        {
+
+            endPoint = hit.point;
+
+
             Debug.Log($"Hit {hit.collider.name} for {damage} damage");
             Debug.Log("i shot something out of my weapon... kinda ");
 
-            if(hit.collider.GetComponent<PlayerStats>() != null ) { // poglej da je player.
-            hit.collider.GetComponent<PlayerStats>().TakeDamage(100f); // naredi logiko za odvisno kaj zadanes... glava noge roke...
+            if (hit.collider.GetComponent<PlayerStats>() != null) // poglej da si zadeu playera. Èe nisi pol ðabe.
+            { 
+                hit.collider.GetComponent<PlayerStats>().TakeDamage(100f); // naredi logiko za odvisno kaj zadanes... glava noge roke...
 
+            }
         }
         else
         {
             //do nothing
-
+            Debug.Log("Shot into nothing");
         }
 
-
-            // Optional: apply damage if target has health
-            // hit.collider.GetComponent<Health>()?.TakeDamage(damage);
-
-            if (tracerLine)
-            {
-                StartCoroutine(ShowTracer(hit.point));
-            }
+        if (tracerLine)
+        {
+            StartCoroutine(ShowTracer(endPoint));
+        }
         
     }
 
