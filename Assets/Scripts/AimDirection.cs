@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class AimDirection : MonoBehaviour
 {
-    public Transform hand;         // the hand or weapon muzzle
+    public Transform firePoint;// the hand or weapon muzzle
     public Camera playerCamera;    // your main camera
     public LayerMask aimLayerMask = ~0;
     public float maxDistance = 1000f;
@@ -12,8 +12,15 @@ public class AimDirection : MonoBehaviour
     /// <summary>
     /// Returns a world-space direction from the hand to the crosshair hit point.
     /// </summary>
+    ///
+
     public Vector3 GetAimDirection()
     {
+        if (playerCamera == null || firePoint == null)
+        {
+            Debug.LogWarning("AimDirection: Missing camera or firePoint!");
+            return Vector3.forward;
+        }
         // Ray from the center of the screen
         Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 
@@ -29,14 +36,14 @@ public class AimDirection : MonoBehaviour
         }
 
         // Get direction from hand to that point
-        Vector3 direction = (targetPoint - hand.position).normalized;
+        Vector3 direction = (targetPoint - firePoint.position).normalized;
         return direction;
     }
 
     // Optional: visualize in Scene view
     private void OnDrawGizmos()
     {
-        if (hand == null || playerCamera == null) return;
+        if (firePoint == null || playerCamera == null) return;
         // Ray from camera center
         Ray camRay = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
         Vector3 hitPoint;
@@ -56,6 +63,6 @@ public class AimDirection : MonoBehaviour
 
         // Draw hand ray (red)
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(hand.position, hitPoint);
+        Gizmos.DrawLine(firePoint.position, hitPoint);
     }
 }

@@ -1,22 +1,23 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class RifleWeapon : WeaponStats
 
 {
-    public LineRenderer tracerLine;
+    public LineRenderer tracerLinePrefab;
     [Header("Hitscan Settings")]
-    public Transform firePoint;      // from where it will shoot
+    //public Transform firePoint;      // from where it will shoot
     public LayerMask hitMask;        // What layers you can hit
-    public float maxDistance=1000f;
+    //public float maxDistance=1000f;
 
     protected override void Shoot()
     {
-        if (aimDirection == null) return;
+        if (firePoint == null) return;
+        Vector3 targetPoint;
+        Vector3 dir = GetAimDirection(out targetPoint);
 
         Vector3 origin = firePoint.position;
-        Vector3 dir = aimDirection.GetAimDirection();
-
         Vector3 endPoint = origin + dir * maxDistance;
 
 
@@ -41,19 +42,28 @@ public class RifleWeapon : WeaponStats
             Debug.Log("Shot into nothing");
         }
 
-        if (tracerLine)
+        if (tracerLinePrefab != null)
         {
-            StartCoroutine(ShowTracer(endPoint));
+            LineRenderer lr = Instantiate(tracerLinePrefab, Vector3.zero, Quaternion.identity);
+            lr.useWorldSpace = true;
+            StartCoroutine(ShowTracer(lr, origin, endPoint));
         }
-        
+
     }
 
-    private System.Collections.IEnumerator ShowTracer(Vector3 hitPoint)
+    
+
+    private IEnumerator ShowTracer(LineRenderer line, Vector3 start, Vector3 end)
     {
-        tracerLine.SetPosition(0, firePoint.position);
-        tracerLine.SetPosition(1, hitPoint);
-        tracerLine.enabled = true;
+        line.SetPosition(0, start);
+        line.SetPosition(1, end);
+        line.enabled = true;
+
         yield return new WaitForSeconds(0.05f);
-        tracerLine.enabled = false;
+
+        Destroy(line.gameObject);
     }
+
+
+
 }

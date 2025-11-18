@@ -6,9 +6,9 @@ public class ShotgunWapon : WeaponStats
 {
     public LineRenderer tracerLinePrefab; // zakomentirano ker bo tracer prefabDelau
     [Header("Hitscan Settings")]
-    public Transform firePoint;      // from where it will shoot
+    //public Transform firePoint;      // from where it will shoot
     public LayerMask hitMask;        // What layers you can hit
-    public float maxDistance = 1000f;
+    //public float maxDistance = 1000f;
 
     [Header("Shotgun Settings")]
     public int pelletCount = 8;
@@ -18,13 +18,13 @@ public class ShotgunWapon : WeaponStats
 
     protected override void Shoot()
     {
-        if (aimDirection == null || firePoint == null) return;
+        if (firePoint == null || firePoint == null) return;
+
+        Vector3 targetPoint;
+        Vector3 baseDir = GetAimDirection(out targetPoint);
+
 
         Vector3 origin = firePoint.position;
-        Vector3 baseDir = aimDirection.GetAimDirection();
-
-
-
 
         for (int i = 0; i <= pelletCount; i++)
         {

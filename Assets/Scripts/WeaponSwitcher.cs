@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class WeaponSwitcher : MonoBehaviour
@@ -5,11 +6,23 @@ public class WeaponSwitcher : MonoBehaviour
    
     public enum WeaponType { Melee, Rifle, Shotgun}
 
+
     [Header("References")]
     public Animator animator;
     public GameObject meleeWeapon;
     public GameObject rifleWeapon;
     public GameObject shotgunWeapon;
+
+    [Header("CrosshairReferences")]
+    public GameObject meleWeaponCrosshair;
+    public GameObject rifleWeaponCrosshair;
+    public GameObject shotgunWeaponCrosshair;
+
+    //[Header("firePoint References for every weapon")]
+    public Transform meeleWeaponfirePoint;
+    public Transform rifleWeaponfirePoint;
+    public Transform shotgunWeaponfirePoint;
+
 
 
     [Header("Current Weapon")]
@@ -26,14 +39,16 @@ public class WeaponSwitcher : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             EquipWeapon(WeaponType.Melee);
+            ChangeCrosshair(WeaponType.Melee);
             animator.SetInteger("WeaponType", 1); // Melee
             currentWeapon = WeaponType.Melee;
 
-}
+        }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             EquipWeapon(WeaponType.Rifle);
-            animator.SetInteger("WeaponType", 2); // Melee
+            ChangeCrosshair(WeaponType.Rifle);
+            animator.SetInteger("WeaponType", 2); //rifle
             currentWeapon = WeaponType.Rifle;
 
         }
@@ -41,9 +56,9 @@ public class WeaponSwitcher : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             EquipWeapon(WeaponType.Shotgun);
-            animator.SetInteger("WeaponType", 3); // Melee
+            ChangeCrosshair(WeaponType.Shotgun);
+            animator.SetInteger("WeaponType", 3); // shotgun
             currentWeapon = WeaponType.Shotgun;
-
         }
     }
 
@@ -53,9 +68,25 @@ public class WeaponSwitcher : MonoBehaviour
 
         // Toggle visibility
         meleeWeapon.SetActive(newWeapon == WeaponType.Melee);
+        setFirePointForAimDirection();
         rifleWeapon.SetActive(newWeapon == WeaponType.Rifle);
         shotgunWeapon.SetActive(newWeapon == WeaponType.Shotgun);
 
     }
 
+    private void setFirePointForAimDirection()
+    {
+        
+    }
+
+    public void ChangeCrosshair(WeaponType newWeapon)
+    {
+        currentWeapon = newWeapon;
+
+        // Toggle visibility
+        meleWeaponCrosshair.SetActive(newWeapon == WeaponType.Melee);
+        rifleWeaponCrosshair.SetActive(newWeapon == WeaponType.Rifle);
+        shotgunWeaponCrosshair.SetActive(newWeapon == WeaponType.Shotgun);
+
+    }
 }
