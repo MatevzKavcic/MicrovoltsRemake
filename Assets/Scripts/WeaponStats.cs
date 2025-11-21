@@ -56,8 +56,6 @@ public abstract class WeaponStats : MonoBehaviour
             return;
         }
 
-     
-
         StartCoroutine(ReloadRoutine());
 
     }

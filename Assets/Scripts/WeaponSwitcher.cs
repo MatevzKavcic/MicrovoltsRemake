@@ -39,27 +39,16 @@ public class WeaponSwitcher : MonoBehaviour
         // Switch weapons with number keys (for testing)
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            EquipWeapon(WeaponType.Melee);
-            ChangeCrosshair(WeaponType.Melee);
-            animator.SetInteger("WeaponType", 1); // Melee
-            currentWeapon = WeaponType.Melee;
-
+            switchToWeapon(WeaponType.Melee, 1);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            EquipWeapon(WeaponType.Rifle);
-            ChangeCrosshair(WeaponType.Rifle);
-            animator.SetInteger("WeaponType", 2); //rifle
-            currentWeapon = WeaponType.Rifle;
-
+            switchToWeapon(WeaponType.Rifle, 2);
         }
 
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            EquipWeapon(WeaponType.Shotgun);
-            ChangeCrosshair(WeaponType.Shotgun);
-            animator.SetInteger("WeaponType", 3); // shotgun
-            currentWeapon = WeaponType.Shotgun;
+            switchToWeapon(WeaponType.Shotgun, 3);
         }
     }
 
@@ -85,4 +74,14 @@ public class WeaponSwitcher : MonoBehaviour
         shotgunWeaponCrosshair.SetActive(newWeapon == WeaponType.Shotgun);
 
     }
+
+    public void switchToWeapon(WeaponType type, int slot)
+    {
+        EquipWeapon(type);
+        ChangeCrosshair(type);
+        animator.SetInteger("WeaponType", slot); // shotgun
+        currentWeapon = type;
+    }
+
+
 }

@@ -1333,7 +1333,10 @@ MonoBehaviour:
   fireRate: 1
   firePoint: {fileID: 545369518}
   maxDistance: 1000
-  ammo: 0
+  ammo: 3
+  reloadTime: 4
+  ammoSize: 3
+  isReloading: 0
   tracerLinePrefab: {fileID: 8216330726691824439, guid: 80cd02479dc791a48a0aab1e6cfbcd46, type: 3}
   hitMask:
     serializedVersion: 2
@@ -2808,7 +2811,10 @@ MonoBehaviour:
   fireRate: 0.1
   firePoint: {fileID: 1078335254}
   maxDistance: 1000
-  ammo: 0
+  ammo: 30
+  reloadTime: 2
+  ammoSize: 30
+  isReloading: 0
   tracerLinePrefab: {fileID: 8216330726691824439, guid: 80cd02479dc791a48a0aab1e6cfbcd46, type: 3}
   hitMask:
     serializedVersion: 2
