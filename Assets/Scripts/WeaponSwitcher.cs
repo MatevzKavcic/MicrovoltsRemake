@@ -9,6 +9,7 @@ public class WeaponSwitcher : MonoBehaviour
 
     [Header("References")]
     public Animator animator;
+
     public GameObject meleeWeapon;
     public GameObject rifleWeapon;
     public GameObject shotgunWeapon;
@@ -65,19 +66,14 @@ public class WeaponSwitcher : MonoBehaviour
     public void EquipWeapon(WeaponType newWeapon)
     {
         currentWeapon = newWeapon;
-
         // Toggle visibility
         meleeWeapon.SetActive(newWeapon == WeaponType.Melee);
-        setFirePointForAimDirection();
         rifleWeapon.SetActive(newWeapon == WeaponType.Rifle);
         shotgunWeapon.SetActive(newWeapon == WeaponType.Shotgun);
 
     }
 
-    private void setFirePointForAimDirection()
-    {
-        
-    }
+  
 
     public void ChangeCrosshair(WeaponType newWeapon)
     {

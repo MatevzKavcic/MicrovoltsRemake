@@ -6,9 +6,7 @@ public class ShotgunWapon : WeaponStats
 {
     public LineRenderer tracerLinePrefab; // zakomentirano ker bo tracer prefabDelau
     [Header("Hitscan Settings")]
-    //public Transform firePoint;      // from where it will shoot
     public LayerMask hitMask;        // What layers you can hit
-    //public float maxDistance = 1000f;
 
     [Header("Shotgun Settings")]
     public int pelletCount = 8;
@@ -59,7 +57,6 @@ public class ShotgunWapon : WeaponStats
             }
 
         }
-
     }
 
     Vector3 GetSpreadDirection(Vector3 baseDir)

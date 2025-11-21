@@ -7,9 +7,7 @@ public class RifleWeapon : WeaponStats
 {
     public LineRenderer tracerLinePrefab;
     [Header("Hitscan Settings")]
-    //public Transform firePoint;      // from where it will shoot
     public LayerMask hitMask;        // What layers you can hit
-    //public float maxDistance=1000f;
 
     protected override void Shoot()
     {
@@ -48,10 +46,10 @@ public class RifleWeapon : WeaponStats
             lr.useWorldSpace = true;
             StartCoroutine(ShowTracer(lr, origin, endPoint));
         }
-
     }
+  
 
-    
+
 
     private IEnumerator ShowTracer(LineRenderer line, Vector3 start, Vector3 end)
     {

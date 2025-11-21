@@ -21,9 +21,16 @@ public class CharacterAttack : MonoBehaviour
         WeaponStats currentWeaponStats = GetActiveWeaponStats();
         if (currentWeaponStats == null) return;
 
-        // Left click -> primary fire
-        if (Input.GetMouseButton(0))
+        if (currentWeaponStats.ammo == 0)
         {
+
+            currentWeaponStats.TryReaload();
+        }
+
+        // Left click -> primary fire
+        if (Input.GetMouseButton(0)&& currentWeaponStats.isReloading!=true)
+        {
+           
             currentWeaponStats.TryShoot(); // delegate the actual attack
             animator.SetTrigger("leftClick"); // optional, if you have weapon attack animation
         }
@@ -33,6 +40,11 @@ public class CharacterAttack : MonoBehaviour
         {
             // If melee, heavy attack or alt-fire
             animator.SetTrigger("rightClick");
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            currentWeaponStats.TryReaload();
         }
     }
 

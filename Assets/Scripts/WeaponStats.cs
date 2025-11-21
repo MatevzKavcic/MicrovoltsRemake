@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public abstract class WeaponStats : MonoBehaviour
@@ -12,6 +14,13 @@ public abstract class WeaponStats : MonoBehaviour
     public float maxDistance = 1000f;
     protected Camera cam;
 
+    [Header("ammo")]
+    public int ammo;
+    public float reloadTime;
+    public int ammoSize;
+    public bool isReloading = false;
+
+
     protected virtual void Awake()
     {
         cam = Camera.main;
@@ -21,12 +30,39 @@ public abstract class WeaponStats : MonoBehaviour
 
     public virtual void TryShoot()
     {
+        if (isReloading) return;          // no shooting while reloading
+        if (ammo <= 0) return;
         if (Time.time >= nextFireTime)
         {
             Shoot();
             nextFireTime = Time.time + fireRate;
+            ammo--;
         }
     }
+
+    public virtual void TryReaload()
+    {
+        if (isReloading)
+        {
+            Debug.Log("Reloading a weapon");
+            return;
+        }
+
+
+
+        if (ammo == ammoSize)
+        {
+            Debug.Log("to much ammo ");
+            return;
+        }
+
+     
+
+        StartCoroutine(ReloadRoutine());
+
+    }
+
+
     protected Vector3 GetAimDirection(out Vector3 targetPoint)
     {
         targetPoint = Vector3.zero;
@@ -53,8 +89,21 @@ public abstract class WeaponStats : MonoBehaviour
     }
 
 
-
     protected abstract void Shoot();
+
+    private IEnumerator ReloadRoutine()
+    {
+        isReloading = true;
+        // TODO: play reload animation / sound here
+
+        // wait for reload time
+        Debug.Log("Reloading a weapon");
+
+        yield return new WaitForSeconds(reloadTime);
+        Debug.Log("reloaded a weapon");
+        ammo = ammoSize;
+        isReloading = false;
+    }
 
 
     private void OnDrawGizmos()
