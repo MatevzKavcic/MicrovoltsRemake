@@ -21,9 +21,8 @@ public class CharacterAttack : MonoBehaviour
         WeaponStats currentWeaponStats = GetActiveWeaponStats();
         if (currentWeaponStats == null) return;
 
-        if (currentWeaponStats.ammo == 0)
+        if (currentWeaponStats.ammo == 0) // vedno ko mas 0 ammota probas reloadad sepravi ce canclam reload bo u naslednjm frejmu ze reloadou nazaj
         {
-
             currentWeaponStats.TryReaload();
         }
 
@@ -53,11 +52,11 @@ public class CharacterAttack : MonoBehaviour
         switch (weaponSwitcher.currentWeapon)
         {
             case WeaponSwitcher.WeaponType.Melee:
-                return weaponSwitcher.meleeWeapon?.GetComponent<WeaponStats>();
+                return weaponSwitcher.meleeWeapon;
             case WeaponSwitcher.WeaponType.Rifle:
-                return weaponSwitcher.rifleWeapon?.GetComponent<WeaponStats>();
+                return weaponSwitcher.rifleWeapon;
             case WeaponSwitcher.WeaponType.Shotgun:
-                return weaponSwitcher.shotgunWeapon?.GetComponent<WeaponStats>();
+                return weaponSwitcher.shotgunWeapon;
             default:
                 return null;
         }

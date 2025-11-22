@@ -10,21 +10,21 @@ public class WeaponSwitcher : MonoBehaviour
     [Header("References")]
     public Animator animator;
 
-    public GameObject meleeWeapon;
-    public GameObject rifleWeapon;
-    public GameObject shotgunWeapon;
+    public GameObject meleeWeaponMesh;
+    public GameObject rifleWeaponMesh;
+    public GameObject shotgunWeaponMesh;
 
     [Header("CrosshairReferences")]
     public GameObject meleWeaponCrosshair;
     public GameObject rifleWeaponCrosshair;
     public GameObject shotgunWeaponCrosshair;
 
-    //[Header("firePoint References for every weapon")]
-    public Transform meeleWeaponfirePoint;
-    public Transform rifleWeaponfirePoint;
-    public Transform shotgunWeaponfirePoint;
+    public WeaponStats rifleWeapon;
+    public WeaponStats shotgunWeapon;
+    public WeaponStats meleeWeapon;
 
 
+    private WeaponStats activeWeaponStats;
 
     [Header("Current Weapon")]
     public WeaponType currentWeapon = WeaponType.Melee;
@@ -32,6 +32,7 @@ public class WeaponSwitcher : MonoBehaviour
     void Start()
     {
         EquipWeapon(currentWeapon);
+        activeWeaponStats = meleeWeapon;
     }
 
     void Update()
@@ -39,16 +40,16 @@ public class WeaponSwitcher : MonoBehaviour
         // Switch weapons with number keys (for testing)
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            switchToWeapon(WeaponType.Melee, 1);
+            switchToWeapon(WeaponType.Melee, 1, meleeWeapon);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            switchToWeapon(WeaponType.Rifle, 2);
+            switchToWeapon(WeaponType.Rifle, 2,rifleWeapon);
         }
 
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            switchToWeapon(WeaponType.Shotgun, 3);
+            switchToWeapon(WeaponType.Shotgun, 3,shotgunWeapon);
         }
     }
 
@@ -56,9 +57,9 @@ public class WeaponSwitcher : MonoBehaviour
     {
         currentWeapon = newWeapon;
         // Toggle visibility
-        meleeWeapon.SetActive(newWeapon == WeaponType.Melee);
-        rifleWeapon.SetActive(newWeapon == WeaponType.Rifle);
-        shotgunWeapon.SetActive(newWeapon == WeaponType.Shotgun);
+        meleeWeaponMesh.SetActive(newWeapon == WeaponType.Melee);
+        rifleWeaponMesh.SetActive(newWeapon == WeaponType.Rifle);
+        shotgunWeaponMesh.SetActive(newWeapon == WeaponType.Shotgun);
 
     }
 
@@ -75,13 +76,28 @@ public class WeaponSwitcher : MonoBehaviour
 
     }
 
-    public void switchToWeapon(WeaponType type, int slot)
+    public void switchToWeapon(WeaponType type, int slot,WeaponStats weapon)
     {
-        EquipWeapon(type);
-        ChangeCrosshair(type);
-        animator.SetInteger("WeaponType", slot); // shotgun
-        currentWeapon = type;
-    }
 
+        // visual for the mesh
+        EquipWeapon(type); 
+
+        //visual for the crosshair
+        ChangeCrosshair(type);
+
+        // animator for animations 
+        animator.SetInteger("WeaponType", slot); // shotgun
+
+        //nastavi state weaponov da bojo in order da bos meu currentWeapon da bo tisti kjrji je
+        currentWeapon = type;
+        
+        //Weapon activity + handle reloading and cancle reloading.
+        activeWeaponStats.isActive = false;
+        activeWeaponStats.TryReaload();
+        activeWeaponStats = weapon;
+        weapon.isActive = true;
+        weapon.CancelReload();
+
+    }
 
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public abstract class WeaponStats : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public abstract class WeaponStats : MonoBehaviour
     public string weaponName = "Default Weapon";
     public float damage = 10f;
     public float fireRate = 0.25f;
+    public bool isActive = false;   // if you have the weapon selected so it knows if you dont it reloads it. if not active TryReload  ?  . if you switch to it start reloading from scratch.
     [Header("Firing")]  
     public Transform firePoint;
     protected float nextFireTime;
@@ -19,6 +21,8 @@ public abstract class WeaponStats : MonoBehaviour
     public float reloadTime;
     public int ammoSize;
     public bool isReloading = false;
+
+    private Coroutine reloadCoroutine;
 
 
     protected virtual void Awake()
@@ -44,19 +48,17 @@ public abstract class WeaponStats : MonoBehaviour
     {
         if (isReloading)
         {
-            Debug.Log("Reloading a weapon");
+            Debug.Log("Already reloading a weapon");
             return;
         }
-
-
 
         if (ammo == ammoSize)
         {
-            Debug.Log("to much ammo ");
+            Debug.Log("Doesnt need Reloading");
             return;
         }
 
-        StartCoroutine(ReloadRoutine());
+        reloadCoroutine = StartCoroutine(ReloadRoutine());
 
     }
 
@@ -101,7 +103,24 @@ public abstract class WeaponStats : MonoBehaviour
         Debug.Log("reloaded a weapon");
         ammo = ammoSize;
         isReloading = false;
+        reloadCoroutine = null;
     }
+
+    public void CancelReload()
+    {
+        if (!isReloading) return;
+
+        if (reloadCoroutine != null)
+        {
+            StopCoroutine(reloadCoroutine);
+            reloadCoroutine = null;
+        }
+
+        isReloading = false;
+        Debug.Log( "reload cancelled and started back again reloding");
+
+    }
+
 
 
     private void OnDrawGizmos()
