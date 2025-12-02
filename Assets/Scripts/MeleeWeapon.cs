@@ -1,84 +1,102 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MeleeWeapon : WeaponStats
 
 {
-    public LineRenderer tracerLinePrefab; // zakomentirano ker bo tracer prefabDelau
-    [Header("Hitscan Settings")]
-    public LayerMask hitMask;        // What layers you can hit
+    [Header("Melee Settings")]
+    public Collider hitbox;            // assign your Hitbox collider here
+    public float activeHitTime = 0.2f; // how long hitbox is active per swing
+    public string targetTag = "Player"; // or "Enemy", depending who you hit
 
-    [Header("Shotgun Settings")]
-    public int pelletCount = 8;
-    public float spreadAngle = 5f;      // degrees of random spread
-    public float tracerDuration = 0.5f;
-
+    private HashSet<Collider> alreadyHit = new HashSet<Collider>();
 
     protected override void Shoot()
     {
-        if (firePoint == null || firePoint == null) return;
+        // swing quick
+        StartCoroutine(MeleeSwingQuickRoutine());
+    }
 
-        Vector3 targetPoint;
-        Vector3 baseDir = GetAimDirection(out targetPoint);
+    protected override void Aim()
+    {
+        // swing slow
+        Debug.Log("i came here ?");
+        StartCoroutine(MeleeSwingSlowRoutine());
 
+    }
 
-        Vector3 origin = firePoint.position;
-
-        for (int i = 0; i <= pelletCount; i++)
+    private IEnumerator MeleeSwingQuickRoutine()
+    {
+        if (hitbox == null)
         {
-            Vector3 dir = GetSpreadDirection(baseDir);
-
-            Vector3 endPoint = origin + dir * maxDistance;
-
-            if (Physics.Raycast(origin, dir, out RaycastHit hit, maxDistance, hitMask))
-            {
-                endPoint = hit.point;
-
-
-                // Optional: apply damage
-                if (hit.collider.GetComponent<PlayerStats>() != null)
-                {
-                    hit.collider.GetComponent<PlayerStats>().TakeDamage(100f); // naredi logiko za odvisno kaj zadanes... glava noge roke...
-                }
-
-                Debug.Log($"Pellet {i} hit {hit.collider.name} for {damage} damage");
-            }
-
-            else
-            {
-                //do nothing
-                Debug.Log("Shot into nothing");
-            }
-
-            if (tracerLinePrefab != null)
-            {
-                LineRenderer lr = Instantiate(tracerLinePrefab, Vector3.zero, Quaternion.identity);
-                StartCoroutine(ShowTracer(lr, origin, endPoint));
-            }
-
+            Debug.LogWarning($"{name}: No hitbox assigned for melee.");
+            yield break;
         }
+
+        damage = 350; // kolko dmg naredis ko swingnes quick
+
+        // clear previously hit targets for this swing
+        alreadyHit.Clear();
+
+        // enable hitbox
+        hitbox.enabled = true;
+
+        // wait while swing is active
+        yield return new WaitForSeconds(activeHitTime);
+
+        // disable hitbox
+        hitbox.enabled = false;
     }
 
-    Vector3 GetSpreadDirection(Vector3 baseDir)
+    private IEnumerator MeleeSwingSlowRoutine()
     {
-        // Make a random rotation around base direction
-        // random yaw & pitch within spreadAngle
-        float yaw = Random.Range(-spreadAngle, spreadAngle);
-        float pitch = Random.Range(-spreadAngle, spreadAngle);
+        if (hitbox == null)
+        {
+            Debug.LogWarning($"{name}: No hitbox assigned for melee.");
+            yield break;
+        }
 
-        Quaternion rot = Quaternion.Euler(pitch, yaw, 0f);
-        Vector3 spreadDir = rot * baseDir;
-        return spreadDir.normalized;
+        damage = 1200;  // kolko dmg naredis ko swingnes hard
+
+
+        // clear previously hit targets for this swing
+        alreadyHit.Clear();
+
+        // enable hitbox
+        hitbox.enabled = true;
+
+        // wait while swing is active
+        yield return new WaitForSeconds(activeHitTime*2); // difrence je samo u active time slotu weapona in u dmg ku ga naredis
+
+        // disable hitbox
+        hitbox.enabled = false;
     }
 
-    private IEnumerator ShowTracer(LineRenderer line, Vector3 start, Vector3 end)
+
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    Debug.Log("im insiiideeee   F YEA");
+    //    HandleHit(other);
+    //}
+
+    public void HandleHit(Collider other)
     {
-        line.SetPosition(0, start);
-        line.SetPosition(1, end);
-        line.enabled = true;
+        Debug.Log("im insiiideeee0");
 
-        yield return new WaitForSeconds(tracerDuration);
+        if (!hitbox.enabled) return;
+        if (alreadyHit.Contains(other)) return;  // don’t hit same target twice this swing
 
-        Destroy(line.gameObject);
+        alreadyHit.Add(other);
+
+        var stats = other.GetComponent<PlayerStats>(); // or EnemyStats
+
+        Debug.Log("stats od playerja so " + stats.maxHealth);
+
+        if (stats != null)
+        {
+            stats.TakeDamage(damage);
+            Debug.Log($"[Melee] Hit {other.name} for {damage} damage");
+        }
     }
 }

@@ -9,6 +9,12 @@ public class RifleWeapon : WeaponStats
     [Header("Hitscan Settings")]
     public LayerMask hitMask;        // What layers you can hit
 
+    protected override void Aim() // pow poveci malo
+
+    {
+        throw new System.NotImplementedException();
+    }
+
     protected override void Shoot()
     {
         if (firePoint == null) return;

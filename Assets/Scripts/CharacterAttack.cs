@@ -21,7 +21,7 @@ public class CharacterAttack : MonoBehaviour
         WeaponStats currentWeaponStats = GetActiveWeaponStats();
         if (currentWeaponStats == null) return;
 
-        if (currentWeaponStats.ammo == 0) // vedno ko mas 0 ammota probas reloadad sepravi ce canclam reload bo u naslednjm frejmu ze reloadou nazaj
+        if (currentWeaponStats.ammo == 0 && currentWeaponStats.ammo != -10) // vedno ko mas 0 ammota probas reloadad sepravi ce canclam reload bo u naslednjm frejmu ze reloadou nazaj... ce imas -10 ammota si mele weapon
         {
             currentWeaponStats.TryReaload();
         }
@@ -39,6 +39,8 @@ public class CharacterAttack : MonoBehaviour
         {
             // If melee, heavy attack or alt-fire
             animator.SetTrigger("rightClick");
+            currentWeaponStats.TryAim(); // delegate the actual attack
+
         }
 
         if (Input.GetKeyDown(KeyCode.R))

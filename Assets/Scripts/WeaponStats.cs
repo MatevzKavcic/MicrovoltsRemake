@@ -35,6 +35,10 @@ public abstract class WeaponStats : MonoBehaviour
     public virtual void TryShoot()
     {
         if (isReloading) return;          // no shooting while reloading
+        if (ammo == -10) // melee weapon da bo udaru
+        {
+            Shoot();
+        }
         if (ammo <= 0) return;
         if (Time.time >= nextFireTime)
         {
@@ -42,6 +46,8 @@ public abstract class WeaponStats : MonoBehaviour
             nextFireTime = Time.time + fireRate;
             ammo--;
         }
+
+        
     }
 
     public virtual void TryReaload()
@@ -60,6 +66,11 @@ public abstract class WeaponStats : MonoBehaviour
 
         reloadCoroutine = StartCoroutine(ReloadRoutine());
 
+    }
+
+    public virtual void TryAim()
+    {
+        Aim();
     }
 
 
@@ -90,6 +101,8 @@ public abstract class WeaponStats : MonoBehaviour
 
 
     protected abstract void Shoot();
+    protected abstract void Aim();
+
 
     private IEnumerator ReloadRoutine()
     {
@@ -123,28 +136,28 @@ public abstract class WeaponStats : MonoBehaviour
 
 
 
-    private void OnDrawGizmos()
-    {
-        if (firePoint == null || cam == null) return;
-        // Ray from camera center
-        Ray camRay = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
-        Vector3 hitPoint;
+    //private void OnDrawGizmos()
+    //{
+    //    if (firePoint == null || cam == null) return;
+    //    // Ray from camera center
+    //    Ray camRay = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+    //    Vector3 hitPoint;
 
-        if (Physics.Raycast(camRay, out RaycastHit hit, maxDistance, ~0))
-        {
-            hitPoint = hit.point;
-        }
-        else
-        {
-            hitPoint = camRay.origin + camRay.direction * maxDistance;
-        }
+    //    if (Physics.Raycast(camRay, out RaycastHit hit, maxDistance, ~0))
+    //    {
+    //        hitPoint = hit.point;
+    //    }
+    //    else
+    //    {
+    //        hitPoint = camRay.origin + camRay.direction * maxDistance;
+    //    }
 
-        // Draw camera ray (green)
-        Gizmos.color = Color.green;
-        Gizmos.DrawLine(camRay.origin, hitPoint);
+    //    // Draw camera ray (green)
+    //    Gizmos.color = Color.green;
+    //    Gizmos.DrawLine(camRay.origin, hitPoint);
 
-        // Draw hand ray (red)
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(firePoint.position, hitPoint);
-    }
+    //    // Draw hand ray (red)
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawLine(firePoint.position, hitPoint);
+    //}
 }

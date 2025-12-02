@@ -97,7 +97,5 @@ public class WeaponSwitcher : MonoBehaviour
         activeWeaponStats = weapon;
         weapon.isActive = true;
         weapon.CancelReload();
-
     }
-
 }

@@ -13,6 +13,10 @@ public class ShotgunWapon : WeaponStats
     public float spreadAngle = 5f;      // degrees of random spread
     public float tracerDuration = 0.5f;
 
+    protected override void Aim()
+    {
+        throw new System.NotImplementedException();  // nemores aimat z shotijem
+    }
 
     protected override void Shoot()
     {

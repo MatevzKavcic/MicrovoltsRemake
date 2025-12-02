@@ -97,3 +97,8 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+/Assets/Plugins/
+/Assets/Animations/Animation_lessons/
+/Assets/Animations/Animation_lessons.meta
+/florijaneeeeee.zip
