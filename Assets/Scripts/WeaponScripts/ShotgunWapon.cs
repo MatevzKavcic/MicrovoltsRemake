@@ -20,7 +20,7 @@ public class ShotgunWapon : WeaponStats
 
     protected override void Shoot()
     {
-        if (firePoint == null || firePoint == null) return;
+        if (firePoint == null || cam==null) return;
 
         Vector3 targetPoint;
         Vector3 baseDir = GetAimDirection(out targetPoint);

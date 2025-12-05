@@ -42,7 +42,7 @@ public class CharacterMovement : MonoBehaviour
     void Update()
     {
         HandleJump();
-        //Debug.Log("Grounded: " + isGrounded);
+        Debug.Log("Grounded: " + isGrounded);
     }
 
     void FixedUpdate()
@@ -96,7 +96,7 @@ public class CharacterMovement : MonoBehaviour
 
             animator.ResetTrigger("jumpKey");
             animator.SetTrigger("jumpKey");
-            //Debug.Log("jumpKey triggered");
+            Debug.Log("jumpKey triggered");
 
         }
     }
@@ -105,8 +105,12 @@ public class CharacterMovement : MonoBehaviour
     {
         bool wasGrounded = isGrounded;
 
-        float rayOriginOffset = GetComponent<CapsuleCollider>().height / 2 - 0.05f;
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, rayOriginOffset + groundCheckDistance, groundMask);
+        CapsuleCollider col = GetComponent<CapsuleCollider>();
+        float radius = col.radius * 0.9f; // slight shrink to avoid edge issues
+
+        Vector3 origin = transform.position + Vector3.up * (col.height / 2f - radius);
+
+        isGrounded = Physics.Raycast(origin, Vector3.down, groundCheckDistance + 0.05f, groundMask);
 
         // If we just landed, reset jump count and air control
         if (isGrounded && !wasGrounded)
@@ -114,10 +118,14 @@ public class CharacterMovement : MonoBehaviour
             jumpCount = 0;
 
             animator.SetBool("isGrounded", isGrounded);
+            //Debug.Log("Is grounded true");
+
 
         }
         else if(isGrounded==false){
             animator.SetBool("isGrounded", isGrounded);
+            //Debug.Log("Is grounded false");
+
 
         }
 

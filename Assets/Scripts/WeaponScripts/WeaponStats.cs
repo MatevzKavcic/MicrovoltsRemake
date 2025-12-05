@@ -54,13 +54,13 @@ public abstract class WeaponStats : MonoBehaviour
     {
         if (isReloading)
         {
-            Debug.Log("Already reloading a weapon");
+            //Debug.Log("Already reloading a weapon");
             return;
         }
 
         if (ammo == ammoSize)
         {
-            Debug.Log("Doesnt need Reloading");
+            //Debug.Log("Doesnt need Reloading");
             return;
         }
 
@@ -80,7 +80,7 @@ public abstract class WeaponStats : MonoBehaviour
 
         if (cam == null || firePoint == null)
         {
-            Debug.LogWarning($"{name}: Missing camera or firePoint!");
+            Debug.LogWarning($"{name}: Missing camera or firePoint!"+ cam);
             return Vector3.forward;
         }
 
@@ -136,28 +136,28 @@ public abstract class WeaponStats : MonoBehaviour
 
 
 
-    //private void OnDrawGizmos()
-    //{
-    //    if (firePoint == null || cam == null) return;
-    //    // Ray from camera center
-    //    Ray camRay = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
-    //    Vector3 hitPoint;
+    private void OnDrawGizmos()
+    {
+        if (firePoint == null || cam == null) return;
+        // Ray from camera center
+        Ray camRay = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+        Vector3 hitPoint;
 
-    //    if (Physics.Raycast(camRay, out RaycastHit hit, maxDistance, ~0))
-    //    {
-    //        hitPoint = hit.point;
-    //    }
-    //    else
-    //    {
-    //        hitPoint = camRay.origin + camRay.direction * maxDistance;
-    //    }
+        if (Physics.Raycast(camRay, out RaycastHit hit, maxDistance, ~0))
+        {
+            hitPoint = hit.point;
+        }
+        else
+        {
+            hitPoint = camRay.origin + camRay.direction * maxDistance;
+        }
 
-    //    // Draw camera ray (green)
-    //    Gizmos.color = Color.green;
-    //    Gizmos.DrawLine(camRay.origin, hitPoint);
+        // Draw camera ray (green)
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(camRay.origin, hitPoint);
 
-    //    // Draw hand ray (red)
-    //    Gizmos.color = Color.red;
-    //    Gizmos.DrawLine(firePoint.position, hitPoint);
-    //}
+        // Draw hand ray (red)
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(firePoint.position, hitPoint);
+    }
 }
