@@ -1,7 +1,9 @@
+using System.Globalization;
+using Unity.Netcode;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class CharacterMovement : MonoBehaviour
+public class CharacterMovement : NetworkBehaviour
 {
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
@@ -41,12 +43,14 @@ public class CharacterMovement : MonoBehaviour
 
     void Update()
     {
+        if (!IsOwner) return;
         HandleJump();
         Debug.Log("Grounded: " + isGrounded);
     }
 
     void FixedUpdate()
     {
+        if (!IsOwner) return;
         HandleMovement();
         CheckGround();
     }
