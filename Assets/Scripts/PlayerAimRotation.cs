@@ -1,7 +1,8 @@
+using Unity.Netcode;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerAimRotation : MonoBehaviour
+public class PlayerAimRotation : NetworkBehaviour
 {
     [Header("References")]
     public Transform cameraTransform; // Assign your main camera here in the Inspector
@@ -25,6 +26,7 @@ public class PlayerAimRotation : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!IsOwner) return; 
         RotateTowardCamera();
     }
 

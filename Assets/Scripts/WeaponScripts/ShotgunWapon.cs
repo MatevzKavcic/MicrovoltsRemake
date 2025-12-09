@@ -1,10 +1,10 @@
 using System.Collections;
+using Unity.Netcode;
 using UnityEngine;
 
 public class ShotgunWapon : WeaponStats
 
 {
-    public LineRenderer tracerLinePrefab; // zakomentirano ker bo tracer prefabDelau
     [Header("Hitscan Settings")]
     public LayerMask hitMask;        // What layers you can hit
 
@@ -13,18 +13,10 @@ public class ShotgunWapon : WeaponStats
     public float spreadAngle = 5f;      // degrees of random spread
     public float tracerDuration = 0.5f;
 
-    protected override void Aim()
+   
+
+    protected override void ServerShootLogic(Vector3 baseDir) // base dir je Aim direction ze zracunau in vrze noter v to metodo.
     {
-        throw new System.NotImplementedException();  // nemores aimat z shotijem
-    }
-
-    protected override void Shoot()
-    {
-        if (firePoint == null || cam==null) return;
-
-        Vector3 targetPoint;
-        Vector3 baseDir = GetAimDirection(out targetPoint);
-
 
         Vector3 origin = firePoint.position;
 
@@ -39,29 +31,19 @@ public class ShotgunWapon : WeaponStats
                 endPoint = hit.point;
 
 
-                // Optional: apply damage
-                if (hit.collider.GetComponent<PlayerStats>() != null)
+                var stats = hit.collider.GetComponent<PlayerStats>();
+                if (stats != null)
                 {
-                    hit.collider.GetComponent<PlayerStats>().TakeDamage(100f); // naredi logiko za odvisno kaj zadanes... glava noge roke...
+                    stats.TakeDamage(damage);
                 }
-
-                Debug.Log($"Pellet {i} hit {hit.collider.name} for {damage} damage");
+                Debug.Log($"Pellet hit {hit.collider.name} for {damage} damage");
             }
 
-            else
-            {
-                //do nothing
-                Debug.Log("Shot into nothing");
-            }
-
-            if (tracerLinePrefab != null)
-            {
-                LineRenderer lr = Instantiate(tracerLinePrefab, Vector3.zero, Quaternion.identity);
-                StartCoroutine(ShowTracer(lr, origin, endPoint));
-            }
+            SpawnTracerClientRpc(origin, endPoint);
 
         }
     }
+
 
     Vector3 GetSpreadDirection(Vector3 baseDir)
     {
@@ -75,14 +57,8 @@ public class ShotgunWapon : WeaponStats
         return spreadDir.normalized;
     }
 
-    private IEnumerator ShowTracer(LineRenderer line, Vector3 start, Vector3 end)
+    protected override void Aim()
     {
-        line.SetPosition(0, start);
-        line.SetPosition(1, end);
-        line.enabled = true;
-
-        yield return new WaitForSeconds(tracerDuration);
-
-        Destroy(line.gameObject);
+        throw new System.NotImplementedException();  // nemores aimat z shotijem
     }
 }

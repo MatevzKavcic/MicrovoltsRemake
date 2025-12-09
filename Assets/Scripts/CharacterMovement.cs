@@ -45,7 +45,7 @@ public class CharacterMovement : NetworkBehaviour
     {
         if (!IsOwner) return;
         HandleJump();
-        Debug.Log("Grounded: " + isGrounded);
+        //Debug.Log("Grounded: " + isGrounded);
     }
 
     void FixedUpdate()

@@ -73,13 +73,6 @@ public class MeleeWeapon : WeaponStats
         hitbox.enabled = false;
     }
 
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    Debug.Log("im insiiideeee   F YEA");
-    //    HandleHit(other);
-    //}
-
     public void HandleHit(Collider other)
     {
         Debug.Log("im insiiideeee0");
@@ -98,5 +91,10 @@ public class MeleeWeapon : WeaponStats
             stats.TakeDamage(damage);
             Debug.Log($"[Melee] Hit {other.name} for {damage} damage");
         }
+    }
+
+    protected override void ServerShootLogic(Vector3 baseDir)
+    {
+        throw new System.NotImplementedException();
     }
 }

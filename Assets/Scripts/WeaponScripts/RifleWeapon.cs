@@ -1,11 +1,11 @@
 using System.Collections;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class RifleWeapon : WeaponStats
 
 {
-    public LineRenderer tracerLinePrefab;
     [Header("Hitscan Settings")]
     public LayerMask hitMask;        // What layers you can hit
 
@@ -15,59 +15,32 @@ public class RifleWeapon : WeaponStats
         throw new System.NotImplementedException();
     }
 
-    protected override void Shoot()
+
+
+    protected override void ServerShootLogic(Vector3 baseDir) // base dir je Aim direction ze zracunau in vrze noter v to metodo.
     {
-        if (firePoint == null) return;
-        Vector3 targetPoint;
-        Vector3 dir = GetAimDirection(out targetPoint);
 
         Vector3 origin = firePoint.position;
-        Vector3 endPoint = origin + dir * maxDistance;
 
+        Vector3 endPoint = origin + baseDir * maxDistance;
 
-        if (Physics.Raycast(origin, dir, out RaycastHit hit, 1000f))
+        // server raycast (authoritative)
+        if (Physics.Raycast(origin, baseDir, out RaycastHit hit, maxDistance, hitMask))
         {
-
             endPoint = hit.point;
 
-
-            Debug.Log($"Hit {hit.collider.name} for {damage} damage");
-            Debug.Log("i shot something out of my weapon... kinda ");
-
-            if (hit.collider.GetComponent<PlayerStats>() != null) // poglej da si zadeu playera. Èe nisi pol ðabe.
-            { 
-                hit.collider.GetComponent<PlayerStats>().TakeDamage(100f); // naredi logiko za odvisno kaj zadanes... glava noge roke...
-
+            // damage player if they have PlayerStats
+            var stats = hit.collider.GetComponent<PlayerStats>();
+            if (stats != null)
+            {
+                stats.TakeDamage(damage);
             }
-        }
-        else
-        {
-            //do nothing
-            Debug.Log("Shot into nothing");
+            Debug.Log($"Pellet hit {hit.collider.name} for {damage} damage");
         }
 
-        if (tracerLinePrefab != null)
-        {
-            LineRenderer lr = Instantiate(tracerLinePrefab, Vector3.zero, Quaternion.identity);
-            lr.useWorldSpace = true;
-            StartCoroutine(ShowTracer(lr, origin, endPoint));
-        }
-    }
-  
-
-
-
-    private IEnumerator ShowTracer(LineRenderer line, Vector3 start, Vector3 end)
-    {
-        line.SetPosition(0, start);
-        line.SetPosition(1, end);
-        line.enabled = true;
-
-        yield return new WaitForSeconds(0.05f);
-
-        Destroy(line.gameObject);
+        // tell ALL clients to show tracer
+        SpawnTracerClientRpc(origin, endPoint);
     }
 
-
-
+   
 }

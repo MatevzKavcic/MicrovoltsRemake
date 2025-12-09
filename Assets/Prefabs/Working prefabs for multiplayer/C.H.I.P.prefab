@@ -203,9 +203,9 @@ GameObject:
   - component: {fileID: 3957060277232117851}
   - component: {fileID: 6181408471736972434}
   - component: {fileID: 5592596023271941611}
+  - component: {fileID: 5075563872034483009}
   - component: {fileID: 6380413234703854575}
   - component: {fileID: 2066217881380408820}
-  - component: {fileID: 5075563872034483009}
   - component: {fileID: 4778080668208300125}
   - component: {fileID: 3364840546750662610}
   - component: {fileID: 8154812538199635420}
@@ -323,6 +323,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterAttack
   weaponSwitcher: {fileID: 2066217881380408820}
+--- !u!114 &5075563872034483009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806114797361869252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 3136622320
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &6380413234703854575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -335,6 +360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0df4137184e25c488acf55bc3bda578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAimRotation
+  ShowTopMostFoldoutHeaderGroup: 1
   cameraTransform: {fileID: 0}
   rotationSpeed: 1000
 --- !u!114 &2066217881380408820
@@ -360,31 +386,6 @@ MonoBehaviour:
   shotgunWeapon: {fileID: 8955763457505782840}
   meleeWeapon: {fileID: 8010705946244126141}
   currentWeapon: 0
---- !u!114 &5075563872034483009
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 806114797361869252}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1308465394
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 0
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
 --- !u!114 &4778080668208300125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -642,6 +643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 419f9c0636801e94497e68e2a38c45ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeleeWeapon
+  ShowTopMostFoldoutHeaderGroup: 1
   weaponName: Default Weapon
   damage: 10
   fireRate: 0.25
@@ -888,6 +890,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa82c539e567d16489176872b14d67ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShotgunWapon
+  ShowTopMostFoldoutHeaderGroup: 1
   weaponName: Default Weapon
   damage: 10
   fireRate: 0.25
@@ -2170,6 +2173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43b1d8fc4f0a53744ae41af754adcec2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RifleWeapon
+  ShowTopMostFoldoutHeaderGroup: 1
   weaponName: Default Weapon
   damage: 10
   fireRate: 0.25

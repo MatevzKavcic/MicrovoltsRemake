@@ -4,7 +4,7 @@ using Unity.Cinemachine;
 
 public class PlayerCameraController : NetworkBehaviour
 {
-    private CinemachineCamera virtualCam;
+    private CinemachineCamera virtualCam; // KOMPONENTA KI GLEDA SAMO MULTIPLAYER CAMERO KER JE CINEMACHINE IN DRUGAVCE NOCES SPREMINJAT SKRIPTE
 
     void Awake()
     {

@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerStats : MonoBehaviour
+public class PlayerStats : NetworkBehaviour
 {
     [Header("Player")]
     public GameObject playerObject; // mora bit mesh... ne dat objekta drugace tudi corutine umre oz skripta.
@@ -12,7 +14,14 @@ public class PlayerStats : MonoBehaviour
 
     [Header("Health Values")]
     public float maxHealth = 1000f;
-    public float currentHealth;
+    //public float currentHealth;
+
+
+    public NetworkVariable<float> currentHealth = new NetworkVariable<float>(
+    0f,
+    NetworkVariableReadPermission.Everyone,
+    NetworkVariableWritePermission.Server
+);
 
     [Header("UI")]
     public Image healthBarFill;   // Assign your fill image here
@@ -22,10 +31,18 @@ public class PlayerStats : MonoBehaviour
 
     private bool isDead = false;
 
+
+
+
     private void Start()
     {
-        currentHealth = maxHealth;
-        UpdateHealthUI();
+        if (IsServer)
+        {
+            currentHealth.Value = maxHealth;
+        }
+
+        // Update UI when health changes
+        currentHealth.OnValueChanged += OnHealthChanged; // naredi server callback  v to noter ker ga pac ima na ValueCahnge
     }
 
     // Update is called once per frame
@@ -33,38 +50,46 @@ public class PlayerStats : MonoBehaviour
     {
         UpdateHealthUI(); // ce te kej jebe healthbar mas tle updejt drugace ne rabis updejtat konstantno ampak samo ko tejkas dmg lahko zs insoectorjem.
 
-        if (currentHealth<=0)
+        if (currentHealth.Value <=0)
         {
             Die();
+        }
+    }
+    private void OnHealthChanged(float oldValue, float newValue)
+    {
+        // Only update UI for LOCAL player
+        if (IsOwner)
+        {
+            UpdateHealthUI();
         }
     }
     public void TakeDamage(float amount)
     {
+        if (!IsServer) return; // only server updates health
         if (isDead) { return; }
 
-        currentHealth -= amount;
+        currentHealth.Value -= amount;
 
-        if (currentHealth < 0)
-            currentHealth = 0;
-
-        UpdateHealthUI();
-
-        if (currentHealth <= 0)
+        if (currentHealth.Value <= 0)
         {
-            Die();
-
+                currentHealth.Value = 0;
+                Die();
         }
     }
     public void UpdateHealth(float amount)
     {
-        currentHealth += amount;
+        if (!IsServer) return; // only server updates health
+
+        currentHealth.Value += amount;
         UpdateHealthUI();
     }
     private void UpdateHealthUI()
     {
+        if (!IsOwner) return;
+
         if (healthBarFill != null)
         {
-            float fill = currentHealth / maxHealth;
+            float fill = currentHealth .Value/ maxHealth;
             healthBarFill.fillAmount = fill;
         }
     }
@@ -106,9 +131,7 @@ public class PlayerStats : MonoBehaviour
             transform.position = respawnPoint.position;
 
         isDead = false;
-        currentHealth = maxHealth;
-        UpdateHealthUI();
-        Debug.Log("PLAYER RESPAWNED");
+        currentHealth.Value = maxHealth;
         SetAliveState(true);
 
     }
