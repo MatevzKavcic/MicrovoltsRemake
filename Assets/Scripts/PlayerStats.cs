@@ -26,7 +26,6 @@ public class PlayerStats : NetworkBehaviour
     [Header("UI")]
     public Image healthBarFill;   // Assign your fill image here
     [Header("Respawn")]
-    public Transform respawnPoint;
     public float respawnDelay = 4f;   // 4 sekunde respawn
 
     private bool isDead = false;
@@ -48,6 +47,8 @@ public class PlayerStats : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isDead) return; // solv da ga ne teleporta okoli
+
         UpdateHealthUI(); // ce te kej jebe healthbar mas tle updejt drugace ne rabis updejtat konstantno ampak samo ko tejkas dmg lahko zs insoectorjem.
 
         if (currentHealth.Value <=0)
@@ -125,10 +126,17 @@ public class PlayerStats : NetworkBehaviour
             rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
         }
+         // transform to a random spawn point
+        Transform spawn = RespawnManager.Instance.GetRandomSpawnPoint();
 
-        // Move to respawn point
-        if (respawnPoint != null)
-            transform.position = respawnPoint.position;
+        if (spawn != null)
+        {
+            transform.position = spawn.position;
+        }
+        else
+        {
+            Debug.LogWarning("No spawn points found in RespawnManager!");
+        }
 
         isDead = false;
         currentHealth.Value = maxHealth;

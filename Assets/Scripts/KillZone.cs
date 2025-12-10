@@ -1,27 +1,21 @@
+using Unity.Netcode;
 using UnityEngine;
 
 public class KillZone : MonoBehaviour
 {
-    public Transform respawnPoint;
-
     private void OnTriggerEnter(Collider other)
     {
+        if (!NetworkManager.Singleton.IsServer) return;   // Only server handles kill zone
+
         if (other.CompareTag("Player"))
         {
-            Rigidbody rb = other.GetComponent<Rigidbody>();
-            if (rb) rb.linearVelocity = Vector3.zero;
-
             PlayerStats stats = other.GetComponent<PlayerStats>();
+            if (stats == null) return;
 
-            stats.TakeDamage(1000f);
+            // Instantly kill the player
+            stats.TakeDamage(9999f);
 
-
-            other.transform.position = respawnPoint.position;
-
-            Debug.Log("Player respawned from kill zone.");
-
-
-
+            Debug.Log("Player entered kill zone.");
         }
     }
 }
