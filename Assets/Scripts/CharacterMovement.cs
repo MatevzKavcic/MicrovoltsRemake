@@ -33,12 +33,12 @@ public class CharacterMovement : NetworkBehaviour
 
     void Start()
     {
+        Debug.Log($"{name} | Owner = {IsOwner} | Server = {IsServer} | LocalID = {NetworkManager.Singleton.LocalClientId} | OwnerID = {OwnerClientId}");
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         animator = GetComponentInChildren<Animator>();
-
     }
 
     void Update()

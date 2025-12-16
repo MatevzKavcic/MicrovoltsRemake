@@ -90,7 +90,7 @@ public class PlayerStats : NetworkBehaviour
 
         if (healthBarFill != null)
         {
-            float fill = currentHealth .Value/ maxHealth;
+            float fill = currentHealth.Value/ maxHealth;
             healthBarFill.fillAmount = fill;
         }
     }
@@ -121,7 +121,7 @@ public class PlayerStats : NetworkBehaviour
 
         // Reset velocity
         Rigidbody rb = GetComponent<Rigidbody>();
-        if (rb != null)
+        if (rb != null || IsOwner )
         {
             rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
@@ -139,7 +139,10 @@ public class PlayerStats : NetworkBehaviour
         }
 
         isDead = false;
-        currentHealth.Value = maxHealth;
+        // currentHealth.Value = maxHealth; // baje to je error ker ga client spreminja tko da pazi se na to ? 
+
+        ResetHealthServerRpc();
+
         SetAliveState(true);
 
     }
@@ -169,6 +172,14 @@ public class PlayerStats : NetworkBehaviour
                     s.enabled = alive;
             }
         }
+    }
+
+
+
+    [ServerRpc]
+    private void ResetHealthServerRpc()
+    {
+        currentHealth.Value = maxHealth;
     }
 }
 
