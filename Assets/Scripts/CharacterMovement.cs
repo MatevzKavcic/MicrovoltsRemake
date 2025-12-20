@@ -67,22 +67,28 @@ public class CharacterMovement : NetworkBehaviour
         animator.SetFloat("MoveZ", animZ);
 
         // Movement direction relative to the player's facing direction
-        Vector3 moveDir = (transform.forward * moveZ + transform.right * moveX).normalized;
+
+        Transform cam = Camera.main.transform;
+
+        Vector3 camForward = Vector3.ProjectOnPlane(cam.forward, Vector3.up).normalized;    
+        Vector3 camRight = Vector3.ProjectOnPlane(cam.right, Vector3.up).normalized;
+
+        Vector3 moveDir = (camForward * moveZ + camRight * moveX).normalized;
 
         if (isGrounded)
         {
-            // Full movement control on ground
             lastMoveDir = moveDir;
+
             Vector3 targetVelocity = moveDir * moveSpeed;
             targetVelocity.y = rb.linearVelocity.y;
             rb.linearVelocity = targetVelocity;
         }
         else
         {
-            // In the air — reduced or zero control
             Vector3 airDir = Vector3.Lerp(lastMoveDir, moveDir, airControlPercent);
+
             Vector3 targetVelocity = airDir * moveSpeed;
-            targetVelocity.y = rb.linearVelocity.y; // keep gravity/jump
+            targetVelocity.y = rb.linearVelocity.y;
             rb.linearVelocity = targetVelocity;
         }
     }
@@ -129,8 +135,6 @@ public class CharacterMovement : NetworkBehaviour
         else if(isGrounded==false){
             animator.SetBool("isGrounded", isGrounded);
             //Debug.Log("Is grounded false");
-
-
         }
 
 

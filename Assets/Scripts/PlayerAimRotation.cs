@@ -1,7 +1,7 @@
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
 public class PlayerAimRotation : NetworkBehaviour
 {
     [Header("References")]
@@ -9,22 +9,19 @@ public class PlayerAimRotation : NetworkBehaviour
 
     [Header("Rotation Settings")]
     [Tooltip("How quickly the player rotates to face the camera direction.")]
-    public float rotationSpeed = 8f;
-
-    private Rigidbody rb;
+    public float rotationSpeed = 1000f;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true; // Ensure physics doesn't interfere with rotation
-
         if (cameraTransform == null)
         {
-            cameraTransform = Camera.main.transform;
+            Camera cam = Camera.main;
+            if (cam != null)
+                cameraTransform = cam.transform;
         }
     }
 
-    void FixedUpdate()
+    void LateUpdate()
     {
         if (!IsOwner) return; 
         RotateTowardCamera();
@@ -34,20 +31,20 @@ public class PlayerAimRotation : NetworkBehaviour
     {
         if (!cameraTransform) return;
 
-        Vector3 camForward = cameraTransform.forward;
-        camForward.y = 0f;
-        camForward.Normalize();
+        if (!IsOwner) return;
 
-        if (camForward.sqrMagnitude < 0.001f)
+        Vector3 forward = cameraTransform.forward;
+        forward.y = 0f;
+
+        if (forward.sqrMagnitude < 0.001f)
             return;
 
-        Quaternion targetRotation = Quaternion.LookRotation(camForward);
-
-        // Rotate at a fixed angular speed (degrees per second)
-        transform.rotation = Quaternion.RotateTowards(
+        transform.rotation = Quaternion.Slerp(
             transform.rotation,
-            targetRotation,
-            rotationSpeed * Time.deltaTime
+            Quaternion.LookRotation(forward),
+            10f * Time.deltaTime
         );
+
+        Debug.Log("rotating " + transform.gameObject);
     }
 }
