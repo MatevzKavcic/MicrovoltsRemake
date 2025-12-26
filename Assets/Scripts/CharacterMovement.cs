@@ -29,6 +29,7 @@ public class CharacterMovement : NetworkBehaviour
 
     private Vector3 lastMoveDir;
 
+    public float respawnDelay = 4f;
 
     private Animator animator;
 
@@ -72,7 +73,7 @@ public class CharacterMovement : NetworkBehaviour
     }
     public IEnumerator FinishRespawn() // nevem zakaj rabi bit enumerator ce ja ampak pustimo ker dela za zdej
     {
-        yield return new WaitForFixedUpdate();
+        yield return new WaitForSeconds(respawnDelay);
 
         Rigidbody rb = GetComponent<Rigidbody>();
         rb.WakeUp();

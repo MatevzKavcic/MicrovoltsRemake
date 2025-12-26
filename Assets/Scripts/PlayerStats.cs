@@ -45,21 +45,21 @@ public class PlayerStats : NetworkBehaviour
         }
 
         // Update UI when health changes
-        currentHealth.OnValueChanged += OnHealthChanged; // naredi server callback  v to noter ker ga pac ima na ValueCahnge
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        if (!IsOwner) return;
         if (isDead) return; // solv da ga ne teleporta okoli
 
-        UpdateHealthUI(); // ce te kej jebe healthbar mas tle updejt drugace ne rabis updejtat konstantno ampak samo ko tejkas dmg lahko zs insoectorjem.
+        //UpdateHealthUI(); // ce te kej jebe healthbar mas tle updejt drugace ne rabis updejtat konstantno ampak samo ko tejkas dmg lahko zs insoectorjem.
 
-        if (currentHealth.Value <=0)
-        {
-            Die();
-        }
+        currentHealth.OnValueChanged += OnHealthChanged; // naredi server callback  v to noter ker ga pac ima na ValueCahnge
+
     }
+
     private void OnHealthChanged(float oldValue, float newValue)
     {
         // Only update UI for LOCAL player
@@ -81,13 +81,7 @@ public class PlayerStats : NetworkBehaviour
                 Die();
         }
     }
-    public void UpdateHealth(float amount)
-    {
-        if (!IsServer) return; // only server updates health
 
-        currentHealth.Value += amount;
-        UpdateHealthUI();
-    }
     private void UpdateHealthUI()
     {
         if (!IsOwner) return;
@@ -119,16 +113,17 @@ public class PlayerStats : NetworkBehaviour
     {
         EnableDisableColidersAndScripts(false);
 
-        yield return new WaitForSeconds(respawnDelay);
 
         Transform spawn = RespawnManager.Instance.GetRandomSpawnPoint();
 
         RespawnClientRpc(spawn.position); // dej mu spawn point da ga poklicu u skripti
 
-        currentHealth.Value = maxHealth;
         ResetHealthServerRpc(); // i gues da bi moglo bit to prav zato da resetas health na serverju?
 
         isDead = false; // dej mu da je ziv nazaj
+
+        yield return new WaitForSeconds(respawnDelay);
+
 
         EnableDisableColidersAndScripts(true);
     }
@@ -138,8 +133,10 @@ public class PlayerStats : NetworkBehaviour
     void RespawnClientRpc(Vector3 spawnPos, ClientRpcParams rpcParams = default)
     {
         if (!IsOwner) return;
+
+        //teleport him back to where he will spawn...
         movement.BeginRespawn(spawnPos);
-        StartCoroutine(movement.FinishRespawn());
+        StartCoroutine(movement.FinishRespawn());       
     }
 
     private void EnableDisableColidersAndScripts(bool alive) // colidersi in scripte disabli enabli da nemore streljat itd...
