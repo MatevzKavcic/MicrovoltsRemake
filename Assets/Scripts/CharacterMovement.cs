@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Globalization;
 using Unity.Netcode;
 using UnityEngine;
@@ -31,6 +32,9 @@ public class CharacterMovement : NetworkBehaviour
 
     private Animator animator;
 
+    public bool CanMove { get; private set; } = true;
+    public bool IsRespawning { get; private set; } = false;
+
     void Start()
     {
         Debug.Log($"{name} | Owner = {IsOwner} | Server = {IsServer} | LocalID = {NetworkManager.Singleton.LocalClientId} | OwnerID = {OwnerClientId}");
@@ -50,9 +54,31 @@ public class CharacterMovement : NetworkBehaviour
 
     void FixedUpdate()
     {
-        if (!IsOwner) return;
+        if (!IsOwner || !CanMove) return; // poglej ce s elahko premika.... ce se nemore
         HandleMovement();
         CheckGround();
+    }
+
+    public void BeginRespawn(Vector3 spawnPos) // to poklices u player stats
+    {
+        CanMove = false; // se nemore vec premikat zs to skripto dokler mu ne das to na true
+        IsRespawning = true;
+
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        rb.Sleep();
+
+        transform.position = spawnPos; // premakni ga 
+    }
+    public IEnumerator FinishRespawn() // nevem zakaj rabi bit enumerator ce ja ampak pustimo ker dela za zdej
+    {
+        yield return new WaitForFixedUpdate();
+
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.WakeUp();
+
+        IsRespawning = false;
+        CanMove = true; //se lahko premika nazaj lepo
     }
 
     void HandleMovement()

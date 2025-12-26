@@ -30,9 +30,13 @@ public class PlayerStats : NetworkBehaviour
 
     private bool isDead = false;
 
+    private CharacterMovement movement;
 
 
-
+    void Awake()
+    {
+        movement = GetComponent<CharacterMovement>(); // dobi CharacterMovement script
+    }
     private void Start()
     {
         if (IsServer)
@@ -67,7 +71,7 @@ public class PlayerStats : NetworkBehaviour
     public void TakeDamage(float amount)
     {
         if (!IsServer) return; // only server updates health
-        if (isDead) { return; }
+        if (isDead)  return; 
 
         currentHealth.Value -= amount;
 
@@ -100,54 +104,45 @@ public class PlayerStats : NetworkBehaviour
         Debug.Log("PLAYER DIED");
         isDead = true;
 
-        Debug.Log("respawn delay function");
-
-        SetAliveState(false);
-        StartCoroutine(RespawnAfterDelay());
-
-        // Respawn
+        StartCoroutine(RespawnRoutine());
 
     }
-    IEnumerator RespawnAfterDelay()
+    /*
+     disabli coliderje,
+    corutine da waitas en cajt,
+    u CharacterMovement poklici API da ga transforma na pravo mesto
+    dej mu helth nazaj,
+    dej mu da je ziv
+    enabli skripte
+     */
+    IEnumerator RespawnRoutine() 
     {
-        // Wait 4 seconds
-        playerObject.SetActive(false);
+        EnableDisableColidersAndScripts(false);
 
         yield return new WaitForSeconds(respawnDelay);
 
-        // Reset health
-        
-
-
-        // Reset velocity
-        Rigidbody rb = GetComponent<Rigidbody>();
-        if (rb != null || IsOwner )
-        {
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-        }
-         // transform to a random spawn point
         Transform spawn = RespawnManager.Instance.GetRandomSpawnPoint();
 
-        if (spawn != null)
-        {
-            transform.position = spawn.position;
-        }
-        else
-        {
-            Debug.LogWarning("No spawn points found in RespawnManager!");
-        }
+        RespawnClientRpc(spawn.position); // dej mu spawn point da ga poklicu u skripti
 
-        isDead = false;
-        // currentHealth.Value = maxHealth; // baje to je error ker ga client spreminja tko da pazi se na to ? 
+        currentHealth.Value = maxHealth;
+        ResetHealthServerRpc(); // i gues da bi moglo bit to prav zato da resetas health na serverju?
 
-        ResetHealthServerRpc();
+        isDead = false; // dej mu da je ziv nazaj
 
-        SetAliveState(true);
-
+        EnableDisableColidersAndScripts(true);
     }
 
-    private void SetAliveState(bool alive)
+
+    [ClientRpc] // v movement scriptu poklici da se spawna na random spawn point
+    void RespawnClientRpc(Vector3 spawnPos, ClientRpcParams rpcParams = default)
+    {
+        if (!IsOwner) return;
+        movement.BeginRespawn(spawnPos);
+        StartCoroutine(movement.FinishRespawn());
+    }
+
+    private void EnableDisableColidersAndScripts(bool alive) // colidersi in scripte disabli enabli da nemore streljat itd...
     {
         // Show/hide character mesh
         if (playerObject != null)
@@ -173,8 +168,6 @@ public class PlayerStats : NetworkBehaviour
             }
         }
     }
-
-
 
     [ServerRpc]
     private void ResetHealthServerRpc()

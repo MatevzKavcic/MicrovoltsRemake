@@ -45,6 +45,6 @@ public class PlayerAimRotation : NetworkBehaviour
             10f * Time.deltaTime
         );
 
-        Debug.Log("rotating " + transform.gameObject);
+        //Debug.Log("rotating " + transform.gameObject);
     }
 }
