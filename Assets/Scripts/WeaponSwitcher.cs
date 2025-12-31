@@ -4,7 +4,7 @@ using UnityEngine;
 public class WeaponSwitcher : MonoBehaviour
 {
    
-    public enum WeaponType { Melee, Rifle, Shotgun}
+    public enum WeaponType { Melee, Rifle, Shotgun, Sniper}
 
 
     [Header("References")]
@@ -13,15 +13,19 @@ public class WeaponSwitcher : MonoBehaviour
     public GameObject meleeWeaponMesh;
     public GameObject rifleWeaponMesh;
     public GameObject shotgunWeaponMesh;
+    public GameObject sniperWeaponMesh;
 
     [Header("CrosshairReferences")]
     public GameObject meleWeaponCrosshair;
     public GameObject rifleWeaponCrosshair;
     public GameObject shotgunWeaponCrosshair;
+    public GameObject sniperWeaponCrosshair;
+
 
     public WeaponStats rifleWeapon;
     public WeaponStats shotgunWeapon;
     public WeaponStats meleeWeapon;
+    public WeaponStats sniperWeapon;
 
 
     private WeaponStats activeWeaponStats;
@@ -49,7 +53,11 @@ public class WeaponSwitcher : MonoBehaviour
 
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            switchToWeapon(WeaponType.Shotgun, 3,shotgunWeapon);
+            switchToWeapon(WeaponType.Shotgun, 3, shotgunWeapon);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            switchToWeapon(WeaponType.Sniper, 4, sniperWeapon);
         }
     }
 
@@ -60,10 +68,11 @@ public class WeaponSwitcher : MonoBehaviour
         meleeWeaponMesh.SetActive(newWeapon == WeaponType.Melee);
         rifleWeaponMesh.SetActive(newWeapon == WeaponType.Rifle);
         shotgunWeaponMesh.SetActive(newWeapon == WeaponType.Shotgun);
+        sniperWeaponMesh.SetActive(newWeapon == WeaponType.Sniper);
 
     }
 
-  
+
 
     public void ChangeCrosshair(WeaponType newWeapon)
     {
@@ -73,6 +82,7 @@ public class WeaponSwitcher : MonoBehaviour
         meleWeaponCrosshair.SetActive(newWeapon == WeaponType.Melee);
         rifleWeaponCrosshair.SetActive(newWeapon == WeaponType.Rifle);
         shotgunWeaponCrosshair.SetActive(newWeapon == WeaponType.Shotgun);
+        sniperWeaponCrosshair.SetActive(newWeapon == WeaponType.Sniper);
 
     }
 

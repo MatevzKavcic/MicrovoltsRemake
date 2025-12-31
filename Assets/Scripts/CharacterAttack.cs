@@ -59,6 +59,8 @@ public class CharacterAttack : MonoBehaviour
                 return weaponSwitcher.rifleWeapon;
             case WeaponSwitcher.WeaponType.Shotgun:
                 return weaponSwitcher.shotgunWeapon;
+            case WeaponSwitcher.WeaponType.Sniper:
+                return weaponSwitcher.sniperWeapon;
             default:
                 return null;
         }
