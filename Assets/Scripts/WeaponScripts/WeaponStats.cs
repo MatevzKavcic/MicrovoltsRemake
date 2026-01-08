@@ -15,6 +15,9 @@ public abstract class WeaponStats : NetworkBehaviour
     public Transform firePoint;
     protected float nextFireTime;
     public float maxDistance = 1000f;
+
+    public float shootLockTime = 0.2f; // how long IsShooting stays true
+
     protected Camera cam;
 
     public LineRenderer tracerLinePrefab;

@@ -185,6 +185,7 @@ MonoBehaviour:
   isActive: 0
   firePoint: {fileID: 8521542500187188731}
   maxDistance: 1000
+  shootLockTime: 0.2
   tracerLinePrefab: {fileID: 8216330726691824439, guid: 80cd02479dc791a48a0aab1e6cfbcd46, type: 3}
   ammo: 3
   reloadTime: 3
@@ -2144,6 +2145,7 @@ MonoBehaviour:
   isActive: 0
   firePoint: {fileID: 4410543470676147585}
   maxDistance: 1000
+  shootLockTime: 0.2
   tracerLinePrefab: {fileID: 8216330726691824439, guid: 80cd02479dc791a48a0aab1e6cfbcd46, type: 3}
   ammo: 30
   reloadTime: 1
@@ -3094,6 +3096,7 @@ MonoBehaviour:
   isActive: 0
   firePoint: {fileID: 4717185987508911738}
   maxDistance: 1000
+  shootLockTime: 0.5
   tracerLinePrefab: {fileID: 8216330726691824439, guid: 80cd02479dc791a48a0aab1e6cfbcd46, type: 3}
   ammo: 1
   reloadTime: 5
@@ -3153,6 +3156,7 @@ MonoBehaviour:
   isActive: 0
   firePoint: {fileID: 0}
   maxDistance: 1000
+  shootLockTime: 0.2
   tracerLinePrefab: {fileID: 0}
   ammo: 0
   reloadTime: 0
@@ -3250,7 +3254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 276429185
+  GlobalObjectIdHash: 2998983330
   InScenePlacedSourceGlobalObjectIdHash: 1199442236
   DeferredDespawnTick: 0
   Ownership: 1
@@ -3460,6 +3464,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterAttack
   weaponSwitcher: {fileID: 102716139082639306}
+  networkAnimator: {fileID: 5041910142506777634}
 --- !u!114 &2843986612840044762
 MonoBehaviour:
   m_ObjectHideFlags: 0
