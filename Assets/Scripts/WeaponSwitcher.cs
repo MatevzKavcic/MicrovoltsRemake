@@ -4,7 +4,7 @@ using UnityEngine;
 public class WeaponSwitcher : MonoBehaviour
 {
    
-    public enum WeaponType { Melee, Rifle, Shotgun, Sniper}
+    public enum WeaponType { Melee, Rifle, Shotgun, Sniper, Zooka, Granader}
 
 
     [Header("References")]
@@ -14,18 +14,26 @@ public class WeaponSwitcher : MonoBehaviour
     public GameObject rifleWeaponMesh;
     public GameObject shotgunWeaponMesh;
     public GameObject sniperWeaponMesh;
+    public GameObject zookaWeaponMesh;
+    public GameObject granaderWeaponMesh;
+
 
     [Header("CrosshairReferences")]
     public GameObject meleWeaponCrosshair;
     public GameObject rifleWeaponCrosshair;
     public GameObject shotgunWeaponCrosshair;
     public GameObject sniperWeaponCrosshair;
+    public GameObject zookaWeaponCrosshair;
+    public GameObject granaderWeaponCrosshair;
 
 
     public WeaponStats rifleWeapon;
     public WeaponStats shotgunWeapon;
     public WeaponStats meleeWeapon;
     public WeaponStats sniperWeapon;
+    public WeaponStats zookaWeapon;
+    public WeaponStats granaderWeapon;
+
 
 
     private WeaponStats activeWeaponStats;
@@ -59,6 +67,17 @@ public class WeaponSwitcher : MonoBehaviour
         {
             switchToWeapon(WeaponType.Sniper, 4, sniperWeapon);
         }
+
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            switchToWeapon(WeaponType.Zooka, 5, zookaWeapon);
+        }
+
+        else if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            switchToWeapon(WeaponType.Granader, 6, granaderWeapon);
+        }
+
     }
 
     public void EquipWeapon(WeaponType newWeapon)
@@ -69,6 +88,9 @@ public class WeaponSwitcher : MonoBehaviour
         rifleWeaponMesh.SetActive(newWeapon == WeaponType.Rifle);
         shotgunWeaponMesh.SetActive(newWeapon == WeaponType.Shotgun);
         sniperWeaponMesh.SetActive(newWeapon == WeaponType.Sniper);
+        zookaWeaponMesh.SetActive(newWeapon == WeaponType.Zooka);
+        granaderWeaponMesh.SetActive(newWeapon == WeaponType.Granader);
+
 
     }
 
@@ -83,6 +105,9 @@ public class WeaponSwitcher : MonoBehaviour
         rifleWeaponCrosshair.SetActive(newWeapon == WeaponType.Rifle);
         shotgunWeaponCrosshair.SetActive(newWeapon == WeaponType.Shotgun);
         sniperWeaponCrosshair.SetActive(newWeapon == WeaponType.Sniper);
+        zookaWeaponCrosshair.SetActive(newWeapon == WeaponType.Zooka);
+        granaderWeaponCrosshair.SetActive(newWeapon == WeaponType.Granader);
+
 
     }
 
@@ -108,4 +133,4 @@ public class WeaponSwitcher : MonoBehaviour
         weapon.isActive = true;
         weapon.CancelReload();
     }
-}
+} 
