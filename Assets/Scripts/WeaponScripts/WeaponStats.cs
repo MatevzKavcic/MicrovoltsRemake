@@ -59,23 +59,24 @@ public abstract class WeaponStats : NetworkBehaviour
         if (!IsOwner) return;
         StartCoroutine(AssignCameraWhenReady());
     } // samo za camera da se bo pravilno inniciarizirala
-    public virtual void TryShoot() // to je dejanski gate keep ki se vedno pogleda preden streljas tko da lahko tle delas checke za network ne rabis u weaponih.
+    public virtual bool TryShoot() // to je dejanski gate keep ki se vedno pogleda preden streljas tko da lahko tle delas checke za network ne rabis u weaponih.
     {
-        if (!IsOwner) return;  // network blocka da si to res samo ti ce nisi automatko ne nardi
-        if (isReloading) return;          // no shooting while reloading
+        if (!IsOwner) return false;  // network blocka da si to res samo ti ce nisi automatko ne nardi
+        if (isReloading) return false ;          // no shooting while reloading
         if (ammo == -10) // melee weapon da bo udaru
         {
             Shoot();
+            return true;
         }
-        if (ammo <= 0) return;
-        if (Time.time >= nextFireTime)
-        {
-            Shoot();
-            nextFireTime = Time.time + fireRate;
-            ammo--;
-        }
+        if (ammo <= 0) return false;
+        if (Time.time < nextFireTime) return false;
 
-        
+        nextFireTime = Time.time + fireRate;
+        ammo--;
+        Shoot();
+        return true;
+
+
     }
     protected virtual void Shoot()
     {

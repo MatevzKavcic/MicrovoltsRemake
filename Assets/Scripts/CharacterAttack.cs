@@ -38,23 +38,21 @@ public class CharacterAttack : MonoBehaviour
         // Left click -> primary fire
         if (Input.GetMouseButton(0)&& currentWeaponStats.isReloading!=true)
         {
-            currentWeaponStats.TryShoot(); // delegate the actual attack
+           // currentWeaponStats.TryShoot(); // delegate the actual attack
             //animator.SetTrigger("leftClick"); // optional, if you have weapon attack animation
             Debug.Log(" triger Left click activated");
 
-            //networkAnimator.SetTrigger("leftClick");
-
-            animator.SetBool("isShooting", true);
-
-            ResetShoot(currentWeaponStats.shootLockTime); // bad practice je to ma ce deluje tle dobis samo kolko casa traja animation od weapona in pol lockej ta animation da shoota tolko casa...... preden skenslas animation
-            
-
+            if (currentWeaponStats.TryShoot()) // delegate the attack !!
+            {
+                animator.SetTrigger("Shoot");
+            }
+            animator.SetBool("isFiring", Input.GetMouseButton(0));
         }
 
         if (Input.GetMouseButton(0) == false )
         {
-            animator.SetBool("isShooting", false);
 
+            animator.SetBool("isFiring", Input.GetMouseButton(0));
         }
 
         // Right click -> secondary fire
@@ -72,12 +70,6 @@ public class CharacterAttack : MonoBehaviour
         }
     }
 
-
-    IEnumerator ResetShoot(float timer)
-    {
-        yield return new WaitForSeconds(timer);
-        animator.SetBool("IsShooting", false);
-    }
 
     private WeaponStats GetActiveWeaponStats()
     {
