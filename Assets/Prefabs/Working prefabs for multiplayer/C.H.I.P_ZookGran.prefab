@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9205735187821510519}
   - component: {fileID: 709897107268617194}
   - component: {fileID: 2080078011877293701}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: crosshairGranader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,7 +84,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8885319419174735255}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: kljucnica.l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1024082834631785852}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Healthbar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,7 +153,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5312230089225189843}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Stopalo.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,7 +185,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7150925935486529955}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: podlaht.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -217,7 +217,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4074798071809330717}
   - component: {fileID: 8907517437529218197}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BazzokaWeaponScriptHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -266,7 +266,8 @@ MonoBehaviour:
   isReloading: 0
   hitMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 375
+  zookaProjectilePrefab: {fileID: 8390685370921445554, guid: d7d7580f9a4b5114da07695324767db3, type: 3}
 --- !u!1 &547764651253780419
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,7 +278,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2894754392301699931}
   - component: {fileID: 3927297336244027482}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: MeleWeaponScriptHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -336,7 +337,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7826370107270943063}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GranadeWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -369,7 +370,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5910746700329983203}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Gumbi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -407,7 +408,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5048105862700165469}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: dlan.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -438,7 +439,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4938321959949200869}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: podlaht_IK.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -470,7 +471,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5343989041585706360}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GranaderFirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -501,7 +502,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4206995523497861058}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ZookaFirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -532,7 +533,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5069153319407717408}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: podlaht.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -566,7 +567,7 @@ GameObject:
   - component: {fileID: 7461002202972061448}
   - component: {fileID: 82600147139069041}
   - component: {fileID: 6758329770925570960}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: crosshairShotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -639,7 +640,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8522680227271701510}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: stegnoTarget.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -673,7 +674,7 @@ GameObject:
   - component: {fileID: 914465959625568729}
   - component: {fileID: 5307490136404319701}
   - component: {fileID: 3409660122876035611}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Canvas (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -774,7 +775,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4594799600855185436}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: podlaht.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -810,7 +811,7 @@ GameObject:
   - component: {fileID: 9200865817585023041}
   - component: {fileID: 4538603055420944974}
   - component: {fileID: 5855938014706851968}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: client
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -952,7 +953,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 906904649669635302}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: stegno.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -984,7 +985,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3894120202746428978}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Piscula.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1016,7 +1017,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1579520549321153848}
   - component: {fileID: 7477598490905104931}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SniperWeaponScriptHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1077,7 +1078,7 @@ GameObject:
   - component: {fileID: 6613190751281046890}
   - component: {fileID: 5597224356961338670}
   - component: {fileID: 6475304469159998335}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: healthBarBacground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1152,7 +1153,7 @@ GameObject:
   - component: {fileID: 4223865662677626643}
   - component: {fileID: 7065315070909288071}
   - component: {fileID: 6407872541855894553}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: VisualRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1246,7 +1247,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8805123250996331267}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: chest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1282,7 +1283,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5125805597037447887}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: nadlaht.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1314,7 +1315,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6371384745616609110}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: MeleWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1347,7 +1348,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8484397988279714429}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SniperFirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1378,7 +1379,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1203127109730397679}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Stopalo_IK.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1422,7 +1423,7 @@ GameObject:
   - component: {fileID: 5275416121365321203}
   - component: {fileID: 122961944519890781}
   - component: {fileID: 6262466053230599761}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: C.H.I.P_ZookGran
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1459,7 +1460,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3746560110
+  GlobalObjectIdHash: 2116973703
   InScenePlacedSourceGlobalObjectIdHash: 2998983330
   DeferredDespawnTick: 0
   Ownership: 1
@@ -1752,7 +1753,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6406797442181757904}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Stopalo.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1784,7 +1785,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4330733862062584240}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: stegnoTarget.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1818,7 +1819,7 @@ GameObject:
   - component: {fileID: 7501720139605952690}
   - component: {fileID: 7673444980311883766}
   - component: {fileID: 9035203986541144033}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: crosshairMele
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1891,7 +1892,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7856689605682571383}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: aaCameraFolow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1924,7 +1925,7 @@ GameObject:
   - component: {fileID: 1493589945179648075}
   - component: {fileID: 7466324025913720895}
   - component: {fileID: 7534771379651379863}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Zooka
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2012,7 +2013,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8490096576785547667}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Piscula.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2044,7 +2045,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4179667492634585776}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: RifleFirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2075,7 +2076,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7341637590919993497}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: glava
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2109,7 +2110,7 @@ GameObject:
   - component: {fileID: 3425763656367857253}
   - component: {fileID: 2497429720776425103}
   - component: {fileID: 2818647876323899199}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2245,7 +2246,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4382516176118002087}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: C.H.I.P.
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2279,7 +2280,7 @@ GameObject:
   - component: {fileID: 1740030481754368688}
   - component: {fileID: 7702574363497794500}
   - component: {fileID: 7955131089662242117}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2369,7 +2370,7 @@ GameObject:
   - component: {fileID: 3058589051448119276}
   - component: {fileID: 7409921662869686136}
   - component: {fileID: 634978862378599091}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: crosshairSniper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2444,7 +2445,7 @@ GameObject:
   - component: {fileID: 7432515163808935747}
   - component: {fileID: 6814581136885497245}
   - component: {fileID: 2162865546586021237}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: crosshairRifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2519,7 +2520,7 @@ GameObject:
   - component: {fileID: 684365774466495721}
   - component: {fileID: 7296278910185282574}
   - component: {fileID: 2022158006797725545}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sniper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2608,7 +2609,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1810926771728944578}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Stopalo.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2639,7 +2640,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 624784237987513039}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Main
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2675,7 +2676,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 19425414056351309}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Piscula.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2706,7 +2707,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6462746407000100970}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: stegnoTarget.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2737,7 +2738,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6631473890861768962}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: stegno.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2769,7 +2770,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6656584107988130089}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: dlan.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2800,7 +2801,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6973817412447417990}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: nadlaht.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2834,7 +2835,7 @@ GameObject:
   - component: {fileID: 522294483685267331}
   - component: {fileID: 829323153369252327}
   - component: {fileID: 7156358301623396051}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: healthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2907,7 +2908,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1222938704496686278}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ShotgunFirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2938,7 +2939,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7701420689886860742}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: kljucnica.r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2974,7 +2975,7 @@ GameObject:
   - component: {fileID: 2063381371199580631}
   - component: {fileID: 3954860690593740727}
   - component: {fileID: 3352781484205957160}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: 'Host '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3116,7 +3117,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6881951082422264668}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: dlan.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3150,7 +3151,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7840193269615612857}
   - component: {fileID: 8866925877235268074}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: C.H.I.P_Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3265,7 +3266,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 760434187144279525}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BazzokaWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3298,7 +3299,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3194978467236931900}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: RifleWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3331,7 +3332,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3369683957979546036}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: dlan.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3365,7 +3366,7 @@ GameObject:
   - component: {fileID: 2196658219777761732}
   - component: {fileID: 3911690863191122324}
   - component: {fileID: 1004121172432195354}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3501,7 +3502,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3952075071238051455}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Stopalo.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3533,7 +3534,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4648833362990335021}
   - component: {fileID: 175867792211565044}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GranadeWeaponScriptHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3592,7 +3593,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3054488620846556138}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Stopalo_IK.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3624,7 +3625,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3131437739708129292}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: stegnoTarget.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3657,7 +3658,7 @@ GameObject:
   m_Component:
   - component: {fileID: 803079005501720871}
   - component: {fileID: 1133343722172274960}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: RifleWeaponScriptHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3716,7 +3717,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8373888258272106301}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Piscula.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3748,7 +3749,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4784112481620709448}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: podlaht_IK.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3782,7 +3783,7 @@ GameObject:
   - component: {fileID: 6230998204495294204}
   - component: {fileID: 865672677759816286}
   - component: {fileID: 5824649188275336571}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Pencil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3871,7 +3872,7 @@ GameObject:
   - component: {fileID: 5632191169619813628}
   - component: {fileID: 7945912953392602081}
   - component: {fileID: 6453395664522215139}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Granader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3963,7 +3964,7 @@ GameObject:
   - component: {fileID: 6704825046226323034}
   - component: {fileID: 6457589656190788358}
   - component: {fileID: 2690953657238156927}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: server
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4105,7 +4106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8665909935931249837}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: glava_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4136,7 +4137,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3008511377312536808}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WeaponSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4173,7 +4174,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1034648457666322548}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Hip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4207,7 +4208,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7380865885305796718}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ShotgunWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4240,7 +4241,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7628573740250827121}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: podlaht.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4271,7 +4272,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 777809659107699076}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SniperWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4306,7 +4307,7 @@ GameObject:
   - component: {fileID: 2028022823309756385}
   - component: {fileID: 1421255968227263578}
   - component: {fileID: 6550547915897933932}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: shotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4396,7 +4397,7 @@ GameObject:
   - component: {fileID: 6400983047755300177}
   - component: {fileID: 6656336659276177535}
   - component: {fileID: 4565112777029800365}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4534,7 +4535,7 @@ GameObject:
   - component: {fileID: 4470984703083351374}
   - component: {fileID: 2594443479311226740}
   - component: {fileID: 7636005206528425291}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: crosshairBozzoka
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4607,7 +4608,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6553414758807318239}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Crosshair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4649,7 +4650,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6861787856109438806}
   - component: {fileID: 4867686210067224200}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ShotgunWeaponScriptHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
