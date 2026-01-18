@@ -30,7 +30,8 @@ public abstract class WeaponStats : NetworkBehaviour
 
     private Coroutine reloadCoroutine;
 
-    public LayerMask layerMask;
+    [Header("Hitscan Settings")]
+    public LayerMask layerMask; //To masko mora nastimat usak weapon posebej ampak basicly je to samo kam aimas... in kaj zadanes in kaj ne.
 
     //protected virtual void Awake()
     //{

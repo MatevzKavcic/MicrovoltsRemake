@@ -3,9 +3,6 @@ using UnityEngine;
 public class GranaderWeaponScript : WeaponStats
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    [Header("Hitscan Settings")]
-    public LayerMask hitMask;        // What layers you can hit
-
     protected override void Aim() // pow poveci malo
 
     {
@@ -22,7 +19,7 @@ public class GranaderWeaponScript : WeaponStats
         Vector3 endPoint = origin + baseDir * maxDistance;
 
         // server raycast (authoritative)
-        if (Physics.Raycast(origin, baseDir, out RaycastHit hit, maxDistance, hitMask))
+        if (Physics.Raycast(origin, baseDir, out RaycastHit hit, maxDistance, layerMask))
         {
             endPoint = hit.point;
 

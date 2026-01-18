@@ -6,9 +6,6 @@ using UnityEngine.UIElements;
 public class SniperWeaponScript : WeaponStats
 
 {
-    [Header("Hitscan Settings")]
-    public LayerMask hitMask;        // What layers you can hit
-
     protected override void Aim() // pow poveci malo
 
     {
@@ -25,7 +22,7 @@ public class SniperWeaponScript : WeaponStats
         Vector3 endPoint = origin + baseDir * maxDistance;
 
         // server raycast (authoritative)
-        if (Physics.Raycast(origin, baseDir, out RaycastHit hit, maxDistance, hitMask))
+        if (Physics.Raycast(origin, baseDir, out RaycastHit hit, maxDistance, layerMask))
         {
             endPoint = hit.point;
 

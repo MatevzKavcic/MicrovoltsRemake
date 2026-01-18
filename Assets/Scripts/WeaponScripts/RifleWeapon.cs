@@ -6,8 +6,6 @@ using UnityEngine.UIElements;
 public class RifleWeapon : WeaponStats
 
 {
-    [Header("Hitscan Settings")]
-    public LayerMask hitMask;        // What layers you can hit
 
     protected override void Aim() // pow poveci malo
 
@@ -25,7 +23,7 @@ public class RifleWeapon : WeaponStats
         Vector3 endPoint = origin + baseDir * maxDistance;
 
        
-        if (Physics.Raycast(origin, baseDir, out RaycastHit hit, maxDistance, hitMask))
+        if (Physics.Raycast(origin, baseDir, out RaycastHit hit, maxDistance, layerMask))
         {
             endPoint = hit.point;
 

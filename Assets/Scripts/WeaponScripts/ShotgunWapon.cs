@@ -5,9 +5,6 @@ using UnityEngine;
 public class ShotgunWapon : WeaponStats
 
 {
-    [Header("Hitscan Settings")]
-    public LayerMask hitMask;        // What layers you can hit
-
     [Header("Shotgun Settings")]
     public int pelletCount = 8;
     public float spreadAngle = 5f;      // degrees of random spread
@@ -26,7 +23,7 @@ public class ShotgunWapon : WeaponStats
 
             Vector3 endPoint = origin + dir * maxDistance;
 
-            if (Physics.Raycast(origin, dir, out RaycastHit hit, maxDistance, hitMask))
+            if (Physics.Raycast(origin, dir, out RaycastHit hit, maxDistance, layerMask))
             {
                 endPoint = hit.point;
 
