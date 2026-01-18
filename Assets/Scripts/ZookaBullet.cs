@@ -13,12 +13,18 @@ public class ZookaBullet : NetworkBehaviour
 
     private Rigidbody rb;
 
+    private Collider bulletCollider;
+
+
+
     public override void OnNetworkSpawn()
     {
+        bulletCollider = GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
 
         if (IsServer)
         {
+            
             rb.linearVelocity = transform.forward * speed;
             rb.angularVelocity = Vector3.zero;
             Invoke(nameof(Despawn), lifeTime); // ce gre vec ku tolko casa ga despawnej.... da ne gre u neskonènost in wasta power
@@ -26,12 +32,26 @@ public class ZookaBullet : NetworkBehaviour
         }
     }
 
+
+    public void IgnoreOwner(Collider ownerCollider)
+    {
+        if (ownerCollider == null) return;
+        Physics.IgnoreCollision(bulletCollider, ownerCollider, true);
+    }
+
+
     void OnCollisionEnter(UnityEngine.Collision collision)
     {
         if (!IsServer) return;
 
-        if (((1 << collision.gameObject.layer) & hitMask) == 0)
-            return;
+        //if (((1 << collision.gameObject.layer) & hitMask) == 0)
+        //    return;
+
+        //if (collision.collider.GetComponent<NetworkObject>()?.OwnerClientId == OwnerClientId)
+        //{
+        //    Debug.Log("I hit myself");
+        //    return;
+        //}
 
         SpawnExplosion(collision.contacts[0].point);
         Despawn();

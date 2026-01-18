@@ -13,11 +13,11 @@ public class CharacterAttack : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-    }
-    void LateUpdate()
-    {
-        Debug.Log(animator.GetCurrentAnimatorStateInfo(1).shortNameHash);   
-    }
+    }    //void LateUpdate()
+    //{
+    //    //Debug.Log(animator.GetCurrentAnimatorStateInfo(1).shortNameHash);   
+    //}
+
 
 
     void Update()

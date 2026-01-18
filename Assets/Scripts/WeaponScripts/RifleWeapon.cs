@@ -24,7 +24,7 @@ public class RifleWeapon : WeaponStats
 
         Vector3 endPoint = origin + baseDir * maxDistance;
 
-        // server raycast (authoritative)
+       
         if (Physics.Raycast(origin, baseDir, out RaycastHit hit, maxDistance, hitMask))
         {
             endPoint = hit.point;

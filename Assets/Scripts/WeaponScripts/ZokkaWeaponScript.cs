@@ -9,10 +9,18 @@ public class ZokkaWeaponScript : WeaponStats
 
     [SerializeField] private GameObject zookaProjectilePrefab;
 
+    protected Collider ownerCollider;
+
+
     protected override void Aim() // pow poveci malo
 
     {
         throw new System.NotImplementedException();
+    }
+
+    protected virtual void Awake()
+    {
+        ownerCollider = GetComponentInParent<Collider>(); // dobi parent collider muhahahah
     }
 
     protected override void ServerShootLogic(Vector3 baseDir) // base dir je Aim direction ze zracunau in vrze noter v to metodo.
@@ -25,6 +33,12 @@ public class ZokkaWeaponScript : WeaponStats
     );
 
         projectile.GetComponent<NetworkObject>().Spawn(true);
+
+        ZookaBullet bullet = projectile.GetComponent<ZookaBullet>();
+        
+        Debug.Log(ownerCollider.name);
+
+        bullet.IgnoreOwner(ownerCollider);
 
     }
 }

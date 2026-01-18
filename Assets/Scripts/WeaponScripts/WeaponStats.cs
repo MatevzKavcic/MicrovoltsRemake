@@ -30,6 +30,7 @@ public abstract class WeaponStats : NetworkBehaviour
 
     private Coroutine reloadCoroutine;
 
+    public LayerMask layerMask;
 
     //protected virtual void Awake()
     //{
@@ -195,7 +196,7 @@ public abstract class WeaponStats : NetworkBehaviour
         // Ray from the center of the screen
         Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 
-        if (Physics.Raycast(ray, out RaycastHit hit, maxDistance, ~0))
+        if (Physics.Raycast(ray, out RaycastHit hit, maxDistance, layerMask))
         {
             targetPoint = hit.point;
         }
