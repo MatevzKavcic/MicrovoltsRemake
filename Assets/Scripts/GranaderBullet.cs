@@ -58,7 +58,7 @@ public class GranaderBullet : NetworkBehaviour
         TimerStarted = true;
 
         StartCoroutine(FuseCoroutine());
-    }
+    }   
 
     IEnumerator FuseCoroutine()
     {
