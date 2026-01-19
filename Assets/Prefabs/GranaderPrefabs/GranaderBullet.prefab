@@ -100,7 +100,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8370159602178525754}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 67902852ebcf58641b224bdd6c2719f9, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -156,10 +156,11 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   speed: 70
   lifeTime: 5
-  explosionPrefab: {fileID: 6947557617681418040, guid: 77c5ecfef8f3ab942945f7884a8b50f5, type: 3}
+  explosionPrefab: {fileID: 922934099287784082, guid: 170df43c8eb1c924da2be32feb90d46b, type: 3}
   hitMask:
     serializedVersion: 2
     m_Bits: 256
+  TimeToExplode: 1.2
 --- !u!54 &3083997750538374032
 Rigidbody:
   m_ObjectHideFlags: 0

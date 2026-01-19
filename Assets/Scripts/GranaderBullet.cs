@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -12,10 +13,11 @@ public class GranaderBullet : NetworkBehaviour
     [SerializeField] private LayerMask hitMask;
 
     private Rigidbody rb;
+    public float TimeToExplode = 1.2f;
+
+    private Boolean TimerStarted = false;
 
     private Collider bulletCollider;
-
-
 
     public override void OnNetworkSpawn()
     {
@@ -42,18 +44,34 @@ public class GranaderBullet : NetworkBehaviour
 
     void OnCollisionEnter(UnityEngine.Collision collision)
     {
-        if (!IsServer) return;
+        if (!IsServer|| TimerStarted) return;
 
-     
+        if (collision.collider.GetComponent<PlayerStats>())
+        {
+            SpawnExplosion();
+            Despawn();
+            return;
+        }
 
-        SpawnExplosion(collision.contacts[0].point);
+        //if the colision is a player then instantly despawn... and spawn explosion... othervise letit bounce make the logic work but figure out layers and so on...
+
+        TimerStarted = true;
+
+        StartCoroutine(FuseCoroutine());
+    }
+
+    IEnumerator FuseCoroutine()
+    {
+        yield return new WaitForSeconds(TimeToExplode);
+        SpawnExplosion();
         Despawn();
     }
-    void SpawnExplosion(Vector3 pos)
+
+    void SpawnExplosion()
     {
         GameObject explosion = Instantiate(
             explosionPrefab,
-            pos,
+            transform.position,
             Quaternion.identity
         );
 
@@ -65,5 +83,4 @@ public class GranaderBullet : NetworkBehaviour
         if (IsServer && NetworkObject.IsSpawned)
             NetworkObject.Despawn();
     }
-
 }
