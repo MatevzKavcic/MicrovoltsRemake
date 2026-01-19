@@ -872,6 +872,9 @@ MonoBehaviour:
   reloadTime: 0
   ammoSize: 0
   isReloading: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
   hitbox: {fileID: 0}
   activeHitTime: 0.2
   targetTag: Player
@@ -1426,9 +1429,9 @@ MonoBehaviour:
   reloadTime: 3
   ammoSize: 3
   isReloading: 0
-  hitMask:
+  layerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 0
   pelletCount: 8
   spreadAngle: 5
   tracerDuration: 0.5
@@ -1489,6 +1492,10 @@ MonoBehaviour:
   reloadTime: 1
   ammoSize: 5
   isReloading: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  granaderBulletPrefab: {fileID: 8370159602178525754, guid: 22a56fd87d9ba9b42967cc9bc5bf0d8e, type: 3}
   hitMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -2305,9 +2312,9 @@ MonoBehaviour:
   reloadTime: 5
   ammoSize: 1
   isReloading: 0
-  hitMask:
+  layerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 0
 --- !u!1 &3923178400578215317
 GameObject:
   m_ObjectHideFlags: 0
@@ -3020,6 +3027,9 @@ MonoBehaviour:
   reloadTime: 1
   ammoSize: 3
   isReloading: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
   hitMask:
     serializedVersion: 2
     m_Bits: 310
@@ -3921,9 +3931,9 @@ MonoBehaviour:
   reloadTime: 1
   ammoSize: 30
   isReloading: 0
-  hitMask:
+  layerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 0
 --- !u!1 &7367608836808245441
 GameObject:
   m_ObjectHideFlags: 0

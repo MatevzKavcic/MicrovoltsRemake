@@ -9,8 +9,6 @@ public class ZookaBullet : NetworkBehaviour
 
     [SerializeField] private GameObject explosionPrefab;
 
-    [SerializeField] private LayerMask hitMask;
-
     private Rigidbody rb;
 
     private Collider bulletCollider;
@@ -43,15 +41,6 @@ public class ZookaBullet : NetworkBehaviour
     void OnCollisionEnter(UnityEngine.Collision collision)
     {
         if (!IsServer) return;
-
-        //if (((1 << collision.gameObject.layer) & hitMask) == 0)
-        //    return;
-
-        //if (collision.collider.GetComponent<NetworkObject>()?.OwnerClientId == OwnerClientId)
-        //{
-        //    Debug.Log("I hit myself");
-        //    return;
-        //}
 
         SpawnExplosion(collision.contacts[0].point);
         Despawn();

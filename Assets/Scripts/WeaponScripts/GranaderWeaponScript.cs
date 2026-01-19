@@ -1,38 +1,41 @@
+using Unity.Netcode;
 using UnityEngine;
 
 public class GranaderWeaponScript : WeaponStats
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    public GameObject granaderBulletPrefab;
+    public LayerMask hitMask;        // What layers you can hit
+    protected Collider ownerCollider;
+
     protected override void Aim() // pow poveci malo
 
     {
         throw new System.NotImplementedException();
     }
 
-
+    protected virtual void Awake()
+    {
+        ownerCollider = GetComponentInParent<Collider>(); // dobi parent collider muhahahah //copypaste od bazoke
+    }
 
     protected override void ServerShootLogic(Vector3 baseDir) // base dir je Aim direction ze zracunau in vrze noter v to metodo.
     {
 
-        Vector3 origin = firePoint.position;
+        GameObject projectile = Instantiate(
+        granaderBulletPrefab,
+        firePoint.position,
+        Quaternion.LookRotation(baseDir)
+    );
 
-        Vector3 endPoint = origin + baseDir * maxDistance;
+        projectile.GetComponent<NetworkObject>().Spawn(true);
 
-        // server raycast (authoritative)
-        if (Physics.Raycast(origin, baseDir, out RaycastHit hit, maxDistance, layerMask))
-        {
-            endPoint = hit.point;
+        GranaderBullet bullet = projectile.GetComponent<GranaderBullet>();
 
-            // damage player if they have PlayerStats
-            var stats = hit.collider.GetComponent<PlayerStats>();
-            if (stats != null)
-            {
-                stats.TakeDamage(damage);
-            }
-            Debug.Log($"Pellet hit {hit.collider.name} for {damage} damage");
-        }
+        Debug.Log(ownerCollider.name);
 
-        // tell ALL clients to show tracer
-        SpawnTracerClientRpc(origin, endPoint);
+        bullet.IgnoreOwner(ownerCollider);
+
     }
 }
