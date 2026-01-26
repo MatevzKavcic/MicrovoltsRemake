@@ -27,6 +27,7 @@ public class GranaderBullet : NetworkBehaviour
         if (IsServer)
         {
 
+            rb.isKinematic = false; // <-- FORCE IT (important)
             rb.linearVelocity = transform.forward * speed;
             rb.angularVelocity = Vector3.zero;
             Invoke(nameof(Despawn), lifeTime); // ce gre vec ku tolko casa ga despawnej.... da ne gre u neskonènost in wasta power
