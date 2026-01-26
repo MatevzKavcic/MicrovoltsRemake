@@ -40,7 +40,7 @@ public class CharacterAttack : MonoBehaviour
         {
            // currentWeaponStats.TryShoot(); // delegate the actual attack
             //animator.SetTrigger("leftClick"); // optional, if you have weapon attack animation
-            Debug.Log(" triger Left click activated");
+            //Debug.Log(" triger Left click activated");
 
             if (currentWeaponStats.TryShoot()) // delegate the attack !!
             {

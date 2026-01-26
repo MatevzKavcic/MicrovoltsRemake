@@ -30,13 +30,13 @@ public class ZokkaWeaponScript : WeaponStats
         zookaProjectilePrefab,
         firePoint.position,
         Quaternion.LookRotation(baseDir)
-    );
+        );
 
         projectile.GetComponent<NetworkObject>().Spawn(true);
 
         ZookaBullet bullet = projectile.GetComponent<ZookaBullet>();
         
-        Debug.Log(ownerCollider.name);
+        //Debug.Log(ownerCollider.name);
 
         bullet.IgnoreOwner(ownerCollider);
 

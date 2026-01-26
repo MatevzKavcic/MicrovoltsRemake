@@ -48,7 +48,7 @@ public class CharacterMovement : NetworkBehaviour
 
     void Update()
     {
-        if (!IsOwner) return;
+        if (!IsOwner || !CanMove) return;
         HandleJump();
         //Debug.Log("Grounded: " + isGrounded);
     }
@@ -60,7 +60,7 @@ public class CharacterMovement : NetworkBehaviour
         CheckGround();
     }
 
-    public void BeginRespawn(Vector3 spawnPos) // to poklices u player stats
+    public void BeginRespawn(Vector3 spawnPos) // to poklices u player stats da zacnes respawn i gues ? ;
     {
         CanMove = false; // se nemore vec premikat zs to skripto dokler mu ne das to na true
         IsRespawning = true;
@@ -133,7 +133,7 @@ public class CharacterMovement : NetworkBehaviour
 
             animator.ResetTrigger("jumpKey");
             animator.SetTrigger("jumpKey");
-            Debug.Log("jumpKey triggered");
+            //Debug.Log("jumpKey triggered");
 
         }
     }

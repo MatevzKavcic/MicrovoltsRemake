@@ -12,7 +12,7 @@ public class ExplosionZooka : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        if (!IsServer) return; // server authorative.... samo ce si server handlas use bulete i gues ...
+        if (!IsServer) return; // server authorative.... samo ce si server handlas use bulete i gues ... oz tle ze poves da bo take damage na serverju
 
         DealDamage();
         Invoke(nameof(Despawn), lifeTime);

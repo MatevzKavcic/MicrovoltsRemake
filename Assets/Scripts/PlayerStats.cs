@@ -16,12 +16,10 @@ public class PlayerStats : NetworkBehaviour
     public float maxHealth = 1000f;
     //public float currentHealth;
 
-
     public NetworkVariable<float> currentHealth = new NetworkVariable<float>(
     0f,
     NetworkVariableReadPermission.Everyone,
-    NetworkVariableWritePermission.Server
-);
+    NetworkVariableWritePermission.Server     );
 
     [Header("UI")]
     public Image healthBarFill;   // Assign your fill image here
@@ -37,7 +35,7 @@ public class PlayerStats : NetworkBehaviour
     {
         movement = GetComponent<CharacterMovement>(); // dobi CharacterMovement script
     }
-    private void Start()
+    private void Start() // to ne stekam al se klice usakic al ne...
     {
         if (IsServer)
         {
@@ -45,6 +43,47 @@ public class PlayerStats : NetworkBehaviour
         }
 
         // Update UI when health changes
+    }
+
+    public void TakeDamage(float amount) // server to mora klicat vedno ko tejkas damage ampak ti moras to poklicat !!!! oz moras poslat serverju ? 
+    {
+        if (!IsServer) return; // only server updates health
+        if (isDead) return;
+
+        currentHealth.Value -= amount;
+
+        if (IsOwner)
+        {
+            UpdateHealthUI();
+        }
+
+        if (currentHealth.Value <= 0)
+        {
+            currentHealth.Value = 0;
+            Die();
+        }
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        if (IsServer && currentHealth.Value <= 0f)
+        {
+            currentHealth.Value = maxHealth;
+        }
+
+        if (IsOwner)
+        {
+            currentHealth.OnValueChanged += OnHealthChanged;
+            UpdateHealthUI();
+            Debug.Log("i update my health here i supose");
+        }
+    }
+    public override void OnNetworkDespawn()
+    {
+        if (IsOwner)
+        {
+            currentHealth.OnValueChanged -= OnHealthChanged;
+        }
     }
 
     // Update is called once per frame
@@ -56,44 +95,33 @@ public class PlayerStats : NetworkBehaviour
 
         //UpdateHealthUI(); // ce te kej jebe healthbar mas tle updejt drugace ne rabis updejtat konstantno ampak samo ko tejkas dmg lahko zs insoectorjem.
 
-        currentHealth.OnValueChanged += OnHealthChanged; // naredi server callback  v to noter ker ga pac ima na ValueCahnge
-
     }
 
-    private void OnHealthChanged(float oldValue, float newValue)
+    private void OnHealthChanged(float oldValue, float newValue) // client... server ti spremeni health... ti zaznas in si spremenis UI health.
     {
         // Only update UI for LOCAL player
         if (IsOwner)
         {
+            Debug.Log("My health changed... i updated my UI!!");
             UpdateHealthUI();
         }
     }
-    public void TakeDamage(float amount)
-    {
-        if (!IsServer) return; // only server updates health
-        if (isDead)  return; 
-
-        currentHealth.Value -= amount;
-
-        if (currentHealth.Value <= 0)
-        {
-                currentHealth.Value = 0;
-                Die();
-        }
-    }
-
-    private void UpdateHealthUI()
+    private void UpdateHealthUI() // client
     {
         if (!IsOwner) return;
 
+            Debug.Log(" i am owner of this health bar can you please LET  ME UPDATE IT FOR FUCK SAKE");
+
         if (healthBarFill != null)
         {
-            float fill = currentHealth.Value/ maxHealth;
+            float fill = currentHealth.Value / maxHealth;
             healthBarFill.fillAmount = fill;
+            Debug.Log(healthBarFill.fillAmount  +  " i update it to this much ..");
+
         }
     }
 
-    private void Die()
+    private void Die() // client ig
     {
         Debug.Log("PLAYER DIED");
         isDead = true;
@@ -108,36 +136,26 @@ public class PlayerStats : NetworkBehaviour
     dej mu helth nazaj,
     dej mu da je ziv
     enabli skripte
-     */
-    IEnumerator RespawnRoutine() 
+     */ 
+    IEnumerator RespawnRoutine()
     {
-        EnableDisableColidersAndScripts(false);
+        isDead = true;
 
+        EnableDisableColidersAndScripts(false);
 
         Transform spawn = RespawnManager.Instance.GetRandomSpawnPoint();
 
-        RespawnClientRpc(spawn.position); // dej mu spawn point da ga poklicu u skripti
-
-        ResetHealthServerRpc(); // i gues da bi moglo bit to prav zato da resetas health na serverju?
-
-        isDead = false; // dej mu da je ziv nazaj
+        RespawnClientRpc(spawn.position);
 
         yield return new WaitForSeconds(respawnDelay);
 
 
+        currentHealth.Value = maxHealth;
+        
+        isDead = false;
+
         EnableDisableColidersAndScripts(true);
-    }
-
-
-    [ClientRpc] // v movement scriptu poklici da se spawna na random spawn point
-    void RespawnClientRpc(Vector3 spawnPos, ClientRpcParams rpcParams = default)
-    {
-        if (!IsOwner) return;
-
-        //teleport him back to where he will spawn...
-        movement.BeginRespawn(spawnPos);
-        StartCoroutine(movement.FinishRespawn());       
-    }
+    } // server
 
     private void EnableDisableColidersAndScripts(bool alive) // colidersi in scripte disabli enabli da nemore streljat itd...
     {
@@ -166,10 +184,17 @@ public class PlayerStats : NetworkBehaviour
         }
     }
 
-    [ServerRpc]
-    private void ResetHealthServerRpc()
+
+    [ClientRpc] // v movement scriptu poklici da se spawna na random spawn point
+    void RespawnClientRpc(Vector3 spawnPos, ClientRpcParams rpcParams = default)
     {
-        currentHealth.Value = maxHealth;
+        if (!IsOwner) return;
+
+        //teleport him back to where he will spawn...
+        movement.BeginRespawn(spawnPos);
+        StartCoroutine(movement.FinishRespawn());
     }
+
+
 }
 
