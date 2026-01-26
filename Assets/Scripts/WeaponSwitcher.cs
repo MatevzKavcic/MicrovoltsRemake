@@ -1,7 +1,8 @@
 using System;
+using Unity.Netcode;
 using UnityEngine;
 
-public class WeaponSwitcher : MonoBehaviour
+public class WeaponSwitcher : NetworkBehaviour
 {
    
     public enum WeaponType { Melee, Rifle, Shotgun, Sniper, Zooka, Granader}
@@ -35,50 +36,94 @@ public class WeaponSwitcher : MonoBehaviour
     public WeaponStats granaderWeapon;
 
 
+    public NetworkVariable<WeaponType> NetworkWeapon =
+    new NetworkVariable<WeaponType>(
+        WeaponType.Melee,
+        NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Server
+    );
 
     private WeaponStats activeWeaponStats;
 
     [Header("Current Weapon")]
     public WeaponType currentWeapon = WeaponType.Melee;
 
-    void Start()
-    {
-        EquipWeapon(currentWeapon);
-        activeWeaponStats = meleeWeapon;
-    }
-
     void Update()
     {
-        // Switch weapons with number keys (for testing)
+        if (!IsOwner) return;
+
         if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            switchToWeapon(WeaponType.Melee, 1, meleeWeapon);
-        }
+            RequestWeaponChangeServerRpc(WeaponType.Melee);
         else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            switchToWeapon(WeaponType.Rifle, 2,rifleWeapon);
-        }
-
+            RequestWeaponChangeServerRpc(WeaponType.Rifle);
         else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            switchToWeapon(WeaponType.Shotgun, 3, shotgunWeapon);
-        }
+            RequestWeaponChangeServerRpc(WeaponType.Shotgun);
         else if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            switchToWeapon(WeaponType.Sniper, 4, sniperWeapon);
-        }
-
+            RequestWeaponChangeServerRpc(WeaponType.Sniper);
         else if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            switchToWeapon(WeaponType.Zooka, 5, zookaWeapon);
-        }
-
+            RequestWeaponChangeServerRpc(WeaponType.Zooka);
         else if (Input.GetKeyDown(KeyCode.Alpha6))
+            RequestWeaponChangeServerRpc(WeaponType.Granader);
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        NetworkWeapon.OnValueChanged += OnWeaponChanged;
+
+        // Apply current weapon when spawning
+        OnWeaponChanged(NetworkWeapon.Value, NetworkWeapon.Value);
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        NetworkWeapon.OnValueChanged -= OnWeaponChanged;
+    }
+
+    /*
+     * Equipi visuale In animator spremeni da bo correct
+     * 
+     * Pol gres LOCAL in menjas crosshair
+     */
+    private void OnWeaponChanged(WeaponType oldWeapon, WeaponType newWeapon) // core logic
+    {
+        EquipWeapon(newWeapon); // to je visual
+        animator.SetInteger("WeaponType", (int)newWeapon); // animator da ve kaj se dogaja
+
+        if (!IsOwner) return;
+
+        ChangeCrosshair(newWeapon);
+
+        if (activeWeaponStats != null) // to nima smisla... poglej da ko spremenis weapon da ga reloadas... 
         {
-            switchToWeapon(WeaponType.Granader, 6, granaderWeapon);
+            activeWeaponStats.isActive = false;
+            activeWeaponStats.TryReaload();
         }
 
+        activeWeaponStats = GetWeaponStats(newWeapon);
+        activeWeaponStats.isActive = true;
+        activeWeaponStats.CancelReload();
     }
+
+    private WeaponStats GetWeaponStats(WeaponType type)
+    {
+        return type switch
+        {
+            WeaponType.Melee => meleeWeapon,
+            WeaponType.Rifle => rifleWeapon,
+            WeaponType.Shotgun => shotgunWeapon,
+            WeaponType.Sniper => sniperWeapon,
+            WeaponType.Zooka => zookaWeapon,
+            WeaponType.Granader => granaderWeapon,
+            _ => meleeWeapon
+        };
+    }
+
+    [ServerRpc]
+    private void RequestWeaponChangeServerRpc(WeaponType newWeapon)
+    {
+        NetworkWeapon.Value = newWeapon;
+    }
+
 
     public void EquipWeapon(WeaponType newWeapon)
     {
@@ -93,8 +138,6 @@ public class WeaponSwitcher : MonoBehaviour
 
 
     }
-
-
 
     public void ChangeCrosshair(WeaponType newWeapon)
     {
@@ -111,26 +154,4 @@ public class WeaponSwitcher : MonoBehaviour
 
     }
 
-    public void switchToWeapon(WeaponType type, int slot,WeaponStats weapon)
-    {
-
-        // visual for the mesh
-        EquipWeapon(type); 
-
-        //visual for the crosshair
-        ChangeCrosshair(type);
-
-        // animator for animations 
-        animator.SetInteger("WeaponType", slot); // shotgun
-
-        //nastavi state weaponov da bojo in order da bos meu currentWeapon da bo tisti kjrji je
-        currentWeapon = type;
-        
-        //Weapon activity + handle reloading and cancle reloading.
-        activeWeaponStats.isActive = false;
-        activeWeaponStats.TryReaload();
-        activeWeaponStats = weapon;
-        weapon.isActive = true;
-        weapon.CancelReload();
-    }
 } 
