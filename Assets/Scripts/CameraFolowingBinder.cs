@@ -1,6 +1,9 @@
 using Unity.Netcode;
 using UnityEngine;
 using Unity.Cinemachine;
+using static UnityEditor.VersionControl.Message;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
+using System;
 
 public class PlayerCameraBinder : NetworkBehaviour
 {
@@ -10,14 +13,13 @@ public class PlayerCameraBinder : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-        CinemachineCamera vcam =FindObjectOfType<CinemachineCamera>();
+        CinemachineCamera vcam = FindFirstObjectByType<CinemachineCamera>();
 
         if (vcam == null)
         {
             Debug.LogError("No Cinemachine Virtual Camera found!");
             return;
         }
-
         vcam.Follow = cameraFollowTarget;
     }
 }

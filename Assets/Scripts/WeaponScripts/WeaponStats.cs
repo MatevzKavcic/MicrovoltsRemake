@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.Cinemachine;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -16,9 +17,14 @@ public abstract class WeaponStats : NetworkBehaviour
     protected float nextFireTime;
     public float maxDistance = 1000f;
 
-    public float shootLockTime = 0.2f; // how long IsShooting stays true
+    public float defaultFOV;
+    public bool isZoomed = false;
+
+    //public float shootLockTime = 0.2f; // how long IsShooting stays true
 
     protected Camera cam;
+
+    protected CinemachineCamera virtualCamera;
 
     public LineRenderer tracerLinePrefab;
 
@@ -33,34 +39,28 @@ public abstract class WeaponStats : NetworkBehaviour
     [Header("Hitscan Settings")]
     public LayerMask layerMask; //To masko mora nastimat usak weapon posebej ampak basicly je to samo kam aimas... in kaj zadanes in kaj ne.
 
-    //protected virtual void Awake()
-    //{
-    //    Debug.Log("BEFORE isOwner");
-
-    //    if (!IsOwner) return;
-
-    //    cam = Camera.main;
-    //    Debug.Log("CAMERA IS SET WHY TF IS NOT WORKING");
-
-    //    if (cam == null)
-    //        Debug.LogWarning($"{name}: No main camera found!");
-    //}
-
     protected virtual IEnumerator AssignCameraWhenReady()
     {
         // Wait until Camera.main exists
         while (cam == null)
         {
             cam = Camera.main;
+
+            virtualCamera = FindFirstObjectByType<CinemachineCamera>();
+            
             yield return null; // wait a frame
         }
+
+
     }// samo za camera da se bo pravilno inniciarizirala
 
     protected virtual void Start()
     {
         if (!IsOwner) return;
         StartCoroutine(AssignCameraWhenReady());
+        defaultFOV = cam.fieldOfView;
     } // samo za camera da se bo pravilno inniciarizirala
+
     public virtual bool TryShoot() // to je dejanski gate keep ki se vedno pogleda preden streljas tko da lahko tle delas checke za network ne rabis u weaponih.
     {
         if (!IsOwner) return false;  // network blocka da si to res samo ti ce nisi automatko ne nardi
@@ -108,6 +108,14 @@ public abstract class WeaponStats : NetworkBehaviour
         if (!IsOwner) return;  // <–– only local player shoots
         Aim();
     }
+
+    public void DisableZoom()
+    {
+        if (!IsOwner) return;
+        virtualCamera.Lens.FieldOfView = defaultFOV;
+
+        isZoomed = false;
+    }  
 
     public virtual void TryReaload()
     {

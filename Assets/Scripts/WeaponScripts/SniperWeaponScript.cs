@@ -4,14 +4,42 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 public class SniperWeaponScript : WeaponStats
-
 {
+
+    [SerializeField] private float zoomFOV = 20f;
+    [SerializeField] private float zoomSpeed = 10f;
+
+    [SerializeField] private GameObject scopeOverlayUI; // full screen scope
+    [SerializeField] private GameObject normalCrosshair;
+
     protected override void Aim() // pow poveci malo
 
     {
-        throw new System.NotImplementedException();
+        if (!IsOwner) return;
+        Debug.Log(" is zoomed variable :" + isZoomed);
+
+        if (!isZoomed) // zoomej ce nisi zoomed
+        {
+            EnableZoom();
+        }
+        else
+        {   
+            DisableZoom();
+        }
     }
 
+    
+
+    public void EnableZoom()
+    {
+        isZoomed = true;
+
+        virtualCamera.Lens.FieldOfView = zoomFOV;
+
+
+        //scopeOverlayUI.SetActive(true);
+        //normalCrosshair.SetActive(false);
+    }
 
 
     protected override void ServerShootLogic(Vector3 baseDir) // base dir je Aim direction ze zracunau in vrze noter v to metodo.
