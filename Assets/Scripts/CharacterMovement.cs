@@ -3,29 +3,26 @@ using System.Globalization;
 using Unity.Netcode;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+//[RequireComponent(typeof(Rigidbody))]
 public class CharacterMovement : NetworkBehaviour
 {
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
     public float jumpForce = 7f;
-
-    [Header("Ground Check")]
-    public float groundCheckDistance;
-    public LayerMask groundMask;
-
-    [Header("Jump Feel")]
-    public float fallMultiplier = 2f; // slightly faster fall
+    public float gravity = -20f;
 
     [Header("Jump Settings")]
     public int maxJumps = 2;       // 1 = normal jump, 2 = double jump
     private int jumpCount = 0;
-
-    private Rigidbody rb;
     private bool isGrounded;
 
     [SerializeField, Range(0f, 1f)]
     private float airControlPercent = 0f; // 0 = no control, 1 = full control
+
+    private CharacterController controller;
+
+    private Vector3 velocity;
+
 
     private Vector3 lastMoveDir;
 
@@ -39,25 +36,21 @@ public class CharacterMovement : NetworkBehaviour
     void Start()
     {
         Debug.Log($"{name} | Owner = {IsOwner} | Server = {IsServer} | LocalID = {NetworkManager.Singleton.LocalClientId} | OwnerID = {OwnerClientId}");
-        rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        controller = GetComponent<CharacterController>();
+        if (IsOwner)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
         animator = GetComponentInChildren<Animator>();
     }
 
     void Update()
     {
         if (!IsOwner || !CanMove) return;
-        HandleJump();
-        //Debug.Log("Grounded: " + isGrounded);
-    }
-
-    void FixedUpdate()
-    {
-        if (!IsOwner || !CanMove) return; // poglej ce s elahko premika.... ce se nemore
         HandleMovement();
-        CheckGround();
+        HandleJump();
+        ApplyGravity();
     }
 
     public void BeginRespawn(Vector3 spawnPos) // to poklices u player stats da zacnes respawn i gues ? ;
@@ -65,18 +58,15 @@ public class CharacterMovement : NetworkBehaviour
         CanMove = false; // se nemore vec premikat zs to skripto dokler mu ne das to na true
         IsRespawning = true;
 
-        rb.linearVelocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
-        rb.Sleep();
+        velocity = Vector3.zero;
+        controller.enabled = false;
 
-        transform.position = spawnPos; // premakni ga 
+        transform.position = spawnPos;
+        controller.enabled = true;
     }
     public IEnumerator FinishRespawn() // nevem zakaj rabi bit enumerator ce ja ampak pustimo ker dela za zdej
     {
         yield return new WaitForSeconds(respawnDelay);
-
-        Rigidbody rb = GetComponent<Rigidbody>();
-        rb.WakeUp();
 
         IsRespawning = false;
         CanMove = true; //se lahko premika nazaj lepo
@@ -84,6 +74,15 @@ public class CharacterMovement : NetworkBehaviour
 
     void HandleMovement()
     {
+
+        isGrounded = controller.isGrounded;
+
+        if (isGrounded && velocity.y < 0)
+        {
+            velocity.y = -2f;
+            jumpCount = 0;
+        }
+
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
 
@@ -92,6 +91,7 @@ public class CharacterMovement : NetworkBehaviour
 
         animator.SetFloat("MoveX", animX);
         animator.SetFloat("MoveZ", animZ);
+        animator.SetBool("isGrounded", isGrounded);
 
         // Movement direction relative to the player's facing direction
 
@@ -105,19 +105,13 @@ public class CharacterMovement : NetworkBehaviour
         if (isGrounded)
         {
             lastMoveDir = moveDir;
-
-            Vector3 targetVelocity = moveDir * moveSpeed;
-            targetVelocity.y = rb.linearVelocity.y;
-            rb.linearVelocity = targetVelocity;
         }
         else
         {
-            Vector3 airDir = Vector3.Lerp(lastMoveDir, moveDir, airControlPercent);
-
-            Vector3 targetVelocity = airDir * moveSpeed;
-            targetVelocity.y = rb.linearVelocity.y;
-            rb.linearVelocity = targetVelocity;
+            moveDir = Vector3.Lerp(lastMoveDir, moveDir, airControlPercent);
         }
+
+        controller.Move(moveDir * moveSpeed * Time.deltaTime);
     }
 
 
@@ -125,11 +119,8 @@ public class CharacterMovement : NetworkBehaviour
 {
     if (Input.GetButtonDown("Jump") && jumpCount < maxJumps)
     {
-        // Reset vertical speed before applying new force
-        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
-        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-
-        jumpCount++;
+            velocity.y = jumpForce;
+            jumpCount++;
 
             animator.ResetTrigger("jumpKey");
             animator.SetTrigger("jumpKey");
@@ -138,36 +129,12 @@ public class CharacterMovement : NetworkBehaviour
         }
     }
 
-    void CheckGround()
+    // ================= GRAVITY =================
+    void ApplyGravity()
     {
-        bool wasGrounded = isGrounded;
-
-        CapsuleCollider col = GetComponent<CapsuleCollider>();
-        float radius = col.radius * 0.9f; // slight shrink to avoid edge issues
-
-        Vector3 origin = transform.position + Vector3.up * (col.height / 2f - radius);
-
-        isGrounded = Physics.Raycast(origin, Vector3.down, groundCheckDistance + 0.05f, groundMask);
-
-        // If we just landed, reset jump count and air control
-        if (isGrounded && !wasGrounded)
-        {
-            jumpCount = 0;
-
-            animator.SetBool("isGrounded", isGrounded);
-            //Debug.Log("Is grounded true");
-
-
-        }
-        else if(isGrounded==false){
-            animator.SetBool("isGrounded", isGrounded);
-            //Debug.Log("Is grounded false");
-        }
-
-
-
+        velocity.y += gravity * Time.deltaTime;
+        controller.Move(velocity * Time.deltaTime);
     }
-
 
     void OnDrawGizmosSelected()
     {

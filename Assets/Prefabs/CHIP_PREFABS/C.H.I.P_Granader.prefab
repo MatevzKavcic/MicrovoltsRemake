@@ -2273,7 +2273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1892395178
+  GlobalObjectIdHash: 3512383624
   InScenePlacedSourceGlobalObjectIdHash: 4144157666
   DeferredDespawnTick: 0
   Ownership: 1
@@ -2383,7 +2383,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4440825968715936509}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 68ba8ec90d3c3b3438cc75b2dfa4331d, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2411,6 +2411,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3cd49c00848252439c35adc37fe9908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponSwitcher
+  ShowTopMostFoldoutHeaderGroup: 1
   animator: {fileID: 1726855797123804857}
   meleeWeaponMesh: {fileID: 8004425753685357185}
   rifleWeaponMesh: {fileID: 5301178413832000450}
@@ -2430,6 +2431,8 @@ MonoBehaviour:
   sniperWeapon: {fileID: 5955547862502005894}
   zookaWeapon: {fileID: 1608115286781911874}
   granaderWeapon: {fileID: 8847793934395232558}
+  NetworkWeapon:
+    m_InternalValue: 0
   currentWeapon: 0
 --- !u!95 &1726855797123804857
 Animator:
