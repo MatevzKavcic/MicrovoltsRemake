@@ -20,6 +20,12 @@ public abstract class WeaponStats : NetworkBehaviour
     public float defaultFOV;
     public bool isZoomed = false;
 
+    [SerializeField] public float zoomSpeed = 10f;
+
+    [SerializeField] private GameObject scopeOverlayUI; // full screen scope
+    [SerializeField] private GameObject normalCrosshair;
+
+
     //public float shootLockTime = 0.2f; // how long IsShooting stays true
 
     protected Camera cam;
@@ -114,6 +120,12 @@ public abstract class WeaponStats : NetworkBehaviour
         if (!IsOwner) return;
         virtualCamera.Lens.FieldOfView = defaultFOV;
 
+
+    //    virtualCamera.Lens.FieldOfView = Mathf.Lerp(
+    //    virtualCamera.Lens.FieldOfView,
+    //    defaultFOV,
+    //    Time.deltaTime * zoomSpeed
+    //);
         isZoomed = false;
     }  
 

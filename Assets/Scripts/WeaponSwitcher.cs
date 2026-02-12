@@ -24,6 +24,7 @@ public class WeaponSwitcher : NetworkBehaviour
     public GameObject rifleWeaponCrosshair;
     public GameObject shotgunWeaponCrosshair;
     public GameObject sniperWeaponCrosshair;
+    public GameObject sniperWeaponCrosshairZoomed;
     public GameObject zookaWeaponCrosshair;
     public GameObject granaderWeaponCrosshair;
 
@@ -90,6 +91,9 @@ public class WeaponSwitcher : NetworkBehaviour
         animator.SetInteger("WeaponType", (int)newWeapon); // animator da ve kaj se dogaja
 
         if (!IsOwner) return;
+
+        //activeWeaponStats.DisableZoom(); //vedno ko equipas weapon moras disablat zoom in spremenit crosshair TO ne dela idk why
+
 
         ChangeCrosshair(newWeapon);
 

@@ -6,8 +6,7 @@ using UnityEngine.UIElements;
 public class SniperWeaponScript : WeaponStats
 {
 
-    [SerializeField] private float zoomFOV = 20f;
-    [SerializeField] private float zoomSpeed = 10f;
+    [SerializeField] private float zoomFOV = 10f;
 
     [SerializeField] private GameObject scopeOverlayUI; // full screen scope
     [SerializeField] private GameObject normalCrosshair;
@@ -36,9 +35,11 @@ public class SniperWeaponScript : WeaponStats
 
         virtualCamera.Lens.FieldOfView = zoomFOV;
 
-
-        //scopeOverlayUI.SetActive(true);
-        //normalCrosshair.SetActive(false);
+       //    virtualCamera.Lens.FieldOfView = Mathf.Lerp(
+       //    virtualCamera.Lens.FieldOfView,
+       //    zoomFOV,
+       //    Time.deltaTime * zoomSpeed
+       //);
     }
 
 
