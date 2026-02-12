@@ -85,8 +85,6 @@ MonoBehaviour:
   defaultFOV: 0
   isZoomed: 0
   zoomSpeed: 10
-  scopeOverlayUI: {fileID: 0}
-  normalCrosshair: {fileID: 0}
   tracerLinePrefab: {fileID: 8216330726691824439, guid: 80cd02479dc791a48a0aab1e6cfbcd46, type: 3}
   ammo: 30
   reloadTime: 1
@@ -743,8 +741,6 @@ MonoBehaviour:
   defaultFOV: 0
   isZoomed: 0
   zoomSpeed: 10
-  scopeOverlayUI: {fileID: 0}
-  normalCrosshair: {fileID: 0}
   tracerLinePrefab: {fileID: 0}
   ammo: 0
   reloadTime: 0
@@ -1323,8 +1319,6 @@ MonoBehaviour:
   defaultFOV: 0
   isZoomed: 0
   zoomSpeed: 10
-  scopeOverlayUI: {fileID: 0}
-  normalCrosshair: {fileID: 0}
   tracerLinePrefab: {fileID: 8216330726691824439, guid: 80cd02479dc791a48a0aab1e6cfbcd46, type: 3}
   ammo: 3
   reloadTime: 3
@@ -1767,8 +1761,6 @@ MonoBehaviour:
   defaultFOV: 0
   isZoomed: 0
   zoomSpeed: 10
-  scopeOverlayUI: {fileID: 0}
-  normalCrosshair: {fileID: 0}
   tracerLinePrefab: {fileID: 8216330726691824439, guid: 80cd02479dc791a48a0aab1e6cfbcd46, type: 3}
   ammo: 1
   reloadTime: 5
@@ -2094,8 +2086,6 @@ MonoBehaviour:
   defaultFOV: 0
   isZoomed: 0
   zoomSpeed: 10
-  scopeOverlayUI: {fileID: 0}
-  normalCrosshair: {fileID: 0}
   tracerLinePrefab: {fileID: 8216330726691824439, guid: 80cd02479dc791a48a0aab1e6cfbcd46, type: 3}
   ammo: 5
   reloadTime: 1
@@ -2797,7 +2787,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1894890493
+  GlobalObjectIdHash: 92294976
   InScenePlacedSourceGlobalObjectIdHash: 2085457526
   DeferredDespawnTick: 0
   Ownership: 1
@@ -4335,8 +4325,6 @@ MonoBehaviour:
   defaultFOV: 0
   isZoomed: 0
   zoomSpeed: 10
-  scopeOverlayUI: {fileID: 0}
-  normalCrosshair: {fileID: 0}
   tracerLinePrefab: {fileID: 8216330726691824439, guid: 80cd02479dc791a48a0aab1e6cfbcd46, type: 3}
   ammo: 3
   reloadTime: 1

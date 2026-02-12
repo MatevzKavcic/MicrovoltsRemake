@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 public class SniperWeaponScript : WeaponStats
 {
 
-    [SerializeField] private float zoomFOV = 10f;
+    [SerializeField] private float zoomFOV = 5f;
 
     [SerializeField] private GameObject scopeOverlayUI; // full screen scope
     [SerializeField] private GameObject normalCrosshair;
@@ -17,7 +17,7 @@ public class SniperWeaponScript : WeaponStats
         if (!IsOwner) return;
         Debug.Log(" is zoomed variable :" + isZoomed);
 
-        if (!isZoomed) // zoomej ce nisi zoomed
+        if (!isZoomed && !isReloading) // zoomej ce nisi zoomed
         {
             EnableZoom();
         }
@@ -35,11 +35,25 @@ public class SniperWeaponScript : WeaponStats
 
         virtualCamera.Lens.FieldOfView = zoomFOV;
 
+        Debug.Log("zoom is " + virtualCamera.Lens.FieldOfView);
+
+        scopeOverlayUI.SetActive(true);
        //    virtualCamera.Lens.FieldOfView = Mathf.Lerp(
        //    virtualCamera.Lens.FieldOfView,
        //    zoomFOV,
        //    Time.deltaTime * zoomSpeed
        //);
+    }
+
+
+    public void DisableZoom()
+    {
+        if (!IsOwner) return;
+        virtualCamera.Lens.FieldOfView = defaultFOV;
+        scopeOverlayUI.SetActive(false);
+        isZoomed = false;
+        Debug.Log("zoom is " + virtualCamera.Lens.FieldOfView);
+
     }
 
 
@@ -66,7 +80,16 @@ public class SniperWeaponScript : WeaponStats
 
         // tell ALL clients to show tracer
         SpawnTracerClientRpc(origin, endPoint);
+
+
+        DisableZoom();
     }
 
+
+    public override void OnUnequip()
+    {
+        if (isZoomed)
+            DisableZoom();
+    }
 
 }

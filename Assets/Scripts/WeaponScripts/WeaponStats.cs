@@ -17,16 +17,12 @@ public abstract class WeaponStats : NetworkBehaviour
     protected float nextFireTime;
     public float maxDistance = 1000f;
 
-    public float defaultFOV;
+    public float defaultFOV= 50;
     public bool isZoomed = false;
+
 
     [SerializeField] public float zoomSpeed = 10f;
 
-    [SerializeField] private GameObject scopeOverlayUI; // full screen scope
-    [SerializeField] private GameObject normalCrosshair;
-
-
-    //public float shootLockTime = 0.2f; // how long IsShooting stays true
 
     protected Camera cam;
 
@@ -64,7 +60,7 @@ public abstract class WeaponStats : NetworkBehaviour
     {
         if (!IsOwner) return;
         StartCoroutine(AssignCameraWhenReady());
-        defaultFOV = cam.fieldOfView;
+
     } // samo za camera da se bo pravilno inniciarizirala
 
     public virtual bool TryShoot() // to je dejanski gate keep ki se vedno pogleda preden streljas tko da lahko tle delas checke za network ne rabis u weaponih.
@@ -105,6 +101,11 @@ public abstract class WeaponStats : NetworkBehaviour
         ServerShootLogic(baseDir);
     }
 
+    public virtual void OnUnequip()
+    {
+        // default: do nothing
+    }
+
 
 
     protected abstract void Aim(); // usi clasi ga morajo met ampak aimali bojo rifle in snipe... mele weapon hita
@@ -115,19 +116,6 @@ public abstract class WeaponStats : NetworkBehaviour
         Aim();
     }
 
-    public void DisableZoom()
-    {
-        if (!IsOwner) return;
-        virtualCamera.Lens.FieldOfView = defaultFOV;
-
-
-    //    virtualCamera.Lens.FieldOfView = Mathf.Lerp(
-    //    virtualCamera.Lens.FieldOfView,
-    //    defaultFOV,
-    //    Time.deltaTime * zoomSpeed
-    //);
-        isZoomed = false;
-    }  
 
     public virtual void TryReaload()
     {

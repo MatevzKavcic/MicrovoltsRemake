@@ -1,4 +1,5 @@
 using System;
+using Unity.Cinemachine;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -43,11 +44,18 @@ public class WeaponSwitcher : NetworkBehaviour
         NetworkVariableReadPermission.Everyone,
         NetworkVariableWritePermission.Server
     );
+    protected CinemachineCamera virtualCam;
 
     private WeaponStats activeWeaponStats;
 
     [Header("Current Weapon")]
     public WeaponType currentWeapon = WeaponType.Melee;
+
+
+    private void Start()
+    {
+        virtualCam = FindFirstObjectByType<CinemachineCamera>();
+    }
 
     void Update()
     {
@@ -87,13 +95,19 @@ public class WeaponSwitcher : NetworkBehaviour
      */
     private void OnWeaponChanged(WeaponType oldWeapon, WeaponType newWeapon) // core logic
     {
+
+        if (activeWeaponStats != null)
+        {
+            activeWeaponStats.OnUnequip();
+        }
+
+
         EquipWeapon(newWeapon); // to je visual
         animator.SetInteger("WeaponType", (int)newWeapon); // animator da ve kaj se dogaja
 
         if (!IsOwner) return;
 
-        //activeWeaponStats.DisableZoom(); //vedno ko equipas weapon moras disablat zoom in spremenit crosshair TO ne dela idk why
-
+        //sniperWeaponCrosshairZoomed.SetActive(false); // quickfix da vedno ko menjas da se ti crosshair zbrise... in pol se zoom nekko moram...
 
         ChangeCrosshair(newWeapon);
 
