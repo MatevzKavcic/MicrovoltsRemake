@@ -1816,7 +1816,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 674028433
+  GlobalObjectIdHash: 2447978398
   InScenePlacedSourceGlobalObjectIdHash: 4101705596
   DeferredDespawnTick: 0
   Ownership: 1
@@ -2215,6 +2215,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 0
+  inputAxisController: {fileID: 0}
   hitbox: {fileID: 0}
   activeHitTime: 0.2
   targetTag: Player
@@ -3020,6 +3021,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 0
+  inputAxisController: {fileID: 0}
   pelletCount: 8
   spreadAngle: 5
   tracerDuration: 0.5
@@ -3160,9 +3162,11 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 0
+  inputAxisController: {fileID: 0}
   zoomFOV: 10
   scopeOverlayUI: {fileID: 2993486687996701296}
   normalCrosshair: {fileID: 4060167988475654878}
+  inZoomMouseSpeed: 0.18
 --- !u!1 &7842281145839938753
 GameObject:
   m_ObjectHideFlags: 0
@@ -3332,6 +3336,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 0
+  inputAxisController: {fileID: 0}
 --- !u!1 &8171646408594414143
 GameObject:
   m_ObjectHideFlags: 0
@@ -3497,6 +3502,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 0
+  inputAxisController: {fileID: 0}
   hitMask:
     serializedVersion: 2
     m_Bits: 310
@@ -3653,6 +3659,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 0
+  inputAxisController: {fileID: 0}
   granaderBulletPrefab: {fileID: 8370159602178525754, guid: 22a56fd87d9ba9b42967cc9bc5bf0d8e, type: 3}
   hitMask:
     serializedVersion: 2

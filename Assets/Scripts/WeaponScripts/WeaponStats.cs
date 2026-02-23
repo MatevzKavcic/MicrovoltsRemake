@@ -28,6 +28,7 @@ public abstract class WeaponStats : NetworkBehaviour
 
     protected CinemachineCamera virtualCamera;
 
+
     public LineRenderer tracerLinePrefab;
 
     [Header("ammo")]
@@ -40,6 +41,8 @@ public abstract class WeaponStats : NetworkBehaviour
 
     [Header("Hitscan Settings")]
     public LayerMask layerMask; //To masko mora nastimat usak weapon posebej ampak basicly je to samo kam aimas... in kaj zadanes in kaj ne.
+
+    public CinemachineInputAxisController inputAxisController;
 
     protected virtual IEnumerator AssignCameraWhenReady()
     {
@@ -61,6 +64,7 @@ public abstract class WeaponStats : NetworkBehaviour
         if (!IsOwner) return;
         StartCoroutine(AssignCameraWhenReady());
 
+        inputAxisController = virtualCamera.GetComponent<CinemachineInputAxisController>();    
     } // samo za camera da se bo pravilno inniciarizirala
 
     public virtual bool TryShoot() // to je dejanski gate keep ki se vedno pogleda preden streljas tko da lahko tle delas checke za network ne rabis u weaponih.

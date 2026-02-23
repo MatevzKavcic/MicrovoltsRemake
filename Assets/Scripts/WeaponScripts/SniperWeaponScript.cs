@@ -11,6 +11,8 @@ public class SniperWeaponScript : WeaponStats
     [SerializeField] private GameObject scopeOverlayUI; // full screen scope
     [SerializeField] private GameObject normalCrosshair;
 
+    [SerializeField] private float inZoomMouseSpeed;
+
     protected override void Aim() // pow poveci malo
 
     {
@@ -35,6 +37,12 @@ public class SniperWeaponScript : WeaponStats
 
         virtualCamera.Lens.FieldOfView = zoomFOV;
 
+        //CinemachinePOV.m_HorizontalAxis.m_MaxSpeed =3;
+
+        Debug.Log(inputAxisController + " : cinamchine speed neki neki ce dela");
+
+        setCameraSpeedtoSlow();
+
         Debug.Log("zoom is " + virtualCamera.Lens.FieldOfView);
 
         scopeOverlayUI.SetActive(true);
@@ -52,8 +60,50 @@ public class SniperWeaponScript : WeaponStats
         virtualCamera.Lens.FieldOfView = defaultFOV;
         scopeOverlayUI.SetActive(false);
         isZoomed = false;
+        setCameraSpeedtoNormal();
         Debug.Log("zoom is " + virtualCamera.Lens.FieldOfView);
 
+    }
+
+    public void setCameraSpeedtoSlow()
+    {
+        foreach (var c in inputAxisController.Controllers)
+        {
+
+
+            if (c.Name == "Look X (Pan)")
+            {
+
+                c.Input.Gain = inZoomMouseSpeed;
+            }
+
+            if (c.Name == "Look Y (Tilt)")
+            {
+                c.Input.Gain = -inZoomMouseSpeed;
+
+            }
+
+        }
+    }
+    public void setCameraSpeedtoNormal()
+    {
+        foreach (var c in inputAxisController.Controllers)
+        {
+
+
+            if (c.Name == "Look X (Pan)")
+            {
+
+                c.Input.Gain = 1; //constant... to je konstanta za normal playtrough
+            }
+
+            if (c.Name == "Look Y (Tilt)")
+            {
+                c.Input.Gain = -1; //constant... to je konstanta za normal playtrough
+
+            }
+
+        }
     }
 
 
