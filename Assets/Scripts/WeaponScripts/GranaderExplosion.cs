@@ -43,8 +43,10 @@ public class GranaderExplosion : NetworkBehaviour
             {
                 Vector3 direction = (hit.transform.position - transform.position).normalized;
 
-                float knockbackForce = 50f; // tweak this
-                float upwardForce = 60f;     // tweak this
+                // fine tune thisso it will feel better for future COMMITS
+
+                float knockbackForce = 50f; 
+                float upwardForce = 60f;    
 
                 Vector3 force = direction * knockbackForce;
                 force.y = upwardForce;

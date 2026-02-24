@@ -62,10 +62,6 @@ public class CharacterMovement : NetworkBehaviour
         controller.Move(finalVelocity * Time.deltaTime);// samo tle premikej mozicka
 
 
-
-        //controller.Move(velocity * Time.deltaTime); 
-
-
         knockbackVelocity = Vector3.Lerp(knockbackVelocity, Vector3.zero, knockbackDecay * Time.deltaTime);
     }
 
@@ -162,7 +158,6 @@ public class CharacterMovement : NetworkBehaviour
     void ApplyGravity()
     {
         velocity.y += gravity * Time.deltaTime;
-        //controller.Move(velocity * Time.deltaTime);
     }
 
     //void OnDrawGizmosSelected()

@@ -46,8 +46,11 @@ public class ExplosionZooka : NetworkBehaviour
             {
                 Vector3 direction = (hit.transform.position - transform.position).normalized;
 
-                float knockbackForce = 60f; // tweak this
-                float upwardForce = 50f;     // tweak this
+
+                // fine tune thisso it will feel better for future COMMITS
+
+                float knockbackForce = 60f; 
+                float upwardForce = 50f;     
 
                 Vector3 force = direction * knockbackForce;
                 force.y = upwardForce;
