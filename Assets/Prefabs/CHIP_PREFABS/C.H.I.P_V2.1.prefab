@@ -2770,6 +2770,7 @@ MonoBehaviour:
   inputAxisController: {fileID: 0}
   zoomFOV: 50
   inZoomMouseSpeed: 0.4
+  spreadAngle: 1
 --- !u!1 &7186862123814186389
 GameObject:
   m_ObjectHideFlags: 0
@@ -3209,7 +3210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1034770639
+  GlobalObjectIdHash: 2214454279
   InScenePlacedSourceGlobalObjectIdHash: 674028433
   DeferredDespawnTick: 0
   Ownership: 1

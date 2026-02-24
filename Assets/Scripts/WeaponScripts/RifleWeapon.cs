@@ -1,6 +1,7 @@
 using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 
 public class RifleWeapon : WeaponStats
@@ -9,6 +10,9 @@ public class RifleWeapon : WeaponStats
     [SerializeField] private float zoomFOV = 5f;
 
     [SerializeField] private float inZoomMouseSpeed;
+
+    public float spreadAngle = 5f;      // degrees of random spread
+
 
 
     protected override void Aim() // pow poveci malo
@@ -118,10 +122,12 @@ public class RifleWeapon : WeaponStats
 
         Vector3 origin = firePoint.position;
 
-        Vector3 endPoint = origin + baseDir * maxDistance;
+        Vector3 spreadDir = GetSpreadDirection(baseDir); // adding randomnes to shotting so it's not a laser per se
+
+        Vector3 endPoint = origin + spreadDir * maxDistance; 
 
 
-        if (Physics.Raycast(origin, baseDir, out RaycastHit hit, maxDistance, layerMask))
+        if (Physics.Raycast(origin, spreadDir, out RaycastHit hit, maxDistance, layerMask))
         {
             endPoint = hit.point;
 
@@ -137,5 +143,20 @@ public class RifleWeapon : WeaponStats
         // tell ALL clients to show tracer
         SpawnTracerClientRpc(origin, endPoint);
     }
+
+
+
+    Vector3 GetSpreadDirection(Vector3 baseDir)
+    {
+        // Make a random rotation around base direction
+        // random yaw & pitch within spreadAngle
+        float yaw = Random.Range(-spreadAngle, spreadAngle);
+        float pitch = Random.Range(-spreadAngle, spreadAngle);
+
+        Quaternion rot = Quaternion.Euler(pitch, yaw, 0f);
+        Vector3 spreadDir = rot * baseDir;
+        return spreadDir.normalized;
+    }
+
 
 }
