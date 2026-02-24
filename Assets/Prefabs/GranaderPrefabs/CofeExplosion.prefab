@@ -29589,7 +29589,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 888660378
+  GlobalObjectIdHash: 4247837969
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -29621,3 +29621,5 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   lifeTime: 0.5
+  upwardModifier: 1
+  explosionForce: 4

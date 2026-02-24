@@ -30,6 +30,9 @@ public class CharacterMovement : NetworkBehaviour
 
     private Animator animator;
 
+    Vector3 knockbackVelocity;
+
+    float knockbackDecay = 5f;
     public bool CanMove { get; private set; } = true;
     public bool IsRespawning { get; private set; } = false;
 
@@ -51,7 +54,21 @@ public class CharacterMovement : NetworkBehaviour
         HandleMovement();
         HandleJump();
         ApplyGravity();
+
+
+
+        Vector3 finalVelocity = velocity + knockbackVelocity;
+
+        controller.Move(finalVelocity * Time.deltaTime);// samo tle premikej mozicka
+
+
+
+        //controller.Move(velocity * Time.deltaTime); 
+
+
+        knockbackVelocity = Vector3.Lerp(knockbackVelocity, Vector3.zero, knockbackDecay * Time.deltaTime);
     }
+
 
     public void BeginRespawn(Vector3 spawnPos) // to poklices u player stats da zacnes respawn i gues ? ;
     {
@@ -111,7 +128,19 @@ public class CharacterMovement : NetworkBehaviour
             moveDir = Vector3.Lerp(lastMoveDir, moveDir, airControlPercent);
         }
 
-        controller.Move(moveDir * moveSpeed * Time.deltaTime);
+        Vector3 horizontalVelocity = moveDir * moveSpeed;
+
+        velocity.x = horizontalVelocity.x;
+        velocity.z = horizontalVelocity.z;
+    }
+
+    public void ApplyKnockback(Vector3 force)
+    {
+        if(isGrounded)
+        {
+            knockbackVelocity += force;
+
+        }
     }
 
 
@@ -133,7 +162,7 @@ public class CharacterMovement : NetworkBehaviour
     void ApplyGravity()
     {
         velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
+        //controller.Move(velocity * Time.deltaTime);
     }
 
     //void OnDrawGizmosSelected()
