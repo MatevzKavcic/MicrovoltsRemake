@@ -14,7 +14,7 @@ public class JumpPadScript : MonoBehaviour
         if (movement != null)
         {
             //Vector3 launchDir = transform.forward + Vector3.up;
-            launchDirection.Normalize();
+            //launchDirection.Normalize();
 
             movement.ApplyLaunch(launchDirection* launchSpeed);
 
