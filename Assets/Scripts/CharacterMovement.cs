@@ -3,7 +3,6 @@ using System.Globalization;
 using Unity.Netcode;
 using UnityEngine;
 
-//[RequireComponent(typeof(Rigidbody))]
 public class CharacterMovement : NetworkBehaviour
 {
     [Header("Movement Settings")]
@@ -36,6 +35,12 @@ public class CharacterMovement : NetworkBehaviour
     public bool CanMove { get; private set; } = true;
     public bool IsRespawning { get; private set; } = false;
 
+
+    bool isLaunched = false;
+    float launchControlLockTimer = 3f;
+
+
+
     void Start()
     {
         Debug.Log($"{name} | Owner = {IsOwner} | Server = {IsServer} | LocalID = {NetworkManager.Singleton.LocalClientId} | OwnerID = {OwnerClientId}");
@@ -51,7 +56,30 @@ public class CharacterMovement : NetworkBehaviour
     void Update()
     {
         if (!IsOwner || !CanMove) return;
-        HandleMovement();
+
+        isGrounded = controller.isGrounded;
+
+        if (isLaunched)
+        {
+            launchControlLockTimer -= Time.deltaTime;
+
+            if (launchControlLockTimer <= 0f && isGrounded) 
+            {
+                isLaunched = false;
+            }
+        }
+
+
+        // Always check grounding first
+        
+        // Unlock launch when landing
+        if (!isLaunched)
+        {
+            HandleMovement();     
+        }
+        
+
+
         HandleJump();
         ApplyGravity();
 
@@ -63,6 +91,14 @@ public class CharacterMovement : NetworkBehaviour
 
 
         knockbackVelocity = Vector3.Lerp(knockbackVelocity, Vector3.zero, knockbackDecay * Time.deltaTime);
+    }
+
+    public void ApplyLaunch(Vector3 launchVelocity)
+    {
+        knockbackVelocity = Vector3.zero;
+        velocity = launchVelocity;
+        isLaunched = true;
+        launchControlLockTimer = 1.0f; // how long direction is locked
     }
 
 
@@ -88,13 +124,18 @@ public class CharacterMovement : NetworkBehaviour
     void HandleMovement()
     {
 
-        isGrounded = controller.isGrounded;
-
+       
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
             jumpCount = 0;
         }
+
+        //if (isGrounded && isLaunched)
+        //{
+        //    isLaunched = false;
+        //}
+
 
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
@@ -126,8 +167,8 @@ public class CharacterMovement : NetworkBehaviour
 
         Vector3 horizontalVelocity = moveDir * moveSpeed;
 
-        velocity.x = horizontalVelocity.x;
-        velocity.z = horizontalVelocity.z;
+            velocity.x = horizontalVelocity.x;
+            velocity.z = horizontalVelocity.z;
     }
 
     public void ApplyKnockback(Vector3 force)
@@ -139,11 +180,11 @@ public class CharacterMovement : NetworkBehaviour
         }
     }
 
-
+ 
     void HandleJump()
-{
-    if (Input.GetButtonDown("Jump") && jumpCount < maxJumps)
     {
+        if (Input.GetButtonDown("Jump") && jumpCount < maxJumps)
+        {
             velocity.y = jumpForce;
             jumpCount++;
 
@@ -160,12 +201,5 @@ public class CharacterMovement : NetworkBehaviour
         velocity.y += gravity * Time.deltaTime;
     }
 
-    //void OnDrawGizmosSelected()
-    //{
-    //    Gizmos.color = Color.yellow;
-    //    Gizmos.DrawLine(transform.position, transform.position + Vector3.down * (groundCheckDistance + 0.1f));
-    //}
-
-   
-
+    
 }
