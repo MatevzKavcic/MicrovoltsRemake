@@ -13,6 +13,13 @@ public class SniperWeaponScript : WeaponStats
 
     [SerializeField] private float inZoomMouseSpeed;
 
+    [SerializeField] private GameObject CameraMover;
+    
+    [SerializeField] private Transform DefaultPosition;
+
+    [SerializeField] private Transform ZoomPosition;
+
+
     protected override void Aim() // pow poveci malo
 
     {
@@ -39,7 +46,12 @@ public class SniperWeaponScript : WeaponStats
 
         //CinemachinePOV.m_HorizontalAxis.m_MaxSpeed =3;
 
-        Debug.Log(inputAxisController + " : cinamchine speed neki neki ce dela");
+        //pri kameri ne premikat kamere ampak premakni samo položaj folow targeta
+
+        CameraMover.transform.position = ZoomPosition.position;
+
+        Debug.Log(cam.transform.position  + " položaj kamere  ENABLE");
+
 
         setCameraSpeedtoSlow();
 
@@ -60,6 +72,9 @@ public class SniperWeaponScript : WeaponStats
         virtualCamera.Lens.FieldOfView = defaultFOV;
         scopeOverlayUI.SetActive(false);
         isZoomed = false;
+        Debug.Log(cam.transform.position + " položaj kamere  DISABLE");
+        CameraMover.transform.position = DefaultPosition.position;
+
         setCameraSpeedtoNormal();
         Debug.Log("zoom is " + virtualCamera.Lens.FieldOfView);
 
