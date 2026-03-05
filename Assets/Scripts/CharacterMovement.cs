@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Globalization;
+using Unity.Cinemachine;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -39,6 +40,24 @@ public class CharacterMovement : NetworkBehaviour
     bool isLaunched = false;
     float launchControlLockTimer = 3f;
 
+
+    private Camera playerCamera;
+
+
+    public override void OnNetworkSpawn()
+    {
+        if (!IsOwner) return;
+
+        StartCoroutine(AssignCamera());
+    }
+
+    private IEnumerator AssignCamera()
+    {
+        while (Camera.main == null)
+            yield return null;
+
+        playerCamera = Camera.main;
+    }
 
 
     void Start()
@@ -148,8 +167,9 @@ public class CharacterMovement : NetworkBehaviour
         animator.SetBool("isGrounded", isGrounded);
 
         // Movement direction relative to the player's facing direction
+        if (playerCamera == null) return;
 
-        Transform cam = Camera.main.transform;
+        Transform cam = playerCamera.transform;
 
         Vector3 camForward = Vector3.ProjectOnPlane(cam.forward, Vector3.up).normalized;    
         Vector3 camRight = Vector3.ProjectOnPlane(cam.right, Vector3.up).normalized;

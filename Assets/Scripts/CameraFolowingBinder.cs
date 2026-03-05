@@ -1,25 +1,35 @@
 using Unity.Netcode;
 using UnityEngine;
 using Unity.Cinemachine;
-using static UnityEditor.VersionControl.Message;
-using static UnityEngine.UIElements.UxmlAttributeDescription;
-using System;
+using System.Collections;
 
-public class PlayerCameraBinder : NetworkBehaviour
+
+public class CameraFolowingBinder : NetworkBehaviour
 {
     [SerializeField] private Transform cameraFollowTarget;
 
+    [SerializeField] private CinemachineCamera vcam;
+
+    public Camera PlayerCamera { get; private set; }
+
     public override void OnNetworkSpawn()
     {
-        if (!IsOwner) return;
+        if (!IsOwner)
+        {
+            vcam.gameObject.SetActive(false);
+            return;
+        }
 
-        CinemachineCamera vcam = FindFirstObjectByType<CinemachineCamera>();
+        vcam.gameObject.SetActive(true);
+        vcam.Follow = cameraFollowTarget;
 
         if (vcam == null)
         {
             Debug.LogError("No Cinemachine Virtual Camera found!");
             return;
         }
-        vcam.Follow = cameraFollowTarget;
+
     }
+
+
 }

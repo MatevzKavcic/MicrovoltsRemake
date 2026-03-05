@@ -17,6 +17,7 @@ public class ClientButton : MonoBehaviour
         string ip = ipInputField.text;
 
         var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
+        Debug.Log(transport + " to je transpport ce dela sploh ' to je  ip : "+ ip );
         transport.SetConnectionData(ip, 7777);
 
         NetworkManager.Singleton.StartClient();

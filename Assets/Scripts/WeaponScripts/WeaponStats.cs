@@ -26,8 +26,7 @@ public abstract class WeaponStats : NetworkBehaviour
 
     protected Camera cam;
 
-    protected CinemachineCamera virtualCamera;
-
+    [SerializeField] protected CinemachineCamera virtualCamera;
 
     public LineRenderer tracerLinePrefab;
 
@@ -44,28 +43,49 @@ public abstract class WeaponStats : NetworkBehaviour
 
     public CinemachineInputAxisController inputAxisController;
 
-    protected virtual IEnumerator AssignCameraWhenReady()
-    {
-        // Wait until Camera.main exists
-        while (cam == null)
-        {
-            cam = Camera.main;
+    //protected virtual IEnumerator AssignCameraWhenReady()
+    //{
+    //    // Wait until Camera.main exists
+    //    while (cam == null)
+    //    {
+    //        cam = Camera.main;
 
-            virtualCamera = FindFirstObjectByType<CinemachineCamera>();
-            
-            yield return null; // wait a frame
-        }
+    //        yield return null; // wait a frame
+    //    }
 
 
-    }// samo za camera da se bo pravilno inniciarizirala
+    //}// samo za camera da se bo pravilno inniciarizirala
 
-    protected virtual void Start()
+    public override void OnNetworkSpawn()
     {
         if (!IsOwner) return;
-        StartCoroutine(AssignCameraWhenReady());
 
-        inputAxisController = virtualCamera.GetComponent<CinemachineInputAxisController>();    
-    } // samo za camera da se bo pravilno inniciarizirala
+        StartCoroutine(AssignCamera());
+    }
+
+    private IEnumerator AssignCamera()
+    {
+        while (Camera.main == null)
+            yield return null;
+
+        cam = Camera.main;
+
+        Debug.Log("Camera assigned: " + cam);
+
+        inputAxisController = virtualCamera
+            .GetComponentInChildren<CinemachineInputAxisController>();
+    }
+
+
+       
+    //protected virtual void Start()
+    //{
+    //    if (!IsOwner) return;
+    //    if (cam == null) return;
+    //    if (virtualCamera == null) return;
+
+
+    //} // samo za camera da se bo pravilno inniciarizirala
 
     public virtual bool TryShoot() // to je dejanski gate keep ki se vedno pogleda preden streljas tko da lahko tle delas checke za network ne rabis u weaponih.
     {
@@ -117,6 +137,8 @@ public abstract class WeaponStats : NetworkBehaviour
     public virtual void TryAim()
     {
         if (!IsOwner) return;  // <–– only local player shoots
+        if (cam == null) return;
+
         Aim();
     }
 
@@ -185,6 +207,8 @@ public abstract class WeaponStats : NetworkBehaviour
     protected void SpawnTracerClientRpc(Vector3 start, Vector3 end) // narisi crte in bodi fency
     {
         if (tracerLinePrefab == null) return;
+        if (cam == null) return;
+
 
         LineRenderer lr = Instantiate(tracerLinePrefab, Vector3.zero, Quaternion.identity);
         StartCoroutine(ShowTracer(lr, start, end));
@@ -197,7 +221,7 @@ public abstract class WeaponStats : NetworkBehaviour
 
         if (cam == null||!IsOwner )
         {
-            Debug.LogWarning($"{name}: Missing camera" + cam + "   na zacetku je setana ? ");
+            Debug.LogWarning($"{name}: Missing camera" + cam + "   na zacetku je setana ? "+ IsOwner);
             return Vector3.forward;
         }
         if ( firePoint == null)

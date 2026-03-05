@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -11,14 +12,19 @@ public class PlayerAimRotation : NetworkBehaviour
     [Tooltip("How quickly the player rotates to face the camera direction.")]
     public float rotationSpeed = 1000f;
 
-    void Start()
+    public override void OnNetworkSpawn()
     {
-        if (cameraTransform == null)
-        {
-            Camera cam = Camera.main;
-            if (cam != null)
-                cameraTransform = cam.transform;
-        }
+        if (!IsOwner) return;
+
+        StartCoroutine(AssignCamera());
+    }
+
+    private IEnumerator AssignCamera()
+    {
+        while (Camera.main == null)
+            yield return null;
+
+        cameraTransform = Camera.main.transform;
     }
 
     void LateUpdate()

@@ -11,6 +11,16 @@ public class BodyRotation : NetworkBehaviour
     private float currentSpineAngle;
     private Quaternion spineInitialRotation;
 
+
+    private Camera playerCamera;
+
+    public override void OnNetworkSpawn()
+    {
+        if (!IsOwner) return;
+
+        playerCamera = Camera.main;
+    }
+
     void Start()
     {
         spineInitialRotation = spineBone.localRotation;
@@ -20,7 +30,10 @@ public class BodyRotation : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-        float cameraPitch = Camera.main.transform.eulerAngles.x;
+        if (playerCamera == null) return;
+
+
+        float cameraPitch = playerCamera.transform.eulerAngles.x;
 
         if (cameraPitch > 180f)
             cameraPitch -= 360f;
