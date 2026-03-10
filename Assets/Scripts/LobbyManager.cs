@@ -26,9 +26,6 @@ public class LobbyManager : NetworkBehaviour
             "GameScene",
             LoadSceneMode.Single
         );
-
-
-
     }
 
     private void OnClientConnected(ulong clientId)
