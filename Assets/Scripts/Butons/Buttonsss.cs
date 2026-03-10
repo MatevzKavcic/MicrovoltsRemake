@@ -18,7 +18,6 @@ public class Buttonsss : MonoBehaviour
 
         hideMe.SetActive(false);
 
-
         for (int i = 0; i < showMe.Length; i++)
         {
             showMe[i].SetActive(true);

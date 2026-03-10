@@ -10,6 +10,8 @@ public class ClientButton : MonoBehaviour
 
     public TMP_InputField ipInputField;
 
+    public GameObject[] showMe;
+
 
     public void StartClient()
     {
@@ -22,6 +24,11 @@ public class ClientButton : MonoBehaviour
 
         NetworkManager.Singleton.StartClient();
         hideMe.SetActive(false);
+
+        for (int i = 0; i < showMe.Length; i++)
+        {
+            showMe[i].SetActive(true);
+        }
 
     }
 }
