@@ -1,16 +1,42 @@
+using Unity.Netcode;
 using UnityEngine;
 
-public class lobbyTeamUIScript : MonoBehaviour
+public class lobbyTeamUIScript : NetworkBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    public int teamNumber;
+
+    public LobbyPlayer[] GetPlayersInTeam()
     {
-        
+        var players = FindObjectsOfType<LobbyPlayer>(); // optimiziraj
+
+        System.Collections.Generic.List<LobbyPlayer> teamPlayers = new();
+
+        foreach (var player in players)
+        {
+            if (player.Team.Value == teamNumber)
+            {
+                teamPlayers.Add(player);
+            }
+        }
+
+        return teamPlayers.ToArray();
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public void showPlayersOnTeamUI()
     {
-        
+        var players = GetPlayersInTeam();
+       
+        foreach (var player in players)
+        {
+            Debug.Log("player ; " + player.name + "   team  : " + player.Team.Value);   
+        }
+    }
+
+
+    private void Start()
+    {
+        InvokeRepeating(nameof(showPlayersOnTeamUI), 1f, 2f);
     }
 }

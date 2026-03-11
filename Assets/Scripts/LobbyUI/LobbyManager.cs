@@ -11,12 +11,7 @@ public class LobbyManager : NetworkBehaviour
 
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
     }
-    private void SpawnPlayer(ulong clientId)
-    {
-        GameObject player = Instantiate(playerPrefab);
-        player.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
-
-    }
+  
 
     public void StartGame()
     {
@@ -69,5 +64,28 @@ public class LobbyManager : NetworkBehaviour
             }
         }
     }
+    //private void SpawnPlayer(ulong clientId)
+    //{
+    //    GameObject player = Instantiate(playerPrefab);
+    //    player.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
 
+    //}
+
+    void SpawnPlayer(ulong clientId) // beter version od above... se transfera podatke o player teamu da pol se nemores streljat
+
+    {
+        var client = NetworkManager.Singleton.ConnectedClients[clientId];
+
+        LobbyPlayer lobbyPlayer = client.PlayerObject.GetComponent<LobbyPlayer>();
+
+        GameObject player = Instantiate(playerPrefab);
+
+        PlayerStats gamePlayer = player.GetComponent<PlayerStats>();
+
+        // data premakni u state
+        gamePlayer.Team.Value = lobbyPlayer.Team.Value;
+        gamePlayer.PlayerName.Value = lobbyPlayer.PlayerName.Value;
+
+        player.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
+    }
 }

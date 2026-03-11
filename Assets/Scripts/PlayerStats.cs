@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +9,12 @@ public class PlayerStats : NetworkBehaviour
 {
     [Header("Player")]
     public GameObject playerObject; // mora bit mesh... ne dat objekta drugace tudi corutine umre oz skripta.
+
+    [Header("TEAM + name")]
+    public NetworkVariable<int> Team = new NetworkVariable<int>();
+    public NetworkVariable<FixedString32Bytes> PlayerName = new NetworkVariable<FixedString32Bytes>();
+
+
     [Header("Death Handling")]
     public Collider[] collidersToDisable;    // main collider, etc.  // lahko das za kolko te hurta ce te zadane.
     public MonoBehaviour[] scriptsToDisable; // movement, attack, etc.
@@ -29,6 +36,7 @@ public class PlayerStats : NetworkBehaviour
     private bool isDead = false;
 
     private CharacterMovement movement;
+
 
 
     void Awake()
@@ -66,6 +74,8 @@ public class PlayerStats : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
+        Debug.Log("Player " + PlayerName.Value + " spawned on team " + Team.Value);
+
         if (IsServer && currentHealth.Value <= 0f)
         {
             currentHealth.Value = maxHealth;
