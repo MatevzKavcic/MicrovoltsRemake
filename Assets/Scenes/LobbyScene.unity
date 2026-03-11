@@ -1470,7 +1470,6 @@ GameObject:
   - component: {fileID: 704932005}
   - component: {fileID: 704932004}
   - component: {fileID: 704932007}
-  - component: {fileID: 704932006}
   m_Layer: 5
   m_Name: RedTeam
   m_TagString: Untagged
@@ -1535,20 +1534,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 704932002}
   m_CullTransparentMesh: 1
---- !u!114 &704932006
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 704932002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4000d36708ac4034a8564d75abd148ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  ShowTopMostFoldoutHeaderGroup: 1
-  teamNumber: 1
 --- !u!114 &704932007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1726,7 +1711,6 @@ GameObject:
   - component: {fileID: 884684266}
   - component: {fileID: 884684268}
   - component: {fileID: 884684267}
-  - component: {fileID: 884684269}
   - component: {fileID: 884684270}
   m_Layer: 5
   m_Name: BlueTeam
@@ -1792,20 +1776,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 884684265}
   m_CullTransparentMesh: 1
---- !u!114 &884684269
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 884684265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4000d36708ac4034a8564d75abd148ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::lobbyTeamUIScript
-  ShowTopMostFoldoutHeaderGroup: 1
-  teamNumber: 2
 --- !u!114 &884684270
 MonoBehaviour:
   m_ObjectHideFlags: 0

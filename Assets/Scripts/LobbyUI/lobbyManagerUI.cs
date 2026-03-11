@@ -19,7 +19,7 @@ public class LobbyManagerUI : MonoBehaviour
 
             InLobbyPlayerUserInterface row = Instantiate(playerRowPrefab, parent);
 
-            row.Setup(player.PlayerName.Value.ToString()+" banana");
+            row.Setup(player.PlayerName.Value.ToString());
         }
     }
 
