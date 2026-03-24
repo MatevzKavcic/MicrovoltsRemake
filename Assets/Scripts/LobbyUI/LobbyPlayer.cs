@@ -1,3 +1,4 @@
+using TMPro;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
@@ -16,14 +17,12 @@ public class LobbyPlayer : NetworkBehaviour
         NetworkVariableWritePermission.Server
     );
 
-    //public void joinTeam()
-    //{
-    //    ChangeTeamServerRpc(1); //joinej ga u prvi team automatsko ko ga sisa....
-    //}
 
 
     public override void OnNetworkSpawn()
     {
+        LobbyManagerUI ui = FindFirstObjectByType<LobbyManagerUI>();
+
         if (IsServer)
         {
             PlayerName.Value = $"Player {OwnerClientId}"; //dej clientu id za ime sam da se ve
@@ -31,7 +30,7 @@ public class LobbyPlayer : NetworkBehaviour
 
         Team.OnValueChanged += OnTeamChanged;
 
-
+        ui.RefreshUI(); 
     }
 
     public void RequestTeamChange(int team)  // to bo referancou button in mu das se st zdraven.
@@ -46,6 +45,7 @@ public class LobbyPlayer : NetworkBehaviour
     private void OnTeamChanged(int oldTeam, int newTeam)
     {
         LobbyManagerUI ui = FindFirstObjectByType<LobbyManagerUI>();
+
         ui.RefreshUI();
 
         Debug.Log(PlayerName.Value + " switched to team " + newTeam);

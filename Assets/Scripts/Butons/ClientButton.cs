@@ -12,10 +12,9 @@ public class ClientButton : MonoBehaviour
 
     public GameObject[] showMe;
 
-
+    
     public void StartClient()
     {
-
         string ip = ipInputField.text;
 
         var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
