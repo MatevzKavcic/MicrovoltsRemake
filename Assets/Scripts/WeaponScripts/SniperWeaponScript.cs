@@ -122,6 +122,15 @@ public class SniperWeaponScript : WeaponStats
     }
 
 
+    protected override void OnBeforeShoot()
+    {
+        if (isZoomed)
+        {
+            DisableZoom();
+        }
+    }
+
+
     protected override void ServerShootLogic(Vector3 baseDir) // base dir je Aim direction ze zracunau in vrze noter v to metodo.
     {
 

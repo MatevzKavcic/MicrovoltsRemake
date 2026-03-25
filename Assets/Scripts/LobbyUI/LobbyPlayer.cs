@@ -29,8 +29,9 @@ public class LobbyPlayer : NetworkBehaviour
         }
 
         Team.OnValueChanged += OnTeamChanged;
-
+        if (IsOwner) { 
         ChangeTeamServerRpc(1); // automatsko si doloèi team da slucajno nebos crashou
+        }
         ui.RefreshUI(); 
     }
 

@@ -112,6 +112,8 @@ public abstract class WeaponStats : NetworkBehaviour
         Vector3 targetPoint;
         Vector3 baseDir = GetAimDirection(out targetPoint);
 
+        OnBeforeShoot(); // to rabi samo sniper.... ampak rabi 
+
         // Ask the server to perform the shot
         PerformShotServerRpc(baseDir);
     }
@@ -128,6 +130,11 @@ public abstract class WeaponStats : NetworkBehaviour
     public virtual void OnUnequip()
     {
         // default: do nothing
+    }
+
+    protected virtual void OnBeforeShoot()
+    {
+        // default = do nothing
     }
 
 
