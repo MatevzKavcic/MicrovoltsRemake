@@ -74,18 +74,32 @@ public class PlayerStats : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
+        //Debug.Log("Player " + PlayerName.Value + " spawned on team " + Team.Value);
+
+        //if (IsServer && currentHealth.Value <= 0f)
+        //{
+        //    currentHealth.Value = maxHealth;
+        //}
+
+        //if (IsOwner)
+        //{
+        //    currentHealth.OnValueChanged += OnHealthChanged;
+        //    UpdateHealthUI();
+        //    Debug.Log("i update my health here i supose");
+        //}
+
+
         Debug.Log("Player " + PlayerName.Value + " spawned on team " + Team.Value);
 
-        if (IsServer && currentHealth.Value <= 0f)
+        if (IsServer)
         {
-            currentHealth.Value = maxHealth;
+            StartCoroutine(DelayedSpawn());
         }
 
         if (IsOwner)
         {
             currentHealth.OnValueChanged += OnHealthChanged;
             UpdateHealthUI();
-            Debug.Log("i update my health here i supose");
         }
 
 
@@ -176,6 +190,37 @@ public class PlayerStats : NetworkBehaviour
 
         EnableDisableColidersAndScripts(true);
     } // server
+
+
+    private IEnumerator DelayedSpawn()
+    {
+        // wait 1 frame so everything initializes
+        yield return null;
+
+        // wait until RespawnManager exists
+        while (RespawnManager.Instance == null)
+            yield return null;
+
+        Transform spawn = RespawnManager.Instance.GetNextSpawnPoint(Team.Value);
+
+        // teleport ONLY the owner client
+        RespawnClientRpc(spawn.position, new ClientRpcParams
+        {
+            Send = new ClientRpcSendParams
+            {
+                TargetClientIds = new ulong[] { OwnerClientId }
+            }
+        });
+
+        currentHealth.Value = maxHealth;
+    }
+
+    //public void StartSpawn()
+    //{
+    //    Transform spawn = RespawnManager.Instance.GetNextSpawnPoint(Team.Value); // poves value team u katerem si in pol te manager vrze na pravo mesto ....
+
+    //    RespawnClientRpc(spawn.position);
+    //}
 
     private void EnableDisableColidersAndScripts(bool alive) // colidersi in scripte disabli enabli da nemore streljat itd...
     {
