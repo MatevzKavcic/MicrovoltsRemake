@@ -1299,7 +1299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 676256740
+  GlobalObjectIdHash: 3568549721
   InScenePlacedSourceGlobalObjectIdHash: 1733920651
   DeferredDespawnTick: 0
   Ownership: 1
@@ -1463,6 +1463,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
   ShowTopMostFoldoutHeaderGroup: 1
   playerObject: {fileID: 2265966559130608615}
+  Team:
+    m_InternalValue: 0
+  PlayerName:
+    m_InternalValue:
+      utf8LengthInBytes: 0
+      bytes:
+        offset0000:
+          byte0000: 0
+          byte0001: 0
+          byte0002: 0
+          byte0003: 0
+          byte0004: 0
+          byte0005: 0
+          byte0006: 0
+          byte0007: 0
+          byte0008: 0
+          byte0009: 0
+          byte0010: 0
+          byte0011: 0
+          byte0012: 0
+          byte0013: 0
+          byte0014: 0
+          byte0015: 0
+        byte0016: 0
+        byte0017: 0
+        byte0018: 0
+        byte0019: 0
+        byte0020: 0
+        byte0021: 0
+        byte0022: 0
+        byte0023: 0
+        byte0024: 0
+        byte0025: 0
+        byte0026: 0
+        byte0027: 0
+        byte0028: 0
+        byte0029: 0
   collidersToDisable:
   - {fileID: 0}
   scriptsToDisable:
@@ -1695,7 +1732,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2606317944706594963}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.34675798, y: -0.47359458, z: 0.21003278, w: 0.78189087}
+  m_LocalRotation: {x: -0.04380164, y: 0.1122919, z: 0.0049547534, w: 0.99269706}
   m_LocalPosition: {x: 15.807144, y: 17.647753, z: -1.3224678}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1770,7 +1807,7 @@ MonoBehaviour:
       Offset: {x: 0, y: 0}
   CenterOnActivate: 1
   TargetOffset: {x: 0, y: 0, z: 0}
-  Damping: {x: 1, y: 1, z: 1}
+  Damping: {x: 0, y: 0, z: 0}
   Lookahead:
     Enabled: 0
     Time: 0
@@ -1791,7 +1828,7 @@ MonoBehaviour:
   ReferenceFrame: 0
   RecenterTarget: 0
   PanAxis:
-    Value: -73.560684
+    Value: 12.9075
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -1801,7 +1838,7 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   TiltAxis:
-    Value: 69.18707
+    Value: -5.0529456
     Center: 0
     Range: {x: -70, y: 70}
     Wrap: 0

@@ -38,20 +38,12 @@ public class PlayerAimRotation : NetworkBehaviour
     {
         if (!cameraTransform) return;
 
-        if (!IsOwner) return;
-
         Vector3 forward = cameraTransform.forward;
         forward.y = 0f;
 
         if (forward.sqrMagnitude < 0.001f)
             return;
 
-        transform.rotation = Quaternion.Slerp(
-            transform.rotation,
-            Quaternion.LookRotation(forward),
-            10f * Time.deltaTime
-        );
-
-        //Debug.Log("rotating " + transform.gameObject);
+        transform.rotation = Quaternion.LookRotation(forward);
     }
 }
