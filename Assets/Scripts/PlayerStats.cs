@@ -87,7 +87,17 @@ public class PlayerStats : NetworkBehaviour
             UpdateHealthUI();
             Debug.Log("i update my health here i supose");
         }
+
+
+
+
     }
+
+    // sepravi rabim 
+
+
+
+
     public override void OnNetworkDespawn()
     {
         if (IsOwner)
@@ -153,7 +163,7 @@ public class PlayerStats : NetworkBehaviour
 
         EnableDisableColidersAndScripts(false);
 
-        Transform spawn = RespawnManager.Instance.GetRandomSpawnPoint();
+        Transform spawn = RespawnManager.Instance.GetNextSpawnPoint(Team.Value); // poves value team u katerem si in pol te manager vrze na pravo mesto ....
 
         RespawnClientRpc(spawn.position);
 
