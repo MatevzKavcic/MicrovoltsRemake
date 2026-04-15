@@ -28,6 +28,11 @@ public abstract class WeaponStats : NetworkBehaviour
 
     [SerializeField] protected CinemachineCamera virtualCamera;
 
+    [SerializeField] protected CinemachineCamera virtualCameraFPS;
+
+    protected CinemachinePanTilt fpsPanTilt;
+    protected CinemachinePanTilt thirdPanTilt;
+
     public LineRenderer tracerLinePrefab;
 
     [Header("ammo")]
@@ -41,7 +46,10 @@ public abstract class WeaponStats : NetworkBehaviour
     [Header("Hitscan Settings")]
     public LayerMask layerMask; //To masko mora nastimat usak weapon posebej ampak basicly je to samo kam aimas... in kaj zadanes in kaj ne.
 
+
     public CinemachineInputAxisController inputAxisController;
+
+    public CinemachineInputAxisController inputAxisControllerFPS;
 
     //protected virtual IEnumerator AssignCameraWhenReady()
     //{
@@ -55,6 +63,12 @@ public abstract class WeaponStats : NetworkBehaviour
 
 
     //}// samo za camera da se bo pravilno inniciarizirala
+
+    void Awake()
+    {
+       
+        
+    }
 
     public override void OnNetworkSpawn()
     {
@@ -74,10 +88,16 @@ public abstract class WeaponStats : NetworkBehaviour
 
         inputAxisController = virtualCamera
             .GetComponentInChildren<CinemachineInputAxisController>();
+
+
+        fpsPanTilt = virtualCamera.GetComponent<CinemachinePanTilt>();
+        thirdPanTilt = virtualCameraFPS.GetComponent<CinemachinePanTilt>();
+
+
+
     }
 
 
-       
     //protected virtual void Start()
     //{
     //    if (!IsOwner) return;

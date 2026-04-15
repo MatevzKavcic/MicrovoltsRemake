@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using Unity.Cinemachine;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -42,20 +44,26 @@ public class SniperWeaponScript : WeaponStats
     {
         isZoomed = true;
 
-        virtualCamera.Lens.FieldOfView = zoomFOV;
+        // Disable TPS input
 
-        //CinemachinePOV.m_HorizontalAxis.m_MaxSpeed =3;
+        // Match rotation BEFORE switching
+        thirdPanTilt.PanAxis.Value = fpsPanTilt.PanAxis.Value;
+        thirdPanTilt.TiltAxis.Value = fpsPanTilt.TiltAxis.Value;
 
-        //pri kameri ne premikat kamere ampak premakni samo položaj folow targeta
+        Debug.Log("Setting the value of rotation for fps camera to x " + thirdPanTilt.PanAxis.Value);
 
-        CameraMover.transform.position = ZoomPosition.position;
-
-        Debug.Log(cam.transform.position  + " položaj kamere  ENABLE");
+        Debug.Log("Setting the value of rotation for fps camera to y : " + thirdPanTilt.TiltAxis.Value);
 
 
-        setCameraSpeedtoSlow();
 
-        Debug.Log("zoom is " + virtualCamera.Lens.FieldOfView);
+        // Switch camera
+        virtualCameraFPS.Priority = 20;
+        virtualCamera.Priority = 0;
+
+
+
+
+        //setCameraSpeedtoSlow();
 
         scopeOverlayUI.SetActive(true);
        //    virtualCamera.Lens.FieldOfView = Mathf.Lerp(
@@ -65,6 +73,7 @@ public class SniperWeaponScript : WeaponStats
        //);
     }
 
+  
 
     public void DisableZoom()
     {
@@ -73,9 +82,17 @@ public class SniperWeaponScript : WeaponStats
         scopeOverlayUI.SetActive(false);
         isZoomed = false;
         Debug.Log(cam.transform.position + " položaj kamere  DISABLE");
-        CameraMover.transform.position = DefaultPosition.position;
 
-        setCameraSpeedtoNormal();
+       
+
+        fpsPanTilt.PanAxis.Value = thirdPanTilt.PanAxis.Value;
+        fpsPanTilt.TiltAxis.Value = thirdPanTilt.TiltAxis.Value;
+
+        virtualCameraFPS.Priority = 0;
+        virtualCamera.Priority = 20;
+
+
+        //setCameraSpeedtoNormal();
         Debug.Log("zoom is " + virtualCamera.Lens.FieldOfView);
 
     }
@@ -84,8 +101,6 @@ public class SniperWeaponScript : WeaponStats
     {
         foreach (var c in inputAxisController.Controllers)
         {
-
-
             if (c.Name == "Look X (Pan)")
             {
 
@@ -97,7 +112,6 @@ public class SniperWeaponScript : WeaponStats
                 c.Input.Gain = -inZoomMouseSpeed;
 
             }
-
         }
     }
     public void setCameraSpeedtoNormal()
@@ -119,6 +133,7 @@ public class SniperWeaponScript : WeaponStats
             }
 
         }
+
     }
 
 

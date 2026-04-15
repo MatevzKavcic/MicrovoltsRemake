@@ -31,7 +31,6 @@ public class PlayerAimRotation : NetworkBehaviour
     {
         if (!IsOwner) return; 
         RotateTowardCamera();
-        //Debug.Log($"ROT: {transform.rotation.eulerAngles}");
     }
 
     private void RotateTowardCamera() // fixed so camera is snappy...
