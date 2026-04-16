@@ -7,6 +7,11 @@ using UnityEngine.UI;
 
 public class PlayerStats : NetworkBehaviour
 {
+    [Header("TEAM Boxes")]
+    public GameObject markerImageEnemy;
+    public GameObject markerImageFriendly;
+    public static PlayerStats LocalPlayer;
+
     [Header("Player")]
     public GameObject playerObject; // mora bit mesh... ne dat objekta drugace tudi corutine umre oz skripta.
 
@@ -36,8 +41,6 @@ public class PlayerStats : NetworkBehaviour
     private bool isDead = false;
 
     private CharacterMovement movement;
-
-
 
     void Awake()
     {
@@ -100,7 +103,10 @@ public class PlayerStats : NetworkBehaviour
         {
             currentHealth.OnValueChanged += OnHealthChanged;
             UpdateHealthUI();
+            LocalPlayer = this;
+
         }
+
 
 
 
