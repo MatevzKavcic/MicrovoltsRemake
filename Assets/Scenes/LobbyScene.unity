@@ -5452,7 +5452,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LobbyManager
   ShowTopMostFoldoutHeaderGroup: 1
-  playerPrefab: {fileID: 834220612978973446, guid: 91ae7f46d2adebc439767a533dffcd78, type: 3}
+  playerPrefab: {fileID: 1790374796151365191, guid: 01baa2325cb6f2c47a4680d646bf03f4, type: 3}
 --- !u!114 &1630703287
 MonoBehaviour:
   m_ObjectHideFlags: 0
