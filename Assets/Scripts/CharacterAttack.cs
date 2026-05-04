@@ -57,11 +57,12 @@ public class CharacterAttack : MonoBehaviour
 
 
         // Right click -> secondary fire
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1)&& currentWeaponStats.isReloading==false)
         {
             // If melee, heavy attack or alt-fire
             animator.SetTrigger("rightClick");
 
+            
             currentWeaponStats.TryAim(); // delegate the actual attack or aim 
 
             

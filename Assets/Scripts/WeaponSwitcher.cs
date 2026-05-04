@@ -100,10 +100,12 @@ public class WeaponSwitcher : NetworkBehaviour
         {
             activeWeaponStats.OnUnequip();
         }
-
+        
 
         EquipWeapon(newWeapon); // to je visual
-        animator.SetInteger("WeaponType", (int)newWeapon); // animator da ve kaj se dogaja
+        animator.SetInteger("WeaponType", (int)newWeapon+1); // animator da ve kaj se dogaja
+
+        Debug.Log("setting animator state to number + " +  ((int)newWeapon+1));
 
         if (!IsOwner) return;
 

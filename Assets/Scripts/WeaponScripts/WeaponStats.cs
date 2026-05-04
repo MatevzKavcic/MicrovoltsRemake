@@ -165,7 +165,7 @@ public abstract class WeaponStats : NetworkBehaviour
     {
         if (!IsOwner) return;  // <–– only local player shoots
         if (cam == null) return;
-
+        if (isReloading) return ;
         Aim();
     }
 
