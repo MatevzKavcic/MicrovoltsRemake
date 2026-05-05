@@ -136,6 +136,8 @@ public class RifleWeapon : WeaponStats
             if (stats != null)
             {
                 stats.TakeDamage(damage);
+                // hahve some sort of hitmark...
+
             }
             Debug.Log($"Pellet hit {hit.collider.name} for {damage} damage");
         }

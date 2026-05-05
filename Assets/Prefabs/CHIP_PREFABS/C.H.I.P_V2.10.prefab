@@ -232,6 +232,7 @@ MonoBehaviour:
   ammo: 3
   reloadTime: 1
   ammoSize: 3
+  totalAmo: 0
   isReloading: 0
   layerMask:
     serializedVersion: 2
@@ -559,6 +560,7 @@ MonoBehaviour:
   ammo: -10
   reloadTime: 0
   ammoSize: -10
+  totalAmo: 0
   isReloading: 0
   layerMask:
     serializedVersion: 2
@@ -2921,10 +2923,11 @@ MonoBehaviour:
   ammo: 30
   reloadTime: 1
   ammoSize: 30
+  totalAmo: 90
   isReloading: 0
   layerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 768
   inputAxisController: {fileID: 0}
   inputAxisControllerFPS: {fileID: 0}
   zoomFOV: 50
@@ -3021,10 +3024,11 @@ MonoBehaviour:
   ammo: 1
   reloadTime: 3
   ammoSize: 1
+  totalAmo: 0
   isReloading: 0
   layerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 768
   inputAxisController: {fileID: 3358826707756905333}
   inputAxisControllerFPS: {fileID: 1303433496592678726}
   zoomFOV: 10
@@ -3479,6 +3483,7 @@ MonoBehaviour:
   ammo: 3
   reloadTime: 1
   ammoSize: 3
+  totalAmo: 0
   isReloading: 0
   layerMask:
     serializedVersion: 2
@@ -4974,10 +4979,11 @@ MonoBehaviour:
   ammo: 3
   reloadTime: 3
   ammoSize: 3
+  totalAmo: 0
   isReloading: 0
   layerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 768
   inputAxisController: {fileID: 0}
   inputAxisControllerFPS: {fileID: 0}
   pelletCount: 8

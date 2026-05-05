@@ -39,6 +39,7 @@ public abstract class WeaponStats : NetworkBehaviour
     public int ammo;
     public float reloadTime;
     public int ammoSize;
+    public int totalAmo;
     public bool isReloading = false;
 
     private Coroutine reloadCoroutine;
@@ -185,6 +186,13 @@ public abstract class WeaponStats : NetworkBehaviour
             return;
         }
 
+        if (totalAmo == 0)
+        {
+            Debug.Log("OutOfAmmo");
+            return;
+        }
+
+
         reloadCoroutine = StartCoroutine(ReloadRoutine());
 
     }
@@ -192,13 +200,43 @@ public abstract class WeaponStats : NetworkBehaviour
 
     private IEnumerator ReloadRoutine()
     {
+        if (totalAmo <= 0) {  // nimas vec nic u rezervi in u chamberju
+            Debug.Log("no more amo nowhere");
+
+            yield return 0;
+        }
         isReloading = true;
         // wait for reload time
         Debug.Log("Reloading a weapon");
 
+        bool fullReload = (totalAmo + (ammoSize - ammo)) > ammoSize; // ko je to true je mozen full reload in ga naredi
+
+        Debug.Log("full reload posible ? --> " + fullReload);
+
         yield return new WaitForSeconds(reloadTime);
         Debug.Log("reloaded a weapon");
-        ammo = ammoSize;
+       
+
+        if (fullReload)
+        {
+            totalAmo = totalAmo - (ammoSize - ammo);    // total ammo is a substraction of the amoMagSize - ammoLeftIn the chamber
+            ammo = ammoSize; // napolni mag in total ammo zmanjsej za razliko.
+            Debug.Log("full full reloading");
+
+            Debug.Log(totalAmo +" - " +ammoSize +" - " +ammo );
+
+
+        }
+        else // full reload ni mogoc
+        {
+            ammo = ammo + totalAmo; // uzemi kar mas u ammotu in dodaj se total ammo.
+            totalAmo = 0;
+            Debug.Log("half reloading");
+
+        }
+
+
+
         isReloading = false;
         reloadCoroutine = null;
     }
@@ -225,7 +263,7 @@ public abstract class WeaponStats : NetworkBehaviour
         line.SetPosition(1, end);
         line.enabled = true;
 
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(1f);
 
         Destroy(line.gameObject);
     } // kar dejansko dela line u igri in jih unicuje.
@@ -236,7 +274,7 @@ public abstract class WeaponStats : NetworkBehaviour
         if (tracerLinePrefab == null) return;
         if (cam == null) return;
 
-
+        
         LineRenderer lr = Instantiate(tracerLinePrefab, Vector3.zero, Quaternion.identity);
         StartCoroutine(ShowTracer(lr, start, end));
     }
