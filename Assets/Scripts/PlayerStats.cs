@@ -42,6 +42,8 @@ public class PlayerStats : NetworkBehaviour
 
     private CharacterMovement movement;
 
+    public WeaponStats[] allWeaponsToReaload;
+
     void Awake()
     {
         movement = GetComponent<CharacterMovement>(); // dobi CharacterMovement script
@@ -66,6 +68,8 @@ public class PlayerStats : NetworkBehaviour
         if (IsOwner)
         {
             UpdateHealthUI();
+            Debug.Log("localy changing my health " );
+
         }
 
         if (currentHealth.Value <= 0)
@@ -77,20 +81,6 @@ public class PlayerStats : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        //Debug.Log("Player " + PlayerName.Value + " spawned on team " + Team.Value);
-
-        //if (IsServer && currentHealth.Value <= 0f)
-        //{
-        //    currentHealth.Value = maxHealth;
-        //}
-
-        //if (IsOwner)
-        //{
-        //    currentHealth.OnValueChanged += OnHealthChanged;
-        //    UpdateHealthUI();
-        //    Debug.Log("i update my health here i supose");
-        //}
-
 
         Debug.Log("Player " + PlayerName.Value + " spawned on team " + Team.Value);
 
@@ -177,7 +167,7 @@ public class PlayerStats : NetworkBehaviour
     dej mu da je ziv
     enabli skripte
      */ 
-    IEnumerator RespawnRoutine()
+    IEnumerator RespawnRoutine() // reloadej use weapone also
     {
         isDead = true;
 
@@ -188,6 +178,11 @@ public class PlayerStats : NetworkBehaviour
         RespawnClientRpc(spawn.position);
 
         yield return new WaitForSeconds(respawnDelay);
+
+        for (int i = 0; i < allWeaponsToReaload.Length; i++)
+        {
+            allWeaponsToReaload[i].deathReload();
+        }
 
 
         currentHealth.Value = maxHealth;

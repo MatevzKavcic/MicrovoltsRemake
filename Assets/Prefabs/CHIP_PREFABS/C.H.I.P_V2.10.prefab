@@ -234,6 +234,8 @@ MonoBehaviour:
   ammoSize: 3
   totalAmo: 6
   isReloading: 0
+  respawnAmmo: 3
+  respawnTotalAmmo: 6
   layerMask:
     serializedVersion: 2
     m_Bits: 0
@@ -502,7 +504,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 834, y: -397}
+  m_AnchoredPosition: {x: 837, y: -397}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8874675029125187005
@@ -560,8 +562,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 45
+  m_fontSizeBase: 45
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -698,6 +700,8 @@ MonoBehaviour:
   ammoSize: -10
   totalAmo: 0
   isReloading: 0
+  respawnAmmo: 0
+  respawnTotalAmmo: 0
   layerMask:
     serializedVersion: 2
     m_Bits: 0
@@ -1013,7 +1017,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1070978021
+  GlobalObjectIdHash: 797820207
   InScenePlacedSourceGlobalObjectIdHash: 3558008417
   DeferredDespawnTick: 0
   Ownership: 1
@@ -1226,6 +1230,12 @@ MonoBehaviour:
     m_InternalValue: 0
   healthBarFill: {fileID: 1777088092744245141}
   respawnDelay: 4
+  allWeaponsToReaload:
+  - {fileID: 7259061295901944688}
+  - {fileID: 1649518356022624992}
+  - {fileID: 5156839114985757042}
+  - {fileID: 4430766899755932736}
+  - {fileID: 3608756265022423678}
 --- !u!114 &6896350741423046002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3064,6 +3074,8 @@ MonoBehaviour:
   ammoSize: 30
   totalAmo: 90
   isReloading: 0
+  respawnAmmo: 30
+  respawnTotalAmmo: 90
   layerMask:
     serializedVersion: 2
     m_Bits: 768
@@ -3165,6 +3177,8 @@ MonoBehaviour:
   ammoSize: 1
   totalAmo: 7
   isReloading: 0
+  respawnAmmo: 3
+  respawnTotalAmmo: 6
   layerMask:
     serializedVersion: 2
     m_Bits: 768
@@ -3385,7 +3399,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4877670604739125939}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.018467676, y: 0.28401563, z: 0.0054714843, w: 0.9586262}
+  m_LocalRotation: {x: -0.0076927124, y: 0.14584899, z: 0.0011341363, w: 0.98927635}
   m_LocalPosition: {x: 15.807144, y: 17.647753, z: -1.3224678}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3481,7 +3495,7 @@ MonoBehaviour:
   ReferenceFrame: 0
   RecenterTarget: 0
   PanAxis:
-    Value: 33.00633
+    Value: 16.7734
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -3491,7 +3505,7 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   TiltAxis:
-    Value: -2.2073023
+    Value: -0.89105755
     Center: 0
     Range: {x: -70, y: 70}
     Wrap: 0
@@ -3624,6 +3638,8 @@ MonoBehaviour:
   ammoSize: 3
   totalAmo: 6
   isReloading: 0
+  respawnAmmo: 3
+  respawnTotalAmmo: 6
   layerMask:
     serializedVersion: 2
     m_Bits: 0
@@ -4743,7 +4759,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7337356278409898938}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.030910842, y: 0.26518366, z: 0.008506122, w: 0.96366477}
+  m_LocalRotation: {x: 0.021045221, y: 0.10512498, z: -0.0022252093, w: 0.99423385}
   m_LocalPosition: {x: -269.22565, y: 284.97394, z: 304.44736}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4821,7 +4837,7 @@ MonoBehaviour:
   ReferenceFrame: 0
   RecenterTarget: 0
   PanAxis:
-    Value: 30.771938
+    Value: 12.071447
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -4831,7 +4847,7 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   TiltAxis:
-    Value: -3.6744184
+    Value: 2.4252288
     Center: 0
     Range: {x: -70, y: 70}
     Wrap: 0
@@ -4977,8 +4993,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 45
+  m_fontSizeBase: 45
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5258,6 +5274,8 @@ MonoBehaviour:
   ammoSize: 3
   totalAmo: 6
   isReloading: 0
+  respawnAmmo: 3
+  respawnTotalAmmo: 6
   layerMask:
     serializedVersion: 2
     m_Bits: 768
@@ -5805,8 +5823,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 45
+  m_fontSizeBase: 45
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

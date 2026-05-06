@@ -41,6 +41,9 @@ public abstract class WeaponStats : NetworkBehaviour
     public int ammoSize;
     public int totalAmo;
     public bool isReloading = false;
+    public int respawnAmmo;
+    public int respawnTotalAmmo;
+
 
     private Coroutine reloadCoroutine;
 
@@ -96,6 +99,12 @@ public abstract class WeaponStats : NetworkBehaviour
 
 
 
+    }
+
+    public void deathReload()
+    {
+        ammo = respawnAmmo;
+        totalAmo = respawnTotalAmmo;
     }
 
 
