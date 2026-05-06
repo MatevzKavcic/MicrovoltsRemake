@@ -1017,7 +1017,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 797820207
+  GlobalObjectIdHash: 1070978021
   InScenePlacedSourceGlobalObjectIdHash: 3558008417
   DeferredDespawnTick: 0
   Ownership: 1
@@ -1236,6 +1236,7 @@ MonoBehaviour:
   - {fileID: 5156839114985757042}
   - {fileID: 4430766899755932736}
   - {fileID: 3608756265022423678}
+  healthUIRoot: {fileID: 5383516276336785562}
 --- !u!114 &6896350741423046002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2140,7 +2141,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 1
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -3399,7 +3400,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4877670604739125939}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0076927124, y: 0.14584899, z: 0.0011341363, w: 0.98927635}
+  m_LocalRotation: {x: -0.18991554, y: 0.100916065, z: 0.019628707, w: 0.976403}
   m_LocalPosition: {x: 15.807144, y: 17.647753, z: -1.3224678}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3495,7 +3496,7 @@ MonoBehaviour:
   ReferenceFrame: 0
   RecenterTarget: 0
   PanAxis:
-    Value: 16.7734
+    Value: 11.801698
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -3505,7 +3506,7 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   TiltAxis:
-    Value: -0.89105755
+    Value: -22.0138
     Center: 0
     Range: {x: -70, y: 70}
     Wrap: 0
@@ -4759,7 +4760,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7337356278409898938}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.021045221, y: 0.10512498, z: -0.0022252093, w: 0.99423385}
+  m_LocalRotation: {x: -0.14997038, y: 0.07750205, z: 0.011793096, w: 0.98557764}
   m_LocalPosition: {x: -269.22565, y: 284.97394, z: 304.44736}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4837,7 +4838,7 @@ MonoBehaviour:
   ReferenceFrame: 0
   RecenterTarget: 0
   PanAxis:
-    Value: 12.071447
+    Value: 8.992536
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -4847,7 +4848,7 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   TiltAxis:
-    Value: 2.4252288
+    Value: -17.304081
     Center: 0
     Range: {x: -70, y: 70}
     Wrap: 0
@@ -4966,7 +4967,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 30
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5796,7 +5797,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 30
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

@@ -44,6 +44,8 @@ public class PlayerStats : NetworkBehaviour
 
     public WeaponStats[] allWeaponsToReaload;
 
+    public GameObject healthUIRoot;
+
     void Awake()
     {
         movement = GetComponent<CharacterMovement>(); // dobi CharacterMovement script
@@ -68,7 +70,7 @@ public class PlayerStats : NetworkBehaviour
         if (IsOwner)
         {
             UpdateHealthUI();
-            Debug.Log("localy changing my health " );
+            
 
         }
 
@@ -81,26 +83,26 @@ public class PlayerStats : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-
-        Debug.Log("Player " + PlayerName.Value + " spawned on team " + Team.Value);
-
         if (IsServer)
         {
             StartCoroutine(DelayedSpawn());
         }
 
-        if (IsOwner)
+        if (!IsOwner)
         {
-            currentHealth.OnValueChanged += OnHealthChanged;
-            UpdateHealthUI();
-            LocalPlayer = this;
-
+            healthUIRoot.SetActive(false); // hide others
         }
 
+        // EVERYONE listens
+        currentHealth.OnValueChanged += OnHealthChanged;
 
+        // Only local player sets up local UI reference
+        if (IsOwner)
+        {
+            LocalPlayer = this;
+        }
 
-
-
+        UpdateHealthUI(); // initial sync
     }
 
     // sepravi rabim 
@@ -144,7 +146,7 @@ public class PlayerStats : NetworkBehaviour
 
         if (healthBarFill != null)
         {
-            float fill = currentHealth.Value / maxHealth;
+            float fill = (float) currentHealth.Value / maxHealth;
             healthBarFill.fillAmount = fill;
             Debug.Log(healthBarFill.fillAmount  +  " i update it to this much ..");
 
