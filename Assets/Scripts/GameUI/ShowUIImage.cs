@@ -1,10 +1,16 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShowUIImage : MonoBehaviour
 {
 
     public WeaponStats[] weaponStats;
-    public GameObject[] pictureOfWeapon; 
+    public GameObject[] pictureOfWeapon;
+
+    public TMP_Text currentAmmo;
+    public TMP_Text totalAmmo;
+
 
 
 
@@ -19,12 +25,31 @@ public class ShowUIImage : MonoBehaviour
             if (weaponStats[i].isActive)
             {
                 pictureOfWeapon[i].SetActive(true);
+
+                if (weaponStats[i].weaponName != "pencil") {
+
+                    currentAmmo.text = weaponStats[i].ammo.ToString();
+
+                    totalAmmo.text = weaponStats[i].totalAmo.ToString();
+                }
+                else
+                {
+                    currentAmmo.text = "0";
+
+                    totalAmmo.text = "0";
+
+                }
+
             }
             else
             {
                 pictureOfWeapon[i].SetActive(false);
 
             }
+
+
+
+
         }
     }
 }
