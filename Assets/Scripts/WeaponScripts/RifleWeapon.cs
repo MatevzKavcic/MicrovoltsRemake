@@ -139,7 +139,6 @@ public class RifleWeapon : WeaponStats
                 // hahve some sort of hitmark...
                 ShowHitmarker();
 
-
             }
             Debug.Log($"Pellet hit {hit.collider.name} for {damage} damage");
         }
