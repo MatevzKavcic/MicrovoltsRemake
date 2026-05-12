@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using Unity.Collections;
 using Unity.Netcode;
+using Unity.Services.Matchmaker.Models;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerStats : NetworkBehaviour
@@ -45,6 +47,8 @@ public class PlayerStats : NetworkBehaviour
     public WeaponStats[] allWeaponsToReaload;
 
     public GameObject healthUIRoot;
+
+    private ScoreManager scoreManager;
 
     void Awake()
     {
@@ -99,6 +103,11 @@ public class PlayerStats : NetworkBehaviour
         // Only local player sets up local UI reference
         if (IsOwner)
         {
+            scoreManager = FindFirstObjectByType<ScoreManager>();
+            if (scoreManager == null)
+            {
+                Debug.LogError("ScoreManager not found!");
+            }
             LocalPlayer = this;
         }
 
@@ -158,6 +167,8 @@ public class PlayerStats : NetworkBehaviour
         Debug.Log("PLAYER DIED");
         isDead = true;
 
+        ScoreManager.Instance.AddKillServerRpc(Team.Value);
+
         StartCoroutine(RespawnRoutine());
 
     }
@@ -169,7 +180,7 @@ public class PlayerStats : NetworkBehaviour
     dej mu da je ziv
     enabli skripte
      */ 
-    IEnumerator RespawnRoutine() // reloadej use weapone also
+    IEnumerator RespawnRoutine() // reloadej use weapone also   
     {
         isDead = true;
 

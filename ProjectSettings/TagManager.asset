@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Coin
   - MainCinemachine
+  - Friendly
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -17,8 +19,8 @@ TagManager:
   - 
   - NotPlayer
   - Player
-  - 
-  - 
+  - Team1
+  - Team2
   - 
   - 
   - 

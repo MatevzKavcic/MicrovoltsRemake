@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Unity.Cinemachine;
 using Unity.Netcode;
+using Unity.Services.Matchmaker.Models;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -55,18 +56,13 @@ public abstract class WeaponStats : NetworkBehaviour
 
     public CinemachineInputAxisController inputAxisControllerFPS;
 
-    //protected virtual IEnumerator AssignCameraWhenReady()
-    //{
-    //    // Wait until Camera.main exists
-    //    while (cam == null)
-    //    {
-    //        cam = Camera.main;
-
-    //        yield return null; // wait a frame
-    //    }
 
 
-    //}// samo za camera da se bo pravilno inniciarizirala
+    public GameObject HitMarker;
+    private Coroutine HitmarkCorutine;
+
+    public PlayerStats ownerStats;
+
 
     void Awake()
     {
@@ -79,6 +75,10 @@ public abstract class WeaponStats : NetworkBehaviour
         if (!IsOwner) return;
 
         StartCoroutine(AssignCamera());
+
+        // assign the playerstats i gues 
+        ownerStats = GetComponentInParent<PlayerStats>();
+
     }
 
     private IEnumerator AssignCamera()
@@ -318,6 +318,26 @@ public abstract class WeaponStats : NetworkBehaviour
 
         return (targetPoint - firePoint.position).normalized;
     } // usi weaponi rabijo to da vejo kam streljajo
+
+    public void ShowHitmarker()
+    {
+        if (HitmarkCorutine != null)
+        {
+            StopCoroutine(HitmarkCorutine);
+        }
+
+        HitmarkCorutine = StartCoroutine(HitmarkerRoutine());
+    }
+
+    private IEnumerator HitmarkerRoutine()
+    {
+        HitMarker.SetActive(true);
+
+        yield return new WaitForSeconds(0.1f);
+
+        HitMarker.SetActive(false);
+
+    }
 
 
     private void OnDrawGizmos()

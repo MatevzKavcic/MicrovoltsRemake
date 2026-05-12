@@ -133,10 +133,12 @@ public class RifleWeapon : WeaponStats
 
             // damage player if they have PlayerStats
             var stats = hit.collider.GetComponent<PlayerStats>();
-            if (stats != null)
+            if (stats != null && stats.Team.Value != ownerStats.Team.Value) // in ni tvoj teammate.
             {
                 stats.TakeDamage(damage);
                 // hahve some sort of hitmark...
+                ShowHitmarker();
+
 
             }
             Debug.Log($"Pellet hit {hit.collider.name} for {damage} damage");
