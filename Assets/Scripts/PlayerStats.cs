@@ -103,17 +103,22 @@ public class PlayerStats : NetworkBehaviour
         // Only local player sets up local UI reference
         if (IsOwner)
         {
-            scoreManager = FindFirstObjectByType<ScoreManager>();
-            if (scoreManager == null)
-            {
-                Debug.LogError("ScoreManager not found!");
-            }
-            LocalPlayer = this;
+            StartCoroutine(WaitForScoreManager());
         }
 
         UpdateHealthUI(); // initial sync
     }
+    private IEnumerator WaitForScoreManager()
+    {
+        while (scoreManager == null)
+        {
+            scoreManager = FindFirstObjectByType<ScoreManager>();
 
+            yield return null; // wait 1 frame
+        }
+
+        Debug.Log("ScoreManager found!");
+    }
     // sepravi rabim 
 
 
