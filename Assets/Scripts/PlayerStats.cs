@@ -96,7 +96,7 @@ public class PlayerStats : NetworkBehaviour
         {
             healthUIRoot.SetActive(false); // hide others
         }
-
+            
         // EVERYONE listens
         currentHealth.OnValueChanged += OnHealthChanged;
 
@@ -104,7 +104,9 @@ public class PlayerStats : NetworkBehaviour
         if (IsOwner)
         {
             StartCoroutine(WaitForScoreManager());
-        }
+
+            LocalPlayer = this;
+        } 
 
         UpdateHealthUI(); // initial sync
     }

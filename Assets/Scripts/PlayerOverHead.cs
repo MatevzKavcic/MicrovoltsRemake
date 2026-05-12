@@ -8,7 +8,7 @@ public class PlayerOverHead : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
 
-        Invoke(nameof(SetupMarker), 0.2f); // small delay = ensure all spawned
+        Invoke(nameof(SetupMarker), 2f); // small delay = ensure all spawned
 
     }
 
@@ -19,9 +19,10 @@ public class PlayerOverHead : NetworkBehaviour
 
         if (myPlayer == null)
         {
-            Debug.Log("  I CANT FIND MY PLAYEEA");
+            Debug.Log("  I CANT FIND MY PLAYEEA  ");
             return;
         }
+
         Debug.Log("Seting target "+ target.GetHashCode());
 
         Debug.Log("Seting target haskoda my player" + myPlayer.GetHashCode());
