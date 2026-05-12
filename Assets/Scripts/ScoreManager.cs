@@ -35,7 +35,7 @@ public class ScoreManager : NetworkBehaviour
         teamScore2UI.text = Team2Score.Value.ToString();
     }
 
-    [ServerRpc(RequireOwnership = false)]
+    [ServerRpc]
     public void AddKillServerRpc(int killerTeam)
     {
         if (killerTeam == 1)

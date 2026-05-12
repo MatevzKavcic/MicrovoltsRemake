@@ -45,7 +45,7 @@ public class SniperWeaponScript : WeaponStats
         isZoomed = true;
 
         // Disable TPS input
-
+        //virtualCamera.Lens.FieldOfView = zoomFOV;
         // Match rotation BEFORE switching
         thirdPanTilt.PanAxis.Value = fpsPanTilt.PanAxis.Value;
         thirdPanTilt.TiltAxis.Value = fpsPanTilt.TiltAxis.Value;
@@ -160,7 +160,7 @@ public class SniperWeaponScript : WeaponStats
 
             // damage player if they have PlayerStats
             var stats = hit.collider.GetComponent<PlayerStats>();
-            if (stats != null)
+            if (stats != null && stats.Team.Value != ownerStats.Team.Value)
             {
                 stats.TakeDamage(damage);
 

@@ -74,8 +74,6 @@ public class PlayerStats : NetworkBehaviour
         if (IsOwner)
         {
             UpdateHealthUI();
-            
-
         }
 
         if (currentHealth.Value <= 0)
@@ -149,8 +147,8 @@ public class PlayerStats : NetworkBehaviour
     {
         // Only update UI for LOCAL player
         if (IsOwner)
-        {
-            Debug.Log("My health changed... i updated my UI!!");
+        { 
+            //Debug.Log("My health changed... i updated my UI!!"); // debuging 
             UpdateHealthUI();
         }
     }
@@ -158,13 +156,11 @@ public class PlayerStats : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-            Debug.Log(" i am owner of this health bar can you please LET  ME UPDATE IT FOR FUCK SAKE");
-
         if (healthBarFill != null)
         {
             float fill = (float) currentHealth.Value / maxHealth;
             healthBarFill.fillAmount = fill;
-            Debug.Log(healthBarFill.fillAmount  +  " i update it to this much ..");
+            //Debug.Log(healthBarFill.fillAmount  +  " i update it to this much ..");
 
         }
     }
@@ -174,7 +170,7 @@ public class PlayerStats : NetworkBehaviour
         Debug.Log("PLAYER DIED");
         isDead = true;
 
-        ScoreManager.Instance.AddKillServerRpc(Team.Value);
+        ScoreManager.Instance.AddKillServerRpc(Team.Value); // score only UI
 
         StartCoroutine(RespawnRoutine());
 
@@ -191,7 +187,8 @@ public class PlayerStats : NetworkBehaviour
     {
         isDead = true;
 
-        EnableDisableColidersAndScripts(false);
+        SetAliveVisualsClientRpc(true);
+
 
         Transform spawn = RespawnManager.Instance.GetNextSpawnPoint(Team.Value); // poves value team u katerem si in pol te manager vrze na pravo mesto ....
 
@@ -199,18 +196,34 @@ public class PlayerStats : NetworkBehaviour
 
         yield return new WaitForSeconds(respawnDelay);
 
-        for (int i = 0; i < allWeaponsToReaload.Length; i++)
-        {
-            allWeaponsToReaload[i].deathReload();
-        }
-
+        ReloadWeaponsClientRpc(); //changing this so the client actualy resets his sammo not just teh server.
 
         currentHealth.Value = maxHealth;
         
         isDead = false;
 
         EnableDisableColidersAndScripts(true);
+
+        SetAliveVisualsClientRpc(true);
+
     } // server
+
+    [ClientRpc]
+    private void ReloadWeaponsClientRpc()
+    {
+        if (!IsOwner) return;
+
+        for (int i = 0; i < allWeaponsToReaload.Length; i++)
+        {
+            allWeaponsToReaload[i].deathReload();
+        }
+    }
+
+    [ClientRpc]
+    private void SetAliveVisualsClientRpc(bool alive)
+    {
+        EnableDisableColidersAndScripts(alive);
+    }
 
 
     private IEnumerator DelayedSpawn()
@@ -245,10 +258,6 @@ public class PlayerStats : NetworkBehaviour
 
     private void EnableDisableColidersAndScripts(bool alive) // colidersi in scripte disabli enabli da nemore streljat itd...
     {
-        // Show/hide character mesh
-        if (playerObject != null)
-            playerObject.SetActive(alive);
-
         // Enable/disable colliders
         if (collidersToDisable != null)
         {
