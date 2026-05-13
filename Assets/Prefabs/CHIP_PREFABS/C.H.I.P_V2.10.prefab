@@ -1023,7 +1023,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1070978021
+  GlobalObjectIdHash: 797820207
   InScenePlacedSourceGlobalObjectIdHash: 3558008417
   DeferredDespawnTick: 0
   Ownership: 1
@@ -1188,7 +1188,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   markerImageEnemy: {fileID: 7721908674239910933}
   markerImageFriendly: {fileID: 8358520350728693685}
-  playerObject: {fileID: 9129907499017821386}
+  playerObject: {fileID: 2012581468635674276}
   Team:
     m_InternalValue: 0
   PlayerName:
@@ -1227,7 +1227,7 @@ MonoBehaviour:
         byte0028: 0
         byte0029: 0
   collidersToDisable:
-  - {fileID: 0}
+  - {fileID: 3184009810094929623}
   scriptsToDisable:
   - {fileID: 6415765571252242182}
   - {fileID: 6627796763374033505}

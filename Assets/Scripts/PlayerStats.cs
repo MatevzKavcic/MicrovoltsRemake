@@ -187,7 +187,7 @@ public class PlayerStats : NetworkBehaviour
     {
         isDead = true;
 
-        SetAliveVisualsClientRpc(true);
+        SetAliveVisualsClientRpc(false);
 
 
         Transform spawn = RespawnManager.Instance.GetNextSpawnPoint(Team.Value); // poves value team u katerem si in pol te manager vrze na pravo mesto ....
@@ -258,6 +258,14 @@ public class PlayerStats : NetworkBehaviour
 
     private void EnableDisableColidersAndScripts(bool alive) // colidersi in scripte disabli enabli da nemore streljat itd...
     {
+        // Show/hide character mesh
+        if (playerObject != null)
+        {
+            
+                playerObject.SetActive(alive);
+           
+        }
+
         // Enable/disable colliders
         if (collidersToDisable != null)
         {
