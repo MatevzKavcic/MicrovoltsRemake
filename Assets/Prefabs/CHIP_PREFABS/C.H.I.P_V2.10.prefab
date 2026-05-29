@@ -243,6 +243,7 @@ MonoBehaviour:
   inputAxisControllerFPS: {fileID: 0}
   HitMarker: {fileID: 5638112388538274912}
   ownerStats: {fileID: 8497166570326977587}
+  shootSound: {fileID: 0}
   hitMask:
     serializedVersion: 2
     m_Bits: 310
@@ -713,6 +714,7 @@ MonoBehaviour:
   inputAxisControllerFPS: {fileID: 0}
   HitMarker: {fileID: 0}
   ownerStats: {fileID: 0}
+  shootSound: {fileID: 8300000, guid: 89383aa1803903c48af0c19286baae7a, type: 3}
   hitbox: {fileID: 3386463691341692170}
   activeHitTime: 0.2
   targetTag: Player
@@ -1023,7 +1025,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 797820207
+  GlobalObjectIdHash: 1070978021
   InScenePlacedSourceGlobalObjectIdHash: 3558008417
   DeferredDespawnTick: 0
   Ownership: 1
@@ -3090,6 +3092,7 @@ MonoBehaviour:
   inputAxisControllerFPS: {fileID: 0}
   HitMarker: {fileID: 7114869162038887092}
   ownerStats: {fileID: 8497166570326977587}
+  shootSound: {fileID: 8300000, guid: 6c71cc8f7fa55c54cba5bb8d9ce9b03c, type: 3}
   zoomFOV: 50
   inZoomMouseSpeed: 0.4
   spreadAngle: 1
@@ -3195,6 +3198,7 @@ MonoBehaviour:
   inputAxisControllerFPS: {fileID: 1303433496592678726}
   HitMarker: {fileID: 7114869162038887092}
   ownerStats: {fileID: 8497166570326977587}
+  shootSound: {fileID: 8300000, guid: d76ca48e1e74e9e4080ec75fb47b35fb, type: 3}
   zoomFOV: 10
   scopeOverlayUI: {fileID: 7429195731753391890}
   normalCrosshair: {fileID: 3000564513630289386}
@@ -3658,6 +3662,7 @@ MonoBehaviour:
   inputAxisControllerFPS: {fileID: 0}
   HitMarker: {fileID: 5638112388538274912}
   ownerStats: {fileID: 8497166570326977587}
+  shootSound: {fileID: 0}
   granaderBulletPrefab: {fileID: 8370159602178525754, guid: 22a56fd87d9ba9b42967cc9bc5bf0d8e, type: 3}
   hitMask:
     serializedVersion: 2
@@ -5446,6 +5451,7 @@ MonoBehaviour:
   inputAxisControllerFPS: {fileID: 0}
   HitMarker: {fileID: 5638112388538274912}
   ownerStats: {fileID: 8497166570326977587}
+  shootSound: {fileID: 8300000, guid: 8ea0d3669de93c04ca6e1b29bd022d5a, type: 3}
   pelletCount: 8
   spreadAngle: 5
   tracerDuration: 0.5

@@ -163,6 +163,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   TimeToExplode: 1.2
+  bounceSound: {fileID: 8300000, guid: 189f9637a1c16c5499f7340fd6033653, type: 3}
 --- !u!54 &3083997750538374032
 Rigidbody:
   m_ObjectHideFlags: 0

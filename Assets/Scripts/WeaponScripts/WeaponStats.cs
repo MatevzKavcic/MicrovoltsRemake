@@ -64,6 +64,9 @@ public abstract class WeaponStats : NetworkBehaviour
     public PlayerStats ownerStats;
 
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip shootSound;
+
     void Awake()
     {
        
@@ -154,6 +157,8 @@ public abstract class WeaponStats : NetworkBehaviour
     protected void PerformShotServerRpc(Vector3 baseDir)
     {
         // v spodnji metodi mors definirat logiko kako napadas v Rifle, shotgun ...
+        PlayShootSoundClientRpc(firePoint.position);
+
         ServerShootLogic(baseDir);
     }
 
@@ -268,12 +273,38 @@ public abstract class WeaponStats : NetworkBehaviour
 
     private IEnumerator ShowTracer(LineRenderer line, Vector3 start, Vector3 end)
     {
+        line.enabled = true;
+        line.positionCount = 2;
+
         line.SetPosition(0, start);
         line.SetPosition(1, end);
-        line.enabled = true;
 
-        yield return new WaitForSeconds(1f);
+        float duration = 0.05f; //bullet speed feel
+        float t = 0;
 
+        float startWidth = line.startWidth;
+        float endWidth = line.endWidth;
+
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            float progress = t / duration;
+
+            // fade out
+            float alpha = 1f - progress;
+
+            Color c = line.material.color;
+            c.a = alpha;
+            line.material.color = c;
+
+            // shrink slightly (bullet taper feel)
+            line.startWidth = Mathf.Lerp(startWidth, 0f, progress);
+            line.endWidth = Mathf.Lerp(endWidth, 0f, progress);
+
+            yield return null;
+        }
+
+        line.enabled = false;
         Destroy(line.gameObject);
     } // kar dejansko dela line u igri in jih unicuje.
 
@@ -338,6 +369,20 @@ public abstract class WeaponStats : NetworkBehaviour
         HitMarker.SetActive(false);
 
     }
+
+
+    [ClientRpc]
+    private void PlayShootSoundClientRpc(Vector3 position)
+    {
+        if (shootSound == null) return;
+
+        AudioSource.PlayClipAtPoint(
+            shootSound,
+            position,
+            1f
+        );
+    }
+
 
 
     private void OnDrawGizmos()

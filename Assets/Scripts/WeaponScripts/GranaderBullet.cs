@@ -19,6 +19,8 @@ public class GranaderBullet : NetworkBehaviour
 
     private Collider bulletCollider;
 
+    [SerializeField] private AudioClip bounceSound;
+
     public override void OnNetworkSpawn()
     {
         bulletCollider = GetComponent<Collider>();
@@ -30,7 +32,7 @@ public class GranaderBullet : NetworkBehaviour
             rb.isKinematic = false; // <-- FORCE IT (important)
             rb.linearVelocity = transform.forward * speed;
             rb.angularVelocity = Vector3.zero;
-            Invoke(nameof(Despawn), lifeTime); // ce gre vec ku tolko casa ga despawnej.... da ne gre u neskonènost in wasta power
+            Invoke(nameof(Despawn), lifeTime); // ce gre vec ku tolko casa ga despawnej.... da ne gre u neskonÄnost in wasta power
 
         }
     }
@@ -45,7 +47,14 @@ public class GranaderBullet : NetworkBehaviour
 
     void OnCollisionEnter(UnityEngine.Collision collision)
     {
-        if (!IsServer|| TimerStarted) return;
+        if (TimerStarted) return;
+
+        if (bounceSound != null)
+        {
+            AudioSource.PlayClipAtPoint(bounceSound,transform.position);
+        }
+        if (!IsServer) return;
+
 
         if (collision.collider.GetComponent<PlayerStats>())
         {
@@ -59,8 +68,8 @@ public class GranaderBullet : NetworkBehaviour
         TimerStarted = true;
 
         StartCoroutine(FuseCoroutine());
-    }   
-
+    }
+    
     IEnumerator FuseCoroutine()
     {
         yield return new WaitForSeconds(TimeToExplode);
