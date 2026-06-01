@@ -33,6 +33,8 @@ public class ShotgunWapon : WeaponStats
                 {
                     stats.TakeDamage(damage);
                     ShowHitmarker(); //hitmark
+                    PlayHitSound();
+
 
                 }
                 Debug.Log($"Pellet hit {hit.collider.name} for {damage} damage");

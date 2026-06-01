@@ -67,11 +67,27 @@ public abstract class WeaponStats : NetworkBehaviour
     [Header("Audio")]
     [SerializeField] private AudioClip shootSound;
 
+    [Header("Hitmarker Audio")]
+    [SerializeField] private AudioClip hitSound;
+
     void Awake()
     {
        
         
     }
+
+    public void PlayHitSound()
+    {
+        if (hitSound == null || cam == null)
+            return;
+
+        AudioSource.PlayClipAtPoint(
+            hitSound,
+            cam.transform.position,
+            0.5f
+        );
+    }
+
 
     public override void OnNetworkSpawn()
     {
@@ -381,6 +397,26 @@ public abstract class WeaponStats : NetworkBehaviour
             position,
             1f
         );
+    }
+
+    [ClientRpc]
+    protected void ShowHitmarkerClientRpc(ClientRpcParams rpcParams = default)
+    {
+        ShowHitmarker();
+        PlayHitSound();
+    }
+
+    protected void SendHitmarker()
+    {
+        ClientRpcParams rpcParams = new ClientRpcParams
+        {
+            Send = new ClientRpcSendParams
+            {
+                TargetClientIds = new[] { OwnerClientId }
+            }
+        };
+
+        ShowHitmarkerClientRpc(rpcParams);
     }
 
 

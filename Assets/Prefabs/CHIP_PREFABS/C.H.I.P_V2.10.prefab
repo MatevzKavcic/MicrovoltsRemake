@@ -1025,7 +1025,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1070978021
+  GlobalObjectIdHash: 797820207
   InScenePlacedSourceGlobalObjectIdHash: 3558008417
   DeferredDespawnTick: 0
   Ownership: 1
@@ -1161,6 +1161,9 @@ MonoBehaviour:
   maxJumps: 2
   airControlPercent: 0
   respawnDelay: 4
+  footstepSound: {fileID: 8300000, guid: 315f2988aae9e0c4c8a661559ef57692, type: 3}
+  jumpSound: {fileID: 8300000, guid: 855ad5f968a4ba241adbe94d6bfaec25, type: 3}
+  footstepInterval: 0.3
 --- !u!114 &6415765571252242182
 MonoBehaviour:
   m_ObjectHideFlags: 0

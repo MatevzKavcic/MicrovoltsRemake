@@ -44,6 +44,15 @@ public class CharacterMovement : NetworkBehaviour
     private Camera playerCamera;
 
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip footstepSound;
+    [SerializeField] private AudioClip jumpSound;
+
+    [SerializeField] private float footstepInterval = 0.4f;
+
+    private float footstepTimer;
+
+
     public override void OnNetworkSpawn()
     {
         if (!IsOwner) return;
@@ -166,6 +175,26 @@ public class CharacterMovement : NetworkBehaviour
         animator.SetFloat("MoveZ", animZ);
         animator.SetBool("isGrounded", isGrounded);
 
+        bool isMoving =
+        Mathf.Abs(moveX) > 0.1f ||
+        Mathf.Abs(moveZ) > 0.1f;
+
+        if (isGrounded && isMoving)
+        {
+            footstepTimer -= Time.deltaTime;
+
+            if (footstepTimer <= 0f)
+            {
+                PlayFootstepSound();
+                footstepTimer = footstepInterval;
+            }
+        }
+        else
+        {
+            // reset timer when standing still
+            footstepTimer = 0f;
+        }
+
         // Movement direction relative to the player's facing direction
         if (playerCamera == null) return;
 
@@ -212,6 +241,7 @@ public class CharacterMovement : NetworkBehaviour
             animator.SetTrigger("jumpKey");
             //Debug.Log("jumpKey triggered");
 
+            PlayJumpSound();
         }
     }
 
@@ -221,5 +251,26 @@ public class CharacterMovement : NetworkBehaviour
         velocity.y += gravity * Time.deltaTime;
     }
 
-    
+    void PlayFootstepSound()
+    {
+        if (footstepSound == null) return;
+
+        AudioSource.PlayClipAtPoint(
+            footstepSound,
+            transform.position,
+            0.5f
+        );
+    }
+
+    void PlayJumpSound()
+    {
+        if (jumpSound == null) return;
+
+        AudioSource.PlayClipAtPoint(
+            jumpSound,
+            transform.position,
+            1f
+        );
+    }
+
 }

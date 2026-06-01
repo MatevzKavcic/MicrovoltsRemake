@@ -164,7 +164,8 @@ public class SniperWeaponScript : WeaponStats
             {
                 stats.TakeDamage(damage);
 
-                ShowHitmarker();
+                SendHitmarker();
+
             }
             Debug.Log($"Pellet hit {hit.collider.name} for {damage} damage");
         }
